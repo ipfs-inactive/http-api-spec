@@ -1,163 +1,109 @@
 # IPFS API Level 1 Spec - Transport Agnostic
 
-## `add`
-
-## `bitswap`
-
-### `bitswap stat`
-
-### `bitswap unwant`
-
-### `bitswap wantlist`
-
-## `block`
-
-### `block get`
-
-### `block put`
-
-### `block stat`
-
-## `bootstrap`
-
-### `bootstrap add`
-
-### `bootstrap list`
-
-### `bootstrap rm`
-
-## `cat`
-
-## `commands`
-
-## `config`
-
-### `config edit`
-
-### `config replace`
-
-### `config show`
-
-## `daemon`
-
-## `dht`
-
-### `dht findpeer`
-
-### `dht findprovs`
-
-### `dht get`
-
-### `dht put`
-
-### `dht query`
-
-## `diag`
-
-### `diag net`
-
-### `diag sys`
-
-## `dns`
-
-## `file`
-
-### `file ls`
-
-## `get`
-
-## `id`
-
-## `init`
-
-## `log`
-
-### `log level`
-
-### `log tail`
-
-## `ls`
-
-## `mount`
-
-## `name`
-
-### `name publish`
-
-### `name resolve`
-
-## `object`
-
-### `object data`
-
-### `object get`
-
-### `object links`
-
-### `object new`
-
-### `object patch`
-
-### `object put`
-
-### `object stat`
-
-## `pin`
-
-### `pin add`
-
-### `pin ls`
-
-### `pin rm`
-
-## `ping`
-
-## `refs`
-
-### `refs local`
-
-## `repo`
-
-### `repo gc`
-
-## `resolve`
-
-## `stats`
-
-### `stats bw`
-
-## `swarm`
-
-### `swarm addrs`
-
-### `swarm addrs local`
-
-### `swarm connect`
-
-### `swarm disconnect`
-
-### `swarm filters`
-
-### `swarm filters add`
-
-### `swarm filters rm`
-
-### `swarm peers`
-
-## `tar`
-
-### `tar add`
-
-### `tar cat`
-
-## `tour`
-
-### `tour list`
-
-### `tour next`
-
-### `tour restart`
-
-## `update`
-
-## `version`
+### IPFS Core
+
+> Everything defined here is required.
+
+- version
+- node
+  - id
+  - start
+  - stop
+- block
+  - get
+  - put
+  - stat
+- object - Basic manipulation of the DAG
+  - data
+  - get
+  - links
+  - new
+  - patch
+  - put
+  - stat
+- refs - Listing of references. (Essentially, walking around the graph).
+  - local
+- repo - Basic manipulation of the repo
+  - init
+  - stat
+  - gc
+  - config get
+  - config put
+- pin - Basic manipulation of the pin set
+  - add
+  - ls
+  - rm
+- log
+  - level
+  - tail
+- name (ipns)
+  - name publish
+  - resolve
+
+### IPFS Ext
+
+> Everything defined here is optional
+
+- dns
+- resolve
+- tar
+  - add
+  - cat
+- tour
+  - list
+  - next
+  - restart
+- files
+  - add
+  - cat
+  - get
+- stat - Statistics about everything
+  - bw
+- mount
+- bootstrap
+  - add
+  - list
+  - rm
+
+### IPFS Tools
+
+> Everything defined here is optional, and might be specific to the
+> implementation details (like running on the command line).
+
+- commands
+- update
+- init - sugar around ipfs repo init
+- config
+  - edit
+  - replace
+  - show
+- daemon
+- diag
+  - net
+  - sys
+
+### Libp2p
+
+- ping
+- dht
+  - findpeer
+  - findprovs
+  - get
+  - put
+  - query
+- swarm
+  - addrs
+  - addrs local
+  - connect
+  - disconnect
+  - filters
+  - filters add
+  - filters rm
+  - peers
+- record (iprs)
+  - put
+  - get
+- bitswap
+  - stat
+  - unwant
+  - wantlist
