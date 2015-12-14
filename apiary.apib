@@ -301,17 +301,118 @@ Lists all available commands (and subcommands) that are available.
 
 # Group config
 
+## config [GET /config{?arg1,arg2,&bool,json}]
+
+ipfs config controls configuration variables. It works
+much like 'git config'. The configuration values are stored in a config
+file inside your IPFS repository.
+
+**Examples:**
+
+Get the value of the 'datastore.path' key:
+
+    `ipfs config datastore.path`
+
+Set the value of the 'datastore.path' key:
+
+    `ipfs config datastore.path ~/.ipfs/datastore`
+
++ Parameters
+    + arg1: "Addresses.API" (string, required) - The key of the config entry
+    + arg2 (string, required) - The value to set the config entry to
+    + bool (boolean, optional) - Set a boolean
+    + json (boolean, optional) - Parse stringified JSON
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+        + `Key`: "API.HTTPHeaders" (string)
+        + `Value`: null (string, nullable)
+
++ Response 500 (application/json)
+
+    + Attributes (object)
+        + `Message` (string)
+        + `Code`: 0 (number)
+
 ## edit [GET /config/edit]
+Opens the config file for editing in $EDITOR
 
-+ Response 200 (text/plain)
+To use 'ipfs config edit', you must have the $EDITOR environment
+    variable set to your preferred text editor.
 
-## replace [GET /config/replace]
++ Response 200 (buffer)
 
-+ Response 200 (text/plain)
+## replace [GET /config/replace{?arg}]
+Replaces the config with <file>
+
+Make sure to back up the config file first if neccessary, this operation
+can't be undone.
+
++ Parameters
+
+    + arg (string, required) - The file to use as the new config
+
++ Response 200 ()
 
 ## show [GET /config/show]
+Outputs the content of the config file
+
+**Warning**
+
+Your private key is stored in the config file, and it will be
+included in the output of this command.
 
 + Response 200 (text/plain)
+
+    + Attributes (object)
+        + `API` (object)
+            + `HTTPHeaders`: null (string, nullable)
+        + `Addresses` (object)
+            + `API`: "/ip4/127.0.0.1/tcp/5001" (string)
+            + `Gateway`: "/ip4/127.0.0.1/tcp/8080" (string)
+            + `Swarm` (array)
+                - MultiAddr (string)
+        + `Bootstrap` (array)
+            - MultiAddr (string)
+        + `Datastore` (object)
+            - `GCPeriod`: "" (string)
+            - `NoSync`: false (boolean)
+            - `Params`: null (nullable)
+            - `Path`: "" (string)
+            - `StorageGCWatermark`: 90 (number)
+            - `StorageMax`: "10GB" (string)
+            - `Type`: "" (string)
+        + `Discovery` (object)
+            + `MDNS` (object)
+                - `Enabled`: true (boolean)
+                - `Interval`: 10 (number)
+        + `Gateway` (object)
+            - `HTTPHeaders`: null (nullable)
+            - `RootRedirect`: "" (string)
+            - `Writable`: false (boolean)
+        + `Identity` (object)
+            - `PeerID`: hash (string)
+            - `PrivKey`: hash (string)
+        + `Ipns` (object)
+            - `RecordLifetime`: "" (string)
+            - `RepublishPeriod`: "" (string)
+            - `ResolveCacheSize`: 128 (number)
+        + `Log` (object)
+            - `MaxAgeDays`: 0 (number)
+            - `MaxBackups`: 1 (number)
+            - `MaxSizeMB`: 250 (number)
+        + `Mounts` (object)
+            - `FuseAllowOther`: false (boolean)
+            - `IPFS`: "/ipfs" (string)
+            - `IPFS`: "/ipns" (string)
+        + `SupernodeRouting` (object)
+            + `Servers` (array)
+                - MultiAddr (string)
+        + `Swarm` (object)
+            - `AddrFilters`: null (nullable)
+        + `Tour` (object)
+            - `Last`: "" (string)
 
 # Group daemon
 
