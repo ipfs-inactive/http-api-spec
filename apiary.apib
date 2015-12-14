@@ -415,6 +415,77 @@ included in the output of this command.
             - `Last`: "" (string)
 
 # Group daemon
+Run a network-connected IPFS node
+
+`ipfs daemon` runs a persistent IPFS daemon that can serve commands
+over the network. Most applications that use IPFS will do so by
+communicating with a daemon over the HTTP API. While the daemon is
+running, calls to `ipfs` commands will be sent over the network to
+the daemon.
+
+The daemon will start listening on ports on the network, which are
+documented in (and can be modified through) `ipfs config Addresses`.
+For example, to change the `Gateway` port:
+
+    ipfs config Addresses.Gateway /ip4/127.0.0.1/tcp/8082
+
+The API address can be changed the same way:
+
+   ipfs config Addresses.API /ip4/127.0.0.1/tcp/5002
+
+Make sure to restart the daemon after changing addresses.
+
+By default, the gateway is only accessible locally. To expose it to
+other computers in the network, use 0.0.0.0 as the ip address:
+
+   ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/8080
+
+Be careful if you expose the API. It is a security risk, as anyone could
+control your node remotely. If you need to control the node remotely,
+make sure to protect the port as you would other services or database
+(firewall, authenticated proxy, etc).
+
+HTTP Headers
+
+IPFS supports passing arbitrary headers to the API and Gateway. You can
+do this by setting headers on the API.HTTPHeaders and Gateway.HTTPHeaders
+keys:
+
+  ipfs config --json API.HTTPHeaders.X-Special-Header '["so special :)"]'
+  ipfs config --json Gateway.HTTPHeaders.X-Special-Header '["so special :)"]'
+
+Note that the value of the keys is an _array_ of strings. This is because
+headers can have more than one value, and it is convenient to pass through
+to other libraries.
+
+CORS Headers (for API)
+
+You can setup CORS headers the same way:
+
+  ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
+  ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
+  ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials '["true"]'
+
+
+**Deprecation Notice**
+
+Previously, IPFS used an environment variable as seen below:
+
+   export API_ORIGIN="http://localhost:8888/"
+
+This is deprecated. It is still honored in this version, but will be removed in a
+future version, along with this notice. Please move to setting the HTTP Headers.
+
++ Parameters
+    + init (boolean, optional) - Initialize IPFS with default settings if not already initialized
+    + routing (string, optional) - Overrides the routing option (dht, supernode)
+    + mount (boolean, optional) - Mounts IPFS to the filesystem
+    + writable (boolean, optional) - Enable writing objects (with POST, PUT and DELETE)
+    + mount-ipfs (string, optional) - Path to the mountpoint for IPFS (if using --mount)
+    + mount-ipns (string, optional) - Path to the mountpoint for IPNS (if using --mount)
+    + unrestricted-api (boolean, optional) - Allow API access to unlisted hashes
+    + disable-transport-encryption (boolean, optional) - Disable transport encryption (for debugging protocols)
+    + enable-gc (boolean, optional) - Enable automatic periodic repo garbage collection
 
 # Group dht
 
