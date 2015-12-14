@@ -4,9 +4,41 @@ FORMAT: 1A
 
 The API for interacting with IPFS nodes.
 
-# Group add
+# Group add [GET /add{?arg,&recursive,quiet,silent,progress,trickle,only-hash,wrap-with-directory,hidden,chunker,pin}]
+Add an object to ipfs.
 
-TODO
+Adds contents of <path> to ipfs. Use -r to add directories.
+Note that directories are added recursively, to form the ipfs
+MerkleDAG. A smarter partial add with a staging area (like git)
+remains to be implemented.
+
++ Parameters
+    + arg (string, required) - The path to a file to be added to IPFS
+    + recursive (boolean, optional) - Add directory paths recursively
+    + quiet (boolean, optional) - Write minimal output
+    + silent (boolean, optional) - Write no output
+    + progress (boolean, optional) - Stream progress data
+    + trickle (boolean, optional) - Use trickle-dag format for dag generation
+    + only-hash (boolean, optional) - Only chunk and hash - do not write to disk
+    + wrap-with-directory (boolean, optional) - Wrap files with a directory object
+    + hidden (boolean, optional) - Include files that are hidden
+    + chunker (boolean, optional) - chunking algorithm to use
+    + pin (boolean, optional) - Pin this object when adding.  Default true
+
++ Response 200 (text/plain)
+
+    + Body
+        ```
+        added QmbFMke1KXqnYyBBWxB74N4c5SBnJMVAiMNRcGu6x1AwQH test
+        ```
+
++ Response 400 (text/plain)
+
+    + Body
+
+        ```
+        File argument 'path' is required
+        ```
 
 # Group bitswap
 A set of commands to manipulate the bitswap agent
