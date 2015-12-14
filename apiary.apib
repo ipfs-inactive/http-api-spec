@@ -488,26 +488,48 @@ future version, along with this notice. Please move to setting the HTTP Headers.
     + enable-gc (boolean, optional) - Enable automatic periodic repo garbage collection
 
 # Group dht
+Issue commands directly through the DHT
 
-## findpeer [GET /dht/findpeer]
+## findpeer [GET /dht/findpeer{?arg,&verbose}]
+Run a 'FindPeer' query through the DHT
 
-+ Response 200 (text/plain)
++ Parameters
+    + arg (string, required) - <peerid> The peer to search for
 
-## findprovs [GET /dht/findprovs]
+## findprovs [GET /dht/findprovs{?arg,&verbose}]
+Run a 'FindProviders' query through the DHT
 
-+ Response 200 (text/plain)
+FindProviders will return a list of peers who are able to provide the value requested.
 
-## get [GET /dht/get]
++ Parameters
+    + arg (string, required) - The key to find providers for
+    + verbose (boolean, optional) - Write extra information
 
-+ Response 200 (text/plain)
+## get [GET /dht/get(?arg,&verbose)]
+Run a 'GetValue' query through the DHT
 
-## put [GET /dht/put]
+GetValue will return the value stored in the dht at the given key.
 
-+ Response 200 (text/plain)
++ Parameters
+    + arg (string, required) - The key to find providers for
+    + verbose (boolean, optional) - Write extra information
+
+## put [GET /dht/put{?arg1,arg2,&verbose}]
+Run a 'PutValue' query through the DHT
+
+PutValue will store the given key value pair in the dht.
+
++ Parameters
+    + arg (string, required) - The key to store the value at
+    + arg (string, required) - The value to store
+    + verbose (boolean, optional) - Write extra information
 
 ## query [GET /dht/query]
+Run a 'findClosestPeers' query through the DHT
 
-+ Response 200 (text/plain)
++ Parameters
+    + arg (string, required) - <peerid> The peerID to run the query against
+    + verbose (boolean, optional) -  Write extra information
 
 # Group diag
 Generate diagnostic reports.
