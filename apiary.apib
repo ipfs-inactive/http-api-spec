@@ -1153,10 +1153,14 @@ By default, recursively. Use `-r=false` for direct pins.
 # Group ping
 Send echo request packets to IPFS hosts
 
-## ping [GET /ping]
+## ping [GET /ping{?arg,&count}]
 A tool to test sending data to other nodes. It finds nodes
 via the routing system, send pings, wait for pongs, and print out round-
 trip latency information.
+
++ Parameters
+    + arg (string, required) - ID of peer to be pinged
+    + count (number, required) - number of ping messages to send
 
 + Response 200 (application/json)
     + Headers
