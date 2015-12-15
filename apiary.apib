@@ -1490,7 +1490,13 @@ Restart the IPFS Tour
 # Group version
 Show version details about the ipfs node.
 
-## version [GET /version]
+## version [GET /version{&number,commit,repo}]
+Returns the current version of ipfs and exits.
+
++ Parameters
+    + number (boolean, optional) - Only show the version number
+    + commit (boolean, optional) - Show the commit hash
+    + repo (boolean, optional) - Show repo version
 
 + Response 200 (application/json)
     + Attributes (object)
