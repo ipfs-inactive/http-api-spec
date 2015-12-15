@@ -751,7 +751,23 @@ may also specify the level of compression by specifying '-l=<1-9>'.
 
 # Group id
 
+Prints out information about the specified peer,
+if no peer is specified, prints out local peers info.
+
+ipfs id supports the format option for output with the following keys:
+<id> : the peers id
+<aver>: agent version
+<pver>: protocol version
+<pubkey>: public key
+<addrs>: addresses (newline delimited)
+
 ## id [GET /id]
+Show IPFS Node ID info
+
++ Parameters
+
+    + arg (string, required) - peerID of node to look up
+    + format (string, optional) - optional output format
 
 + Response 200 (application/json)
 
@@ -782,6 +798,12 @@ may also specify the level of compression by specifying '-l=<1-9>'.
           "ProtocolVersion": "ipfs/0.1.0"
         }
         ```
+
++ Response 400
+
+    + Attributes
+        + `Message`: "Invalid peer id" (string)
+        + `Code`: 1 (number)
 
 # Group log
 
