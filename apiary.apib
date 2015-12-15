@@ -806,12 +806,28 @@ Show IPFS Node ID info
         + `Code`: 1 (number)
 
 # Group log
+`ipfs log` contains utility commands to affect or read the logging
+output of a running daemon.
 
-## level [GET /log/level]
+## level [GET /log/level{?arg1,arg2}]
+`ipfs log level` is a utility command used to change the logging
+output of a running daemon.
+
++ Parameters
+    + arg1 (string) - the subsystem logging identifier. Use 'all' for all subsystems.
+    + arg2 (enum[string])
+        + Members
+            + debug
+            + info
+            + warning
+            + error
+            + fatal
+            + panic
 
 + Response 200 (text/plain)
 
 ## tail [GET /log/tail]
+'ipfs log tail' is a utility command used to read log output as it is written.
 
 + Response 200 (text/plain)
 
