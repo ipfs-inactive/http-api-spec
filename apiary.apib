@@ -1191,9 +1191,54 @@ trip latency information.
 
 # Group refs
 
-## local [GET /refs/local]
+## refs [GET /refs{?arg,&format,edges,unique,recursive}]
+Lists links (references) from an object
+
+Retrieves the object named by <ipfs-path> and displays the link
+hashes it contains, with the following format:
+
+  <link base58 hash>
+
+Note: list all refs recursively with -r.
+
++ Parameters
+    + arg (string, required) - Path to the object(s) to list refs from
+    + format (string, optional) - Emit edges with given format. tokens: `<src> <dst> <linkname>`
+    + edges (boolean, optional) - Emit edge format: `<from> -> <to>`
+    + unique (boolean, optional) - Omit duplicate refs from output
+    + recursive (boolean, optional) - Recursively list links of child nodes
 
 + Response 200 (text/plain)
+
+    + Body
+
+        ```
+        Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u
+        ```
+
+## local [GET /refs/local]
+Lists all local references
+
+Displays the hashes of all local objects.
+
++ Response 200 (text/plain)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked, chunked
+        X-Stream-Output: 1
+        ```
+
+    + Body
+
+        ```
+        QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ
+        ```
 
 
 # Group repo
