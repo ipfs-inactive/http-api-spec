@@ -655,10 +655,58 @@ ipfs.io. TXT "dnslink=/ipfs/QmRzTuh2Lpuz7Gr39stNr6mTFdqAghsZec1JoUnfySUzcy ..."
         - Path: `/ipfs/QmTgNJEgQaCqRht9KSXNyZsCp2xpHZmBRms28NRMmtcERp` (Multihash)
 
 # Group file
+Interact with ipfs objects representing Unix filesystems
 
-## ls [GET /file/ls]
+'ipfs file' provides a familar interface to filesystems represtented
+by IPFS objects that hides IPFS-implementation details like layout
+objects (e.g. fanout and chunking).
 
-+ Response 200 (text/plain)
+## ls [GET /file/ls{?arg}]
+List directory contents for Unix-filesystem object
+
+Retrieves the object named by <ipfs-or-ipns-path> and displays the
+contents.
+
+The JSON output contains size information.  For files, the child size
+is the total size of the file contents.  For directories, the child
+size is the IPFS link size.
+
++ Parameters
+    + arg (string, required) - The path to the IPFS object(s) to list links from
+
++ Response 200 (application/json)
+
+    + Attributes
+        + `Arguments` (object) - The key is the provided path, the value its hash
+        + `Objects` (object)
+            + Key (object) - The key is the hash of the IPFS object(s)
+                - `Hash` (string) - The hash
+                - `Size` (number)
+                - `Type` (string)
+                - `Links` (nullable)
+
+    + Body
+
+        ```
+        {
+          "Arguments": {
+            "/ipfs/QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u"
+          },
+          "Objects": {
+            "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u": {
+              "Hash": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+              "Size": 443230,
+              "Type": "File",
+              "Links": null
+            }
+          }
+        }
+        ```
++ Response 500 (application/json)
+
+    + Attributes
+        + `Message` (string)
+        + `Code` (number)
 
 # Group get
 
