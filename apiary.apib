@@ -897,14 +897,45 @@ root will not be listable, as it is virtual. Access known paths directly.
 + Response 200 (application/json)
 
 # Group name
+IPFS namespace (IPNS) tool
 
-## publish [GET /name/publish]
+IPNS is a PKI namespace, where names are the hashes of public keys, and
+the private key enables publishing new (signed) values. In publish, the
+default value of <name> is your own identity public key.
 
-+ Response 200 (text/plain)
+## publish [GET /name/publish{?arg,&resolve,lifetime,ttl}]
+Publish an object to IPNS
+
++ Parameters
+    + arg (string, required) - IPFS path of the obejct to be published
+    + resolve (boolean, optional) - Resolve given path before publishing
+        + Default: `true`
+    + lifetime (string, optional) - time duration that the record will be valid for
+        + Default: `24hrs`
+    + ttl (string, optional) - time duration this record should be cached for (caution: experimental)
+
+
++ Response 200 (application/json)
+
+    + Attributes
+        + `Name` (string) - IPFS hash
+        + `Value` (string) - IPFS path
 
 ## resolve [GET /name/resolve]
+Gets the value currently published at an IPNS name
+
++ Parameters
+    + arg (string, required) - The IPNS name to resolve. Defaults to your node's peerID.
+    + recursive (boolean, optional) - Resolve until the result is not an IPNS name
+    + nocache (boolean, optional) - Do not used cached entries
 
 + Response 200 (text/plain)
+
++ Response 500
+
+    + Attributes
+        + `Message`: "could not resolve name" (string)
+        + `Code`: 0 (number)
 
 # Group object
 Interact with ipfs objects.
