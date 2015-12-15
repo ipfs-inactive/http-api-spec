@@ -1396,15 +1396,36 @@ List the set of peers the node is connected to.
 # Group tar
 Utility functions for tar files in ipfs
 
-## add [GET /tar/add]
+## add [GET /tar/add{?arg}]
 Import a tar file into ipfs
 
+`ipfs tar add` will parse a tar file and create a merkledag structure to represent it.
+
++ Parameters
+    + arg (string, required) - tar file to add
+
 + Response 200 (text/plain)
 
-## cat [GET /tar/cat]
+    + Body
+
+        ```
+        QmevjfjydFGfFNTkBpvr8gYwUwFyM5LMe46sNyAQ1Fxw6a
+        ```
+
+## cat [GET /tar/cat{?arg}]
 Export a tar file from ipfs
 
+`ipfs tar cat` will export a tar file from a previously imported one in ipfs
+
++ Parameters
+    + arg (string, required) - ipfs path of archive to export
+
 + Response 200 (text/plain)
+
+    + Body
+
+        ```
+        ```
 
 # Group tour
 This is a tour that takes you through various IPFS concepts,
