@@ -711,8 +711,43 @@ size is the IPFS link size.
 # Group get
 
 ## get [GET /get]
+Download IPFS objects
+
+Retrieves the object named by <ipfs-or-ipns-path> and stores the data to disk.
+
+By default, the output will be stored at ./<ipfs-path>, but an alternate path
+can be specified with '--output=<path>' or '-o=<path>'.
+
+To output a TAR archive instead of unpacked files, use '--archive' or '-a'.
+
+To compress the output with GZIP compression, use '--compress' or '-C'. You
+may also specify the level of compression by specifying '-l=<1-9>'.
+
++ Parameters
+    + arg (string, required) - The path to the IPFS object(s) to tbe outputted
+    + output (string, optional) - The path where output should be stored
+    + archive (boolean, optional) - Output a TAR archive
+    + compress (boolean, optional) - Compress the output with GZIP compression
+    + compression-level (int, optional) - The level of compression (1-9)
 
 + Response 200 (text/plain)
+
+    + Headers
+
+        ```
+        Content-type: text/plain
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Date: Tue, 15 Dec 2015 00:38:02 GMT
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked, chunked
+        X-Stream-Output: 1
+        ```
+
++ Response 500 (application/json)
+    + Attributes
+        + `Message`: "context canceled" (string)
+        + `Code`: 0 (number)
 
 # Group id
 
