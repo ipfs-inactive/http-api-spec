@@ -1273,8 +1273,14 @@ identifiers and resolves them to the referenced item.
 # Group stats
 Query IPFS statistics.
 
-## bw [GET /stats/bw]
+## bw [GET /stats/bw{&peer,proto,poll,interval}]
 Print ipfs bandwidth information.
+
++ Parameters
+    + peer (string, optional) - specify a peer to print bandwidth for
+    + proto (string, optional) - specify a protocol to print bandwidth for
+    + poll (boolean, optional) - print bandwidth at an interval
+    + interval (string, optional) - time interval to wait between updating output
 
 + Response 200 (application/json)
 
