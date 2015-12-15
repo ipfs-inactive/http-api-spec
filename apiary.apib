@@ -1068,17 +1068,87 @@ Get stats for the DAG node named by <key>
         - `CumulativeSize`: 5 (number) - cumulative size of object and its references
 
 # Group pin
-## add [GET /pin/add]
+Pin (and unpin) objects to local storage
 
-+ Response 200 (text/plain)
+## add [GET /pin/add{?arg,&recursive}]
+Pins objects to local storage
 
-## ls [GET /pin/ls]
+Retrieves the object named by <ipfs-path> and stores it locally
+on disk.
 
-+ Response 200 (text/plain)
++ Parameters
+    + arg (string, required) - Path to object(s) to be pinned
+    + recursive (boolean, optional) - Recursively pin the object linked to by the specified object(s)
 
-## rm [GET /pin/rm]
++ Response 200 (application/json)
 
-+ Response 200 (text/plain)
+    + Attributes
+        + `Pinned` (array)
+            - Multihash
+
+    + Body
+
+        ```
+        {
+          "Pinned": [
+            "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u"
+          ]
+        }
+        ```
+
+## ls [GET /pin/ls{&type,count,quiet}]
+List objects pinned to local storage
+
++ Parameters
+    + type (enum[string], optional) - The type of pinned keys to list.
+        Default: `recursive`
+        Members:
+            + `all`
+            + `direct`
+            + `indirect`
+            + `recursive`
+    + count (boolean, optional) - Show refcount when listing indirect pins
+    + quiet (boolean, optional) - Write just hashes of objects
+
++ Response 200 (application/json)
+
+    + Attributes
+        + `Keys` (object) - Contains multiple hashes
+            + hash (object)
+                - `Type`: "recursive" (string)
+                - `Coun`: 1 (number)
+
+## rm [GET /pin/rm{?arg,&recursive}]
+Removes the pinned object from local storage.
+
+By default, recursively. Use `-r=false` for direct pins.
+
++ Parameters
+    + arg (string, required) - Path to object(s) to be unpinned
+    + recursive (boolean, optional) - Recursively unpin the object linked to by the specified object(s)
+        Default: true
+
++ Response 200 (application/json)
+
+    + Attributes
+        + `Pinned` (array)
+            - Multihash
+
+    + Body
+
+        ```
+        {
+          "Pinned": [
+            "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u"
+          ]
+        }
+        ```
+
++ Response 500 (application/json)
+
+    + Attributes
+        - `Message`: "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u is not pinned" (string)
+        - `Code`: 0 (number)
 
 # Group ping
 Send echo request packets to IPFS hosts
