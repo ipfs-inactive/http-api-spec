@@ -884,9 +884,15 @@ it contains, with the following format:
     ```
 
 # Group mount
+Mounts IPFS to the filesystem (read-only)
+
 Mount ipfs at a read-only mountpoint on the OS (default: /ipfs and /ipns).
 All ipfs objects will be accessible under that directory. Note that the
 root will not be listable, as it is virtual. Access known paths directly.
+
++ Parameters
+    + ipfs-path (string, optional) - The path where IPFS should be mounted
+    + ipns-path (string, optional) - The path where IPNS should be mounted
 
 + Response 200 (application/json)
 
