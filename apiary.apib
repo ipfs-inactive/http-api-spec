@@ -1297,13 +1297,20 @@ Swarm inspection tool.
 ## addrs [GET /swarm/addrs]
 List known addresses. Useful for debugging.
 
+`ipfs swarm addrs` lists all addresses this node is aware of.
+
 + Response 200 (application/json)
 
     + Attributes (object)
         - Addrs (SwarmAddrs)
 
-## addrs local [GET /swarm/addrs/local]
+## addrs local [GET /swarm/addrs/local{&id}]
 List all local addresses.
+
+`ipfs swarm addrs local` lists all local addresses the node is listening on.
+
++ Parameters
+    + id (boolean, optional) - Show peer ID in addresses
 
 + Response 200 (application/json)
 
@@ -1356,6 +1363,10 @@ Filters default to those specified under the `"Swarm.AddrFilters"` config key.
 ## filters add [GET /swarm/filters/add{?arg}]
 Add the given multiaddr to the filter list.
 
+`ipfs swarm filters add` will add an address filter to the daemons swarm.
+Filters applied this way will not persist daemon reboots, to acheive that,
+add your filters to the ipfs config file.
+
 + Parameters
     + arg (MultiAddr, required) - Address to add to the filter list
 
@@ -1363,6 +1374,10 @@ Add the given multiaddr to the filter list.
 
 ## filters rm [GET /swarm/filters/rm{?arg}]
 Remove the given multiaddr from the filter list.
+
+`ipfs swarm filters rm` will remove an address filter from the daemons swarm.
+Filters removed this way will not persist daemon reboots, to acheive that,
+remove your filters from the ipfs config file.
 
 + Parameters
     + arg (MultiAddr, required) - Address to remove from the filter list
