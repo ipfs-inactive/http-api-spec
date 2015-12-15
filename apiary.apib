@@ -832,10 +832,56 @@ output of a running daemon.
 + Response 200 (text/plain)
 
 # Group ls
+List links from an object.
 
-## ls [GET /ls]
+## ls [GET /ls{?arg,&headers}]
+Retrieves the object named by <ipfs-or-ipns-path> and displays the links
+it contains, with the following format:
 
-+ Response 200 (text/plain)
+  <link base58 hash> <link size in bytes> <link name>
+
++ Parameters
+    + arg (string, required) - The path to the IPFS object(s) to list links from
+    + headers (boolean, optional) - Print table headers (Hash, Name, Size)
+
++ Response 200 (application/json)
+
+    + Attributes
+        + `Objects` (array)
+            + (object)
+                - `Hash`: "/ipfs/QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg" (string)
+                + `Links` (array)
+                    + (object)
+                        - `Name`: "" (string)
+                        - `Hash`: "QmPEKipMh6LsXzvtLxunSPP7ZsBM8y9xQ2SQQwBXy5UY6e" (string)
+                        - `Size`: 262158 (number)
+                        - `Type`: 2 (number)
+
+    + Body
+
+    ```
+    {
+      "Objects": [
+        {
+          "Hash": "/ipfs/QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg",
+          "Links": [
+            {
+              "Name": "",
+              "Hash": "QmPEKipMh6LsXzvtLxunSPP7ZsBM8y9xQ2SQQwBXy5UY6e",
+              "Size": 262158,
+              "Type": 2
+            },
+            {
+              "Name": "",
+              "Hash": "QmT8onRUfPgvkoPMdMvCHPYxh98iKCfFkBYM1ufYpnkHJn",
+              "Size": 181100,
+              "Type": 2
+            }
+          ]
+        }
+      ]
+    }
+    ```
 
 # Group mount
 Mount ipfs at a read-only mountpoint on the OS (default: /ipfs and /ipns).
