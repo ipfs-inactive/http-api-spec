@@ -38,7 +38,7 @@ remains to be implemented.
     + Body
 
         ```
-        File argument 'path' is required
+        File argument `path` is required
         ```
 
 # Group bitswap
@@ -308,7 +308,7 @@ Lists all available commands (and subcommands) that are available.
 ## config [GET /config{?arg1,arg2}{&bool,json}]
 
 ipfs config controls configuration variables. It works
-much like 'git config'. The configuration values are stored in a config
+much like `git config`. The configuration values are stored in a config
 file inside your IPFS repository.
 
 **Examples:**
@@ -342,7 +342,7 @@ Set the value of the 'datastore.path' key:
 ## edit [GET /config/edit]
 Opens the config file for editing in $EDITOR
 
-To use 'ipfs config edit', you must have the $EDITOR environment
+To use `ipfs config edit`, you must have the $EDITOR environment
     variable set to your preferred text editor.
 
 + Response 200 (buffer)
@@ -495,7 +495,7 @@ future version, along with this notice. Please move to setting the HTTP Headers.
 Issue commands directly through the DHT
 
 ## findpeer [GET /dht/findpeer{?arg}]
-Run a 'FindPeer' query through the DHT
+Run a `FindPeer` query through the DHT
 
 + Parameters
     + arg (string, required) - <peerid> The peer to search for
@@ -503,7 +503,7 @@ Run a 'FindPeer' query through the DHT
 + Response 200
 
 ## findprovs [GET /dht/findprovs{?arg}{&verbose}]
-Run a 'FindProviders' query through the DHT
+Run a `FindProviders` query through the DHT
 
 FindProviders will return a list of peers who are able to provide the value requested.
 
@@ -514,7 +514,7 @@ FindProviders will return a list of peers who are able to provide the value requ
 + Response 200
 
 ## get [GET /dht/get{?arg}{&verbose}]
-Run a 'GetValue' query through the DHT
+Run a `GetValue` query through the DHT
 
 GetValue will return the value stored in the dht at the given key.
 
@@ -525,7 +525,7 @@ GetValue will return the value stored in the dht at the given key.
 + Response 200
 
 ## put [GET /dht/put{?arg1,arg2}{&verbose}]
-Run a 'PutValue' query through the DHT
+Run a `PutValue` query through the DHT
 
 PutValue will store the given key value pair in the dht.
 
@@ -537,7 +537,7 @@ PutValue will store the given key value pair in the dht.
 + Response 200
 
 ## query [GET /dht/query{?arg}{&verbose}]
-Run a 'findClosestPeers' query through the DHT
+Run a `findClosestPeers` query through the DHT
 
 + Parameters
     + arg (string, required) - <peerid> The peerID to run the query against
@@ -624,7 +624,7 @@ The default timeout is 20 seconds.
         /ipfs/QmbesKpGyQGd5jtJFUGEB1ByPjNFpukhnKZDnkfxUiKn38
         ```
 
-        To view your diag output, 'ipfs add' the d3 vis output, and
+        To view your diag output, `ipfs add` the d3 vis output, and
         open the following link:
 
         ```
@@ -727,7 +727,7 @@ ipfs.io. TXT "dnslink=/ipfs/QmRzTuh2Lpuz7Gr39stNr6mTFdqAghsZec1JoUnfySUzcy ..."
 # Group file
 Interact with ipfs objects representing Unix filesystems
 
-'ipfs file' provides a familar interface to filesystems represtented
+`ipfs file` provides a familar interface to filesystems represtented
 by IPFS objects that hides IPFS-implementation details like layout
 objects (e.g. fanout and chunking).
 
@@ -786,12 +786,12 @@ Download IPFS objects
 Retrieves the object named by <ipfs-or-ipns-path> and stores the data to disk.
 
 By default, the output will be stored at ./<ipfs-path>, but an alternate path
-can be specified with '--output=<path>' or '-o=<path>'.
+can be specified with `--output=<path>` or `-o=<path>`.
 
-To output a TAR archive instead of unpacked files, use '--archive' or '-a'.
+To output a TAR archive instead of unpacked files, use `--archive` or `-a`.
 
-To compress the output with GZIP compression, use '--compress' or '-C'. You
-may also specify the level of compression by specifying '-l=<1-9>'.
+To compress the output with GZIP compression, use `--compress` or `-C`. You
+may also specify the level of compression by specifying `-l=<1-9>`.
 
 + Parameters
     + arg (string, required) - The path to the IPFS object or objects to be outputted
@@ -883,7 +883,7 @@ output of a running daemon.
 output of a running daemon.
 
 + Parameters
-    + arg1 (string) - the subsystem logging identifier. Use 'all' for all subsystems.
+    + arg1 (string) - the subsystem logging identifier. Use `all` for all subsystems.
     + arg2 (enum[string])
         + Members
             + debug
@@ -896,7 +896,7 @@ output of a running daemon.
 + Response 200 (text/plain)
 
 ## tail [GET /log/tail]
-'ipfs log tail' is a utility command used to read log output as it is written.
+`ipfs log tail` is a utility command used to read log output as it is written.
 
 + Response 200 (text/plain)
 
