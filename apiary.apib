@@ -4,7 +4,7 @@ FORMAT: 1A
 
 The API for interacting with IPFS nodes.
 
-# Group add [GET /add{?arg,&recursive,quiet,silent,progress,trickle,only-hash,wrap-with-directory,hidden,chunker,pin}]
+# Group add [GET /add{?arg}{&recursive,quiet,silent,progress,trickle,only%2Dhash,wrap%2Dwith%2Ddirectory,hidden,chunker,pin}]
 Add an object to ipfs.
 
 Adds contents of <path> to ipfs. Use -r to add directories.
@@ -28,6 +28,7 @@ remains to be implemented.
 + Response 200 (text/plain)
 
     + Body
+
         ```
         added QmbFMke1KXqnYyBBWxB74N4c5SBnJMVAiMNRcGu6x1AwQH test
         ```
@@ -151,7 +152,7 @@ the addresses of bootstrap nodes. These are the *trusted peers* from
 which to learn about other peers in the network. Only edit this list
 if you understand the risks of adding or removing nodes from this list.
 
-## add [GET /bootstrap/add{?arg,&default}]
+## add [GET /bootstrap/add{?arg}{&default}]
 Add peers to the bootstrap list
 
 Outputs a list of peers that were added (that weren't already
@@ -236,14 +237,14 @@ Peers are output in the format `<multiaddr>/<peerID>`.
         }
         ```
 
-## rm [GET /bootstrap/rm{?arg,&all}]
+## rm [GET /bootstrap/rm{?arg}{&all}]
 Removes peers from the bootstrap list
 
 Outputs the list of peers that were removed.
 
 + Parameters
     + arg (Multiaddr, optional) - A peer to add to the bootstrap list
-    + all (bool, optional) Remove all bootstrap peers.
+    + all (boolean, optional) - Remove all bootstrap peers.
 
 + Response 200 (application/json)
 
@@ -280,13 +281,16 @@ Outputs the list of peers that were removed.
 Retrieves the object named by <ipfs-or-ipns-path> and outputs the data it contains.
 
 + Parameters
-    + arg (string, required) - The path to the IPFS object(s) to be outputted
+    + arg (string, required) - The path to the IPFS object or objects to be outputted
 
 + Response 200
 
     + Headers
-        - Transfer-Encoding: chunked
-        - X-Stream-Output: 1
+
+        ```
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        ```
 
 # Group commands
 
@@ -301,7 +305,7 @@ Lists all available commands (and subcommands) that are available.
 
 # Group config
 
-## config [GET /config{?arg1,arg2,&bool,json}]
+## config [GET /config{?arg1,arg2}{&bool,json}]
 
 ipfs config controls configuration variables. It works
 much like 'git config'. The configuration values are stored in a config
@@ -496,7 +500,9 @@ Run a 'FindPeer' query through the DHT
 + Parameters
     + arg (string, required) - <peerid> The peer to search for
 
-## findprovs [GET /dht/findprovs{?arg,&verbose}]
++ Response 200
+
+## findprovs [GET /dht/findprovs{?arg}{&verbose}]
 Run a 'FindProviders' query through the DHT
 
 FindProviders will return a list of peers who are able to provide the value requested.
@@ -505,7 +511,9 @@ FindProviders will return a list of peers who are able to provide the value requ
     + arg (string, required) - The key to find providers for
     + verbose (boolean, optional) - Write extra information
 
-## get [GET /dht/get(?arg,&verbose)]
++ Response 200
+
+## get [GET /dht/get{?arg}{&verbose}]
 Run a 'GetValue' query through the DHT
 
 GetValue will return the value stored in the dht at the given key.
@@ -514,7 +522,9 @@ GetValue will return the value stored in the dht at the given key.
     + arg (string, required) - The key to find providers for
     + verbose (boolean, optional) - Write extra information
 
-## put [GET /dht/put{?arg1,arg2,&verbose}]
++ Response 200
+
+## put [GET /dht/put{?arg1,arg2}{&verbose}]
 Run a 'PutValue' query through the DHT
 
 PutValue will store the given key value pair in the dht.
@@ -524,12 +534,72 @@ PutValue will store the given key value pair in the dht.
     + arg2 (string, required) - The value to store
     + verbose (boolean, optional) - Write extra information
 
-## query [GET /dht/query]
++ Response 200
+
+## query [GET /dht/query{?arg}{&verbose}]
 Run a 'findClosestPeers' query through the DHT
 
 + Parameters
     + arg (string, required) - <peerid> The peerID to run the query against
     + verbose (boolean, optional) -  Write extra information
+
++ Response 200 (application/json)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Date: Wed, 16 Dec 2015 16:37:26 GMT
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked, chunked
+        X-Chunked-Output: 1
+        ```
+
+    + Body
+
+        ```
+        {"Extra":"","ID":"QmR6RQTtbGfzNqWTb4qvvovxpv8R5Fi1aC5YWUmE259ZDG","Responses":null,"Type":2}
+        {"Extra":"","ID":"QmdAYL426boH1RRFR6JABaNT4JNfrEJV1coiPfKytpPVwP","Responses":null,"Type":2}
+        {"Extra":"","ID":"QmP4HvpqhWDdfswxMoBkKW2LJjNeUKcQxKqpgmQuXnqrvX","Responses":null,"Type":2}
+        {"Extra":"","ID":"QmR6RQTtbGfzNqWTb4qvvovxpv8R5Fi1aC5YWUmE259ZDG","Responses":null,"Type":6}
+        {"Extra":"","ID":"QmdAYL426boH1RRFR6JABaNT4JNfrEJV1coiPfKytpPVwP","Responses":null,"Type":6}
+        {"Extra":"","ID":"QmWvc4uZhqKKmPWyjt8f1o9V1Gu2SkB1YSAFoDhfGUENcJ","Responses":null,"Type":2}
+        {"Extra":"","ID":"QmPBZAQmeEy4rVNGCCjY9tjJXmWURukfCRJRRgNKttNf3t","Responses":null,"Type":2}
+        {"Extra":"","ID":"QmP4HvpqhWDdfswxMoBkKW2LJjNeUKcQxKqpgmQuXnqrvX","Responses":null,"Type":6}
+        {"Extra":"","ID":"QmWvc4uZhqKKmPWyjt8f1o9V1Gu2SkB1YSAFoDhfGUENcJ","Responses":null,"Type":6}
+        {"Extra":"","ID":"QmdWox4MybJu5SK5YgQiYpCirvWgPNvRNBtAUpv4hthVio","Responses":null,"Type":2}
+        {"Extra":"","ID":"QmNRV7kyUxYaQ4KQxFXPYm8EfuzJbtGn1wSFenjXL6LD8y","Responses":null,"Type":2}
+        {"Extra":"","ID":"QmPBZAQmeEy4rVNGCCjY9tjJXmWURukfCRJRRgNKttNf3t","Responses":null,"Type":6}
+        {"Extra":"","ID":"QmPvYDTzGoJc6oRL9tDpqudF3CJzUfwoftfPnoAhbbSsfR","Responses":null,"Type":2}
+        {"Extra":"","ID":"QmeqnZVvHbP6BoLsE4pqCBRdTjvLvuEtAsf644YYXKb9ZU","Responses":null,"Type":2}
+        {"Extra":"","ID":"QmdWox4MybJu5SK5YgQiYpCirvWgPNvRNBtAUpv4hthVio","Responses":null,"Type":6}
+        {"Extra":"","ID":"QmNRV7kyUxYaQ4KQxFXPYm8EfuzJbtGn1wSFenjXL6LD8y","Responses":null,"Type":6}
+        {"Extra":"","ID":"QmeWdgoZezpdHz1PX8Ly8AeDQahFkBNtHn6qKeNtWP1jB6","Responses":null,"Type":2}
+        {"Extra":"","ID":"QmPvYDTzGoJc6oRL9tDpqudF3CJzUfwoftfPnoAhbbSsfR","Responses":null,"Type":6}
+        {"Extra":"","ID":"QmeqnZVvHbP6BoLsE4pqCBRdTjvLvuEtAsf644YYXKb9ZU","Responses":null,"Type":6}
+        {"Extra":"","ID":"QmeWdgoZezpdHz1PX8Ly8AeDQahFkBNtHn6qKeNtWP1jB6","Responses":null,"Type":6}
+        {"Extra":"","ID":"QmR6RQTtbGfzNqWTb4qvvovxpv8R5Fi1aC5YWUmE259ZDG","Responses":null,"Type":0}
+        {"Extra":"","ID":"QmP4HvpqhWDdfswxMoBkKW2LJjNeUKcQxKqpgmQuXnqrvX","Responses":null,"Type":0}
+        {"Extra":"","ID":"QmdAYL426boH1RRFR6JABaNT4JNfrEJV1coiPfKytpPVwP","Responses":null,"Type":0}
+        {"Extra":"","ID":"QmdAYL426boH1RRFR6JABaNT4JNfrEJV1coiPfKytpPVwP","Responses":[],"Type":1}
+        {"Extra":"","ID":"QmWvc4uZhqKKmPWyjt8f1o9V1Gu2SkB1YSAFoDhfGUENcJ","Responses":null,"Type":0}
+        {"Extra":"","ID":"QmR6RQTtbGfzNqWTb4qvvovxpv8R5Fi1aC5YWUmE259ZDG","Responses":[],"Type":1}
+        {"Extra":"","ID":"QmPBZAQmeEy4rVNGCCjY9tjJXmWURukfCRJRRgNKttNf3t","Responses":null,"Type":0}
+        {"Extra":"","ID":"QmWvc4uZhqKKmPWyjt8f1o9V1Gu2SkB1YSAFoDhfGUENcJ","Responses":[],"Type":1}
+        {"Extra":"","ID":"QmdWox4MybJu5SK5YgQiYpCirvWgPNvRNBtAUpv4hthVio","Responses":null,"Type":0}
+        {"Extra":"","ID":"QmP4HvpqhWDdfswxMoBkKW2LJjNeUKcQxKqpgmQuXnqrvX","Responses":[],"Type":1}
+        {"Extra":"","ID":"QmNRV7kyUxYaQ4KQxFXPYm8EfuzJbtGn1wSFenjXL6LD8y","Responses":null,"Type":0}
+        {"Extra":"","ID":"QmNRV7kyUxYaQ4KQxFXPYm8EfuzJbtGn1wSFenjXL6LD8y","Responses":[],"Type":1}
+        {"Extra":"","ID":"QmPvYDTzGoJc6oRL9tDpqudF3CJzUfwoftfPnoAhbbSsfR","Responses":null,"Type":0}
+        {"Extra":"","ID":"QmdWox4MybJu5SK5YgQiYpCirvWgPNvRNBtAUpv4hthVio","Responses":[],"Type":1}
+        {"Extra":"","ID":"QmeqnZVvHbP6BoLsE4pqCBRdTjvLvuEtAsf644YYXKb9ZU","Responses":null,"Type":0}
+        {"Extra":"","ID":"QmPBZAQmeEy4rVNGCCjY9tjJXmWURukfCRJRRgNKttNf3t","Responses":[],"Type":1}
+        {"Extra":"","ID":"QmeWdgoZezpdHz1PX8Ly8AeDQahFkBNtHn6qKeNtWP1jB6","Responses":null,"Type":0}
+        {"Extra":"","ID":"QmeqnZVvHbP6BoLsE4pqCBRdTjvLvuEtAsf644YYXKb9ZU","Responses":[],"Type":1}
+        {"Extra":"","ID":"QmPvYDTzGoJc6oRL9tDpqudF3CJzUfwoftfPnoAhbbSsfR","Responses":[],"Type":1}
+        {"Extra":"","ID":"QmeWdgoZezpdHz1PX8Ly8AeDQahFkBNtHn6qKeNtWP1jB6","Responses":[],"Type":1}
+        ```
 
 # Group diag
 Generate diagnostic reports.
@@ -596,7 +666,7 @@ Print out information about your computer to aid in debugging.
        - `used_space`: 113462611968 (number)
        - environment (object)
            - GOPATH: `/Users/dignifiedquire/.go` (string)
-           - IPFS_PATH: (string, nullable)
+           - IPFS_PATH (string, nullable)
        - `ipfs_git_sha` (string)
        - `ipfs_version`: `0.3.9` (string)
        - memory (object)
@@ -672,14 +742,14 @@ is the total size of the file contents.  For directories, the child
 size is the IPFS link size.
 
 + Parameters
-    + arg (string, required) - The path to the IPFS object(s) to list links from
+    + arg (string, required) - The path to the IPFS object or objects to list links from
 
 + Response 200 (application/json)
 
     + Attributes
         + `Arguments` (object) - The key is the provided path, the value its hash
         + `Objects` (object)
-            + Key (object) - The key is the hash of the IPFS object(s)
+            + Key (object) - The key is the hash of the IPFS object or objects
                 - `Hash` (string) - The hash
                 - `Size` (number)
                 - `Type` (string)
@@ -710,7 +780,7 @@ size is the IPFS link size.
 
 # Group get
 
-## get [GET /get{?arg,&output,archive,compress,compression-level}]
+## get [GET /get{?arg}{&output,archive,compress,compression%2Dlevel}]
 Download IPFS objects
 
 Retrieves the object named by <ipfs-or-ipns-path> and stores the data to disk.
@@ -724,7 +794,7 @@ To compress the output with GZIP compression, use '--compress' or '-C'. You
 may also specify the level of compression by specifying '-l=<1-9>'.
 
 + Parameters
-    + arg (string, required) - The path to the IPFS object(s) to tbe outputted
+    + arg (string, required) - The path to the IPFS object or objects to be outputted
     + output (string, optional) - The path where output should be stored
     + archive (boolean, optional) - Output a TAR archive
     + compress (boolean, optional) - Compress the output with GZIP compression
@@ -735,7 +805,6 @@ may also specify the level of compression by specifying '-l=<1-9>'.
     + Headers
 
         ```
-        Content-type: text/plain
         Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
         Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
         Date: Tue, 15 Dec 2015 00:38:02 GMT
@@ -761,7 +830,7 @@ ipfs id supports the format option for output with the following keys:
 <pubkey>: public key
 <addrs>: addresses (newline delimited)
 
-## id [GET /id{?arg,&format}]
+## id [GET /id{?arg}{&format}]
 Show IPFS Node ID info
 
 + Parameters
@@ -834,15 +903,15 @@ output of a running daemon.
 # Group ls
 List links from an object.
 
-## ls [GET /ls{?arg,&headers}]
+## ls [GET /ls{?arg}{&headers}]
 Retrieves the object named by <ipfs-or-ipns-path> and displays the links
 it contains, with the following format:
 
   <link base58 hash> <link size in bytes> <link name>
 
 + Parameters
-    + arg (string, required) - The path to the IPFS object(s) to list links from
-    + headers (boolean, optional) - Print table headers (Hash, Name, Size)
+    + arg (string, required) - The path to the IPFS object or objects to list links from
+    + headers (boolean, optional) - Print table headers, with Hash, Name, Size
 
 + Response 200 (application/json)
 
@@ -859,29 +928,29 @@ it contains, with the following format:
 
     + Body
 
-    ```
-    {
-      "Objects": [
+        ```
         {
-          "Hash": "/ipfs/QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg",
-          "Links": [
+          "Objects": [
             {
-              "Name": "",
-              "Hash": "QmPEKipMh6LsXzvtLxunSPP7ZsBM8y9xQ2SQQwBXy5UY6e",
-              "Size": 262158,
-              "Type": 2
-            },
-            {
-              "Name": "",
-              "Hash": "QmT8onRUfPgvkoPMdMvCHPYxh98iKCfFkBYM1ufYpnkHJn",
-              "Size": 181100,
-              "Type": 2
+              "Hash": "/ipfs/QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg",
+              "Links": [
+                {
+                  "Name": "",
+                  "Hash": "QmPEKipMh6LsXzvtLxunSPP7ZsBM8y9xQ2SQQwBXy5UY6e",
+                  "Size": 262158,
+                  "Type": 2
+                },
+                {
+                  "Name": "",
+                  "Hash": "QmT8onRUfPgvkoPMdMvCHPYxh98iKCfFkBYM1ufYpnkHJn",
+                  "Size": 181100,
+                  "Type": 2
+                }
+              ]
             }
           ]
         }
-      ]
-    }
-    ```
+        ```
 
 # Group mount
 Mounts IPFS to the filesystem (read-only)
@@ -903,7 +972,7 @@ IPNS is a PKI namespace, where names are the hashes of public keys, and
 the private key enables publishing new (signed) values. In publish, the
 default value of <name> is your own identity public key.
 
-## publish [GET /name/publish{?arg,&resolve,lifetime,ttl}]
+## publish [GET /name/publish{?arg}{&resolve,lifetime,ttl}]
 Publish an object to IPNS
 
 + Parameters
@@ -958,7 +1027,7 @@ output is the raw data of the object.
 
 + Response 200 (text/plain)
 
-## get [GET /object/get{?arg,&encoding}]
+## get [GET /object/get{?arg}{&encoding}]
 Get and serialize the DAG node named by <key>
 
 `ipfs object get` is a plumbing command for retreiving DAG nodes.
@@ -969,7 +1038,7 @@ flag. It outputs to stdout, and <key> is a base58 encoded multihash.
     + arg (string, required) - Key of the object to retrieve (in base58-encoded multihash format)
     + encoding (enum[string], optional) - Serializes the DAG node to the format specified
         + Default: `protobuf`
-        + Members:
+        + Members
             + `protobuf`
             + `json`
             + `xml`
@@ -1005,7 +1074,7 @@ node.
 
 + Response 200 (text/plain)
 
-## patch [GET /object/patch{?arg1,arg2,&name,ref}]
+## patch [GET /object/patch{?arg1,arg2}{&name,ref}]
 Create a new merkledag object based on an existing one
 
 `ipfs object patch <root> <cmd> <args>` is a plumbing command used to
@@ -1025,7 +1094,7 @@ build custom DAG objects. It adds and removes links from objects, creating a new
 
 + Response 200 (text/plain)
 
-## put [GET /object/put{?arg,&inputenc}]
+## put [GET /object/put{?arg}{&inputenc}]
 Stores input as a DAG object, outputs its key
 
 `ipfs object put` is a plumbing command for storing DAG nodes.
@@ -1037,7 +1106,7 @@ Data should be in the format specified by the --inputenc flag.
     + arg (string, required) - Data to be stored as a DAG object
     + inputenc (enum[string], optional) - Encoding type of input data
         + Default: `json`
-        + Members:
+        + Members
             + `protobuf`
             + `json`
 
@@ -1045,9 +1114,10 @@ Data should be in the format specified by the --inputenc flag.
 
     + Body
 
-    ```
-    added QmXg9Pp2ytZ14xgmQjYEiHjVjMFXzCVVEcRTWJBmLgR39V
-    ```
+        ```
+        added QmXg9Pp2ytZ14xgmQjYEiHjVjMFXzCVVEcRTWJBmLgR39V
+        ```
+
 ## stat [GET /object/stat{?arg}]
 Get stats for the DAG node named by <key>
 
@@ -1070,15 +1140,15 @@ Get stats for the DAG node named by <key>
 # Group pin
 Pin (and unpin) objects to local storage
 
-## add [GET /pin/add{?arg,&recursive}]
+## add [GET /pin/add{?arg}{&recursive}]
 Pins objects to local storage
 
 Retrieves the object named by <ipfs-path> and stores it locally
 on disk.
 
 + Parameters
-    + arg (string, required) - Path to object(s) to be pinned
-    + recursive (boolean, optional) - Recursively pin the object linked to by the specified object(s)
+    + arg (string, required) - Path to object or objects to be pinned
+    + recursive (boolean, optional) - Recursively pin the object linked to by the specified object or objects
 
 + Response 200 (application/json)
 
@@ -1118,14 +1188,14 @@ List objects pinned to local storage
                 - `Type`: "recursive" (string)
                 - `Coun`: 1 (number)
 
-## rm [GET /pin/rm{?arg,&recursive}]
+## rm [GET /pin/rm{?arg}{&recursive}]
 Removes the pinned object from local storage.
 
 By default, recursively. Use `-r=false` for direct pins.
 
 + Parameters
-    + arg (string, required) - Path to object(s) to be unpinned
-    + recursive (boolean, optional) - Recursively unpin the object linked to by the specified object(s)
+    + arg (string, required) - Path to object or objects to be unpinned
+    + recursive (boolean, optional) - Recursively unpin the object linked to by the specified object or objects
         Default: true
 
 + Response 200 (application/json)
@@ -1153,7 +1223,7 @@ By default, recursively. Use `-r=false` for direct pins.
 # Group ping
 Send echo request packets to IPFS hosts
 
-## ping [GET /ping{?arg,&count}]
+## ping [GET /ping{?arg}{&count}]
 A tool to test sending data to other nodes. It finds nodes
 via the routing system, send pings, wait for pongs, and print out round-
 trip latency information.
@@ -1191,7 +1261,7 @@ trip latency information.
 
 # Group refs
 
-## refs [GET /refs{?arg,&format,edges,unique,recursive}]
+## refs [GET /refs{?arg}{&format,edges,unique,recursive}]
 Lists links (references) from an object
 
 Retrieves the object named by <ipfs-path> and displays the link
@@ -1202,7 +1272,7 @@ hashes it contains, with the following format:
 Note: list all refs recursively with -r.
 
 + Parameters
-    + arg (string, required) - Path to the object(s) to list refs from
+    + arg (string, required) - Path to the object or objects to list refs from
     + format (string, optional) - Emit edges with given format. tokens: `<src> <dst> <linkname>`
     + edges (boolean, optional) - Emit edge format: `<from> -> <to>`
     + unique (boolean, optional) - Omit duplicate refs from output
@@ -1228,7 +1298,6 @@ Displays the hashes of all local objects.
         ```
         Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
         Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
-        Content-Type: text/plain
         Trailer: X-Stream-Error
         Transfer-Encoding: chunked, chunked
         X-Stream-Output: 1
@@ -1254,7 +1323,7 @@ order to reclaim hard disk space.
 # Group resolve
 Resolve the value of names to IPFS.
 
-## resolve [GET /resolve{?arg,&resolve}]
+## resolve [GET /resolve{?arg}{&resolve}]
 There are a number of mutable name protocols that can link among
 themselves and into IPNS.  For example IPNS references can (currently)
 point at IPFS object, and DNS links can point at other DNS links, IPNS
@@ -1516,23 +1585,21 @@ QmNjRVohhWBX31EoaAXkrj5mPF9vQNcTVvQgWHNwdxweCN
 A list of swarm addresses.
 
 ### Sample
-```
-"QmNRCEwFMgCcbjNk5bFud9oqjJduvjBNbkiM8SuxuLh3GS": [
-  "/ip4/127.0.0.1/tcp/4001",
-  "/ip4/172.17.42.1/tcp/4001",
-  "/ip4/192.168.2.3/tcp/4001",
-  "/ip6/::1/tcp/4001"
-],
-"QmNRV7kyUxYaQ4KQxFXPYm8EfuzJbtGn1wSFenjXL6LD8y": [
-  "/ip4/127.0.0.1/tcp/4001",
-  "/ip4/172.17.42.1/tcp/4001",
-  "/ip4/5.9.33.222/tcp/4001",
-  "/ip6/2a01:4f8:161:124a::1337:cafe/tcp/4001",
-  "/ip6/2a01:4f8:161:124a::2/tcp/4001",
-  "/ip6/::1/tcp/4001",
-  "/ip6/fcfc:762a:e12a:245d:8e5b:6a40:f65:acab/tcp/4001"
-]
-```
+- "QmNRCEwFMgCcbjNk5bFud9oqjJduvjBNbkiM8SuxuLh3GS": [
+      "/ip4/127.0.0.1/tcp/4001",
+      "/ip4/172.17.42.1/tcp/4001",
+      "/ip4/192.168.2.3/tcp/4001",
+      "/ip6/::1/tcp/4001"
+    ],
+    "QmNRV7kyUxYaQ4KQxFXPYm8EfuzJbtGn1wSFenjXL6LD8y": [
+      "/ip4/127.0.0.1/tcp/4001",
+      "/ip4/172.17.42.1/tcp/4001",
+      "/ip4/5.9.33.222/tcp/4001",
+      "/ip6/2a01:4f8:161:124a::1337:cafe/tcp/4001",
+      "/ip6/2a01:4f8:161:124a::2/tcp/4001",
+      "/ip6/::1/tcp/4001",
+      "/ip6/fcfc:762a:e12a:245d:8e5b:6a40:f65:acab/tcp/4001"
+    ]
 
 
 ## MultiAddr (string)
