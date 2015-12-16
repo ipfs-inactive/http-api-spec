@@ -382,7 +382,7 @@ included in the output of this command.
         + `Datastore` (object)
             - `GCPeriod`: "" (string)
             - `NoSync`: false (boolean)
-            - `Params`: null (nullable)
+            - `Params`: null (string, nullable)
             - `Path`: "" (string)
             - `StorageGCWatermark`: 90 (number)
             - `StorageMax`: "10GB" (string)
@@ -392,7 +392,7 @@ included in the output of this command.
                 - `Enabled`: true (boolean)
                 - `Interval`: 10 (number)
         + `Gateway` (object)
-            - `HTTPHeaders`: null (nullable)
+            - `HTTPHeaders`: null (string, nullable)
             - `RootRedirect`: "" (string)
             - `Writable`: false (boolean)
         + `Identity` (object)
@@ -414,7 +414,7 @@ included in the output of this command.
             + `Servers` (array)
                 - MultiAddr (string)
         + `Swarm` (object)
-            - `AddrFilters`: null (nullable)
+            - `AddrFilters`: null (string, nullable)
         + `Tour` (object)
             - `Last`: "" (string)
 
@@ -753,7 +753,7 @@ size is the IPFS link size.
                 - `Hash` (string) - The hash
                 - `Size` (number)
                 - `Type` (string)
-                - `Links` (nullable)
+                - `Links` (string, nullable)
 
     + Body
 
