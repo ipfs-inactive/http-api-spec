@@ -12,6 +12,10 @@ Note that directories are added recursively, to form the ipfs
 MerkleDAG. A smarter partial add with a staging area (like git)
 remains to be implemented.
 
+#### curl
+
+    curl -F "file=@test/" -r http://localhost:5001/api/v0/add
+
 + Parameters
     + arg (string, required) - The path to a file to be added to IPFS
     + recursive (boolean, optional) - Add directory paths recursively
@@ -127,6 +131,12 @@ Stores input as an IPFS block
 
 ipfs block put is a plumbing command for storing raw ipfs blocks.
 It reads from stdin, and <key> is a base58 encoded multihash.
+
+#### curl
+
+    curl -i -F "file=@test" http://localhost:5001/api/v0/block/put
+
+
 
 + Parameters
     + arg (string, required) - The path to the data to be stored as an IPFS block
