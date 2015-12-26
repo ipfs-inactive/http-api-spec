@@ -187,9 +187,7 @@ in the bootstrap list).
 
 + Response 400 (application/json)
 
-    + Attributes (object)
-        + Message: no bootstrap peers to add (string)
-        + Code: 1 (number)
+    + Attributes (Err)
 
     + Body
 
@@ -202,9 +200,7 @@ in the bootstrap list).
 
 + Response 500 (application/json)
 
-    + Attributes (object)
-        + Message: invalid multiaddr, must begin with / (string)
-        + Code: 0 (number)
+    + Attributes (Err)
 
     + Body
 
@@ -269,9 +265,7 @@ Outputs the list of peers that were removed.
 
 + Response 500 (application/json)
 
-    + Attributes (object)
-        + Message: invalid ipfs address (string)
-        + Code: 0 (number)
+    + Attributes (Err)
 
     + Body
 
@@ -342,9 +336,7 @@ Set the value of the 'datastore.path' key:
 
 + Response 500 (application/json)
 
-    + Attributes (object)
-        + `Message` (string)
-        + `Code`: 0 (number)
+    + Attributes (Err)
 
 ## edit [GET /config/edit]
 Opens the config file for editing in $EDITOR
@@ -781,9 +773,7 @@ size is the IPFS link size.
         ```
 + Response 500 (application/json)
 
-    + Attributes
-        + `Message` (string)
-        + `Code` (number)
+    + Attributes (Err)
 
 # Group get
 
@@ -821,9 +811,17 @@ may also specify the level of compression by specifying `-l=<1-9>`.
         ```
 
 + Response 500 (application/json)
-    + Attributes
-        + `Message`: "context canceled" (string)
-        + `Code`: 0 (number)
+
+    + Attributes (Err)
+
+    + Body
+
+        ```
+        {
+            "Message": "context canceled",
+            "Code": 0
+        }
+        ```
 
 # Group id
 
@@ -877,9 +875,16 @@ Show IPFS Node ID info
 
 + Response 400
 
-    + Attributes
-        + `Message`: "Invalid peer id" (string)
-        + `Code`: 1 (number)
+    + Attributes (Err)
+
+    + Body
+
+        ```
+        {
+            "Message": "Invalid peer id",
+            "Code": 1
+        }
+        ```
 
 # Group log
 `ipfs log` contains utility commands to affect or read the logging
@@ -1009,9 +1014,16 @@ Gets the value currently published at an IPNS name
 
 + Response 500
 
-    + Attributes
-        + `Message`: "could not resolve name" (string)
-        + `Code`: 0 (number)
+    + Attributes (Err)
+
+    + Body
+
+        ```
+        {
+            "Message": "could not resolve name",
+            "Code": 0
+        }
+        ```
 
 # Group object
 Interact with ipfs objects.
@@ -1223,9 +1235,16 @@ By default, recursively. Use `-r=false` for direct pins.
 
 + Response 500 (application/json)
 
-    + Attributes
-        - `Message`: "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u is not pinned" (string)
-        - `Code`: 0 (number)
+    + Attributes (Err)
+
+    + Body
+
+        ```
+        {
+            "Message": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u is not pinned",
+            "Code": 9
+        }
+        ```
 
 # Group ping
 Send echo request packets to IPFS hosts
@@ -1580,6 +1599,13 @@ Returns the current version of ipfs and exits.
         - Commit: b036b23a233a64faa6a456522b0f45763be70e64 (string)
 
 # Data Structures
+
+## Err (object)
++ Message (string)
++ Code (enum[number])
+    + Members
+        + 0
+        + 1
 
 ## Multihash (string)
 An hash as defined [here](https://github.com/jbenet/multihash)
