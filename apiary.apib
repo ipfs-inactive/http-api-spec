@@ -130,7 +130,6 @@ Store data as a raw ipfs block.
 Stores input as an IPFS block
 
 ipfs block put is a plumbing command for storing raw ipfs blocks.
-It reads from stdin, and <key> is a base58 encoded multihash.
 
 #### curl
 
@@ -141,12 +140,38 @@ It reads from stdin, and <key> is a base58 encoded multihash.
 + Parameters
     + arg (string, required) - The path to the data to be stored as an IPFS block
 
-+ Response 200 (text/plain)
++ Response 200 (application/json)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Sat, 26 Dec 2015 02:13:34 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes
+        + Key (Multihash)
+        + Size (number)
 
     + Body
 
         ```
-        QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n
+        {
+            "Key":"QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n",
+            "Size":0
+        }
+        ```
+
++ Response 400 (text/plain)
+
+    + Body
+
+        ```
+        File argument 'data' is required
         ```
 
 + Response 403 (text/plain)
