@@ -95,10 +95,6 @@ Show blocks currently on the wantlist
 # Group block
 Manipulate raw IPFS blocks
 
-`ipfs block` is a plumbing command used to manipulate raw ipfs blocks.
-Reads from stdin or writes to stdout, and <key> is a base58 encoded
-multihash.
-
 ## stat [GET /block/stat?{arg}]
 Retrieve information on a raw ipfs block.
 
@@ -1034,13 +1030,6 @@ directly.
 ## data [GET /object/data{?arg}]
 Outputs the raw bytes in an IPFS object
 
-`ipfs object data` is a plumbing command for retreiving the raw bytes stored in
-a DAG node. It outputs to stdout, and <key> is a base58 encoded
-multihash.
-
-Note that the "--encoding" option does not affect the output, since the
-output is the raw data of the object.
-
 + Parameters
     + arg (string, optional) - Key of the object to retrieve, in base58-encoded multihash format
 
@@ -1048,10 +1037,6 @@ output is the raw data of the object.
 
 ## get [GET /object/get{?arg}{&encoding}]
 Get and serialize the DAG node named by <key>
-
-`ipfs object get` is a plumbing command for retreiving DAG nodes.
-It serializes the DAG node to the format specified by the "--encoding"
-flag. It outputs to stdout, and <key> is a base58 encoded multihash.
 
 + Parameters
     + arg (string, required) - Key of the object to retrieve (in base58-encoded multihash format)
@@ -1067,10 +1052,6 @@ flag. It outputs to stdout, and <key> is a base58 encoded multihash.
 ## links [GET /object/links{?arg}]
 Outputs the links pointed to by the specified object
 
-`ipfs object links` is a plumbing command for retreiving the links from
-a DAG node. It outputs to stdout, and <key> is a base58 encoded
-multihash.
-
 + Parameters
     + arg (string, required) - Key of the object to retrieve, in base58-encoded multihash format
 
@@ -1079,16 +1060,14 @@ multihash.
 ## new [GET /object/new{?arg}]
 Creates a new object from an ipfs template
 
-`ipfs object new` is a plumbing command for creating new DAG nodes.
 By default it creates and returns a new empty merkledag node, but
 you may pass an optional template argument to create a preformatted
 node.
 
 + Parameters
-    + arg (string, required) - optional template to use
-
-        Available templates:
-            * unixfs-dir
+    + arg (enum[string], optional) - template used to create a prefomatted node
+        + Members
+            - unixfs-dir
 
 
 + Response 200 (text/plain)
@@ -1096,8 +1075,7 @@ node.
 ## patch [GET /object/patch{?arg1,arg2}{&name,ref}]
 Create a new merkledag object based on an existing one
 
-`ipfs object patch <root> <cmd> <args>` is a plumbing command used to
-build custom DAG objects. It adds and removes links from objects, creating a new object as a result. This is the merkle-dag version of modifying an object. It can also set the data inside a node with `set-data` and append to that data as well with `append-data`.
+`patch` adds and removes links from objects, creating a new object as a result. This is the merkle-dag version of modifying an object. It can also set the data inside a node with `set-data` and append to that data as well with `append-data`.
 
 + Parameters
     + arg1 (string, required) - the hash of the node to modify
@@ -1105,8 +1083,8 @@ build custom DAG objects. It adds and removes links from objects, creating a new
         + Members:
             + `add-link` - with `<name> <ref>`, adds a link to a node
             + `rm-link` - with `<name>`, removes a link from a node
-            + `set-data` -  sets a nodes data from stdin
-            + `append-data` - appends to a nodes data from stdin
+            + `set-data` -  sets a node's data
+            + `append-data` - appends to a node's data
     + name (string, optional) - used with `<add-link>` and `<rm-link>`
     + ref (string, optional) - used with `<add-link> <name>`
     + create (boolean, optional) - create intermediate directories on `<add-link>`
@@ -1115,11 +1093,6 @@ build custom DAG objects. It adds and removes links from objects, creating a new
 
 ## put [GET /object/put{?arg}{&inputenc}]
 Stores input as a DAG object, outputs its key
-
-`ipfs object put` is a plumbing command for storing DAG nodes.
-It reads from stdin, and the output is a base58 encoded multihash.
-
-Data should be in the format specified by the --inputenc flag.
 
 + Parameters
     + arg (string, required) - Data to be stored as a DAG object
@@ -1209,8 +1182,6 @@ List objects pinned to local storage
 
 ## rm [GET /pin/rm{?arg}{&recursive}]
 Removes the pinned object from local storage.
-
-By default, recursively. Use `-r=false` for direct pins.
 
 + Parameters
     + arg (string, required) - Path to object or objects to be unpinned
