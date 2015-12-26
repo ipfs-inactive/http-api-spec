@@ -312,19 +312,10 @@ ipfs config controls configuration variables. It works
 much like `git config`. The configuration values are stored in a config
 file inside your IPFS repository.
 
-**Examples:**
-
-Get the value of the 'datastore.path' key:
-
-    `ipfs config datastore.path`
-
-Set the value of the 'datastore.path' key:
-
-    `ipfs config datastore.path ~/.ipfs/datastore`
 
 + Parameters
-    + arg1: "Addresses.API" (string, required) - The key of the config entry
-    + arg2 (string, required) - The value to set the config entry to
+    + arg1: "Datastore.Path" (string, required) - The key of the config entry
+    + arg2: "~/.ipfs/datastore" (string, required) - The value to set the config entry to
     + bool (boolean, optional) - Set a boolean
     + json (boolean, optional) - Parse stringified JSON
 
@@ -425,59 +416,6 @@ over the network. Most applications that use IPFS will do so by
 communicating with a daemon over the HTTP API. While the daemon is
 running, calls to `ipfs` commands will be sent over the network to
 the daemon.
-
-The daemon will start listening on ports on the network, which are
-documented in (and can be modified through) `ipfs config Addresses`.
-For example, to change the `Gateway` port:
-
-    ipfs config Addresses.Gateway /ip4/127.0.0.1/tcp/8082
-
-The API address can be changed the same way:
-
-   ipfs config Addresses.API /ip4/127.0.0.1/tcp/5002
-
-Make sure to restart the daemon after changing addresses.
-
-By default, the gateway is only accessible locally. To expose it to
-other computers in the network, use 0.0.0.0 as the ip address:
-
-   ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/8080
-
-Be careful if you expose the API. It is a security risk, as anyone could
-control your node remotely. If you need to control the node remotely,
-make sure to protect the port as you would other services or database
-(firewall, authenticated proxy, etc).
-
-HTTP Headers
-
-IPFS supports passing arbitrary headers to the API and Gateway. You can
-do this by setting headers on the API.HTTPHeaders and Gateway.HTTPHeaders
-keys:
-
-  ipfs config --json API.HTTPHeaders.X-Special-Header '["so special :)"]'
-  ipfs config --json Gateway.HTTPHeaders.X-Special-Header '["so special :)"]'
-
-Note that the value of the keys is an _array_ of strings. This is because
-headers can have more than one value, and it is convenient to pass through
-to other libraries.
-
-CORS Headers (for API)
-
-You can setup CORS headers the same way:
-
-  ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
-  ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
-  ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials '["true"]'
-
-
-**Deprecation Notice**
-
-Previously, IPFS used an environment variable as seen below:
-
-   export API_ORIGIN="http://localhost:8888/"
-
-This is deprecated. It is still honored in this version, but will be removed in a
-future version, along with this notice. Please move to setting the HTTP Headers.
 
 + Parameters
     + init (boolean, optional) - Initialize IPFS with default settings if not already initialized
@@ -1608,7 +1546,7 @@ Returns the current version of ipfs and exits.
         + 1
 
 ## Multihash (string)
-An hash as defined [here](https://github.com/jbenet/multihash)
+An hash as defined [here](https://github.com/jbenet/multihash).
 
 ### Sample
 QmNjRVohhWBX31EoaAXkrj5mPF9vQNcTVvQgWHNwdxweCN
