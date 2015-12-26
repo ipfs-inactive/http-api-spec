@@ -1261,12 +1261,8 @@ trip latency information.
 ## refs [GET /refs{?arg}{&format,edges,unique,recursive}]
 Lists links (references) from an object
 
-Retrieves the object named by <ipfs-path> and displays the link
-hashes it contains, with the following format:
-
-  <link base58 hash>
-
-Note: list all refs recursively with -r.
+#### curl
+    curl -i http://localhost:5001/api/v0/refs?arg=/ipfs/QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg
 
 + Parameters
     + arg (string, required) - Path to the object or objects to list refs from
@@ -1275,12 +1271,38 @@ Note: list all refs recursively with -r.
     + unique (boolean, optional) - Omit duplicate refs from output
     + recursive (boolean, optional) - Recursively list links of child nodes
 
-+ Response 200 (text/plain)
++ Response 200 (application/json)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Sat, 26 Dec 2015 02:46:43 GMT
+        ```
 
     + Body
 
         ```
-        Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u
+        {
+            "Ref":"QmPEKipMh6LsXzvtLxunSPP7ZsBM8y9xQ2SQQwBXy5UY6e",
+            "Err":""
+        }
+        {
+            "Ref":"QmT8onRUfPgvkoPMdMvCHPYxh98iKCfFkBYM1ufYpnkHJn",
+            "Err":""
+        }
+        ```
+
++ Response 400 (text/plain)
+
+    + Body
+
+        ```
+        Argument 'ipfs-path' is required
         ```
 
 ## local [GET /refs/local]
