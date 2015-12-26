@@ -378,11 +378,38 @@ Replaces the config with <file>
 Make sure to back up the config file first if neccessary, this operation
 can't be undone.
 
+#### curl
+
+    curl -i -F "file=@test" http://localhost:5001/api/v0/config/replace
+
 + Parameters
 
     + arg (string, required) - The file to use as the new config
 
-+ Response 200 ()
++ Response 200 (application/json)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Sat, 26 Dec 2015 02:26:19 GMT
+        ```
+
++ Response 500 ()
+
+    + Attributes (Err)
+
+    + Body
+
+        ```
+        {
+            "Message":"Failed to decode file as config",
+            "Code":0
+        }
+        ```
 
 ## show [GET /config/show]
 Outputs the content of the config file
