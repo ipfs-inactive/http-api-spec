@@ -4,10 +4,9 @@ FORMAT: 1A
 
 The API for interacting with IPFS nodes.
 
-# Group add [GET /add{?arg}{&recursive,quiet,silent,progress,trickle,only%2Dhash,wrap%2Dwith%2Ddirectory,hidden,chunker,pin}]
-Add an object to ipfs.
+# Group add [POST /add{?arg}{&recursive,quiet,silent,progress,trickle,only%2Dhash,wrap%2Dwith%2Ddirectory,hidden,chunker,pin}]
+Add an object to IPFS.
 
-Adds contents of <path> to ipfs. Use -r to add directories.
 Note that directories are added recursively, to form the ipfs
 MerkleDAG. A smarter partial add with a staging area (like git)
 remains to be implemented.
@@ -29,7 +28,35 @@ remains to be implemented.
     + chunker (boolean, optional) - chunking algorithm to use
     + pin (boolean, optional) - Pin this object when adding.  Default true
 
-+ Response 200 (text/plain)
++ Request Single File (application/json)
+
+    #### Curl
+
+        curl -F "file=test" http://localhost:5001/api/v0/add
+
+    + Body
+
+        ```
+        curl -F "file=test" http://localhost:5001/api/v0/add
+        ```
+
++ Response 200 (application/json)
+
+    + Headers
+
+        ```
+        HTTP/1.1 100 Continue
+
+        HTTP/1.1 200 OK
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Fri, 08 Jan 2016 14:48:18 GMT
+        Transfer-Encoding: chunked
+        ```
 
     + Attributes
         + Name (string)
@@ -44,7 +71,34 @@ remains to be implemented.
         }
         ```
 
-+ Response 400 (text/plain)
++ Request Recursive files (text/plain)
+
+    I am currently unable to get this working.
+
+    #### Curl
+
+        curl -F "file=@test/" -x POST -r http://localhost:5001/api/v0/add
+
+    + Headers
+
+
++ Request Empty Arguments (text/plain)
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/add`
+
+    + Body
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 08 Jan 2016 15:22:01 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
 
     + Body
 
