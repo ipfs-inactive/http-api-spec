@@ -395,12 +395,318 @@ MerkleDAG.
         ```
 
 # Group bitswap
+A set of commands to manipulate the bitswap agent
 
-## stat
+## stat [GET /bitswap/stat]
+Show some diagnostic information on the bitswap agent
 
-## unwant
++ Request
 
-## wantlist
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/bitswap/stat
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/bitswap/stat
+        ```
+
++ Response 200 (application/json)
+
+    + Attributes (object)
+        + ProvideBufLen: 0 (number)
+        + Wantlist (array, nullable)
+        + Peers (array)
+            - QmNjRVohhWBX31EoaAXkrj5mPF9vQNcTVvQgWHNwdxweCN (Multihash)
+        + BlocksReceived: 0 (number)
+        + DupBlksReceived: 0 (number)
+        + DupDataReceived: 0 (number)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 21 Jan 2016 17:09:00 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Body
+
+        ```
+        {
+          "ProvideBufLen": 0,
+          "Wantlist": null,
+          "Peers": [
+            "QmSoLPppuBtQSGwKDZT2M73ULpjvfd3aZ6ha4oFGL1KrGM",
+            "QmSoLnSGccFuZQJzRadHn95W2CrSFmZuTdDWP8HXaHca9z",
+            "QmSoLueR4xBeUbY9WZ9xGUUxunbKWcrNFTDAadQJmocnWm"
+          ],
+          "BlocksReceived": 0,
+          "DupBlksReceived": 0,
+          "DupDataReceived": 0
+        }
+        ```
+
+## unwant [GET /bitswap/unwant{?arg}]
+Remove a given block from your wantlist
+
++ Parameters
+    + arg (Multihash, required) - key to remove from your wantlist
+
++ Request No Arguments
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/bitswap/unwant
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/bitswap/unwant
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 29 Jan 2016 20:25:10 GMT
+        Content-Length: 26
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Body
+
+        ```
+        Argument 'key' is required
+        ```
+
++ Request Empty Argument
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/bitswap/unwant?arg=
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/bitswap/unwant?arg=
+        ```
+
++ Response 500 (application/json)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 29 Jan 2016 20:40:32 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: 'incorrectly formatted key: '
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "incorrectly formatted key: ",
+          "Code": 0
+        }
+        ```
+
++ Request With Key
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/bitswap/unwant?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/bitswap/unwant?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ
+        ```
+
++ Response 200 (application/json)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 29 Jan 2016 20:35:58 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Body
+
+        ```
+        ```
+
+## wantlist [GET /bitswap/wantlist{?peer}]
+Show blocks currently on the wantlist.
+
++ Parameters
+    + peer (Multihash, optional)
+
+        Specify which peer to show wantlist for. Default: self.
+
++ Request No Arguments
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/bitswap/wantlist
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/bitswap/wantlist
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 29 Jan 2016 20:58:35 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes
+        + Keys: null (array) The keys
+
+    + Body
+
+        ```
+        {
+          "Keys": null
+        }
+        ```
+
++ Request Bad Argument
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/bitswap/wantlist?peer=cat.jpg
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/bitswap/wantlist?peer=cat.jpg
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 29 Jan 2016 21:09:22 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: 'multihash too short. must be \u003e 3 bytes'
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "multihash too short. must be \u003e 3 bytes",
+          "Code": 0
+        }
+        ```
+
++ Request With Peer
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/bitswap/wantlist?peer=QmSoLPppuBtQSGwKDZT2M73ULpjvfd3aZ6ha4oFGL1KrGM
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/bitswap/wantlist?peer=QmSoLPppuBtQSGwKDZT2M73ULpjvfd3aZ6ha4oFGL1KrGM
+        ```
+
+
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 29 Jan 2016 21:02:09 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + Keys (array) - An array of multihashes
+
+    + Body
+
+        ```
+        {
+          "Keys": [
+            "QmeQh6xVvGEKEkeKVEAUg6svnLogNxNBMHnEeEyvw8yfsd",
+            "QmZe4oTtfmQKmzwVob8N5MUSw1zcwW44J46sV3vjTa29TV",
+            "QmS8wN8cBMdASH7cEpCbVGXiK5kvD1Rz7cYgShs18mFCbh",
+            "QmQeKw6b6fJ48ett5JMsVDmQTqEimwtSEWAtnGAvAEdb5W",
+            "QmSuX7yWDSZM2rns2PtSz1r6n5C6XoU1EvE5DaUsnpeMCm",
+            "QmRUctQmvs3M8EUUG8G1srJm4PLqD6x9719zm1nAPYRKv8",
+            "QmX14SaE4U7dTavWDVXviBToXji65haa8KHHYAnDJ8x7Ci",
+            "QmNrE6csRAHZUYA1mPyszpx9sYEzgSoi2SpBrPhZDRAhv1",
+            "QmXKzXvbmLZ7v1Ns8oFBxNujHoRBDCgtYVyiF9YEyeo5dC",
+            "QmaY7qHWpdQJ9QcTmrrgHL4ykAABULrZkvSUCCLTb79iS5",
+            "QmYbmoDHDNgqoDbLC4vMyoMH5dYQdrxL1wh63x9rhSC6Zf",
+            "QmcXMzFwmhDciqAfFemVpaFyEs3Kz7TABs7ARMtt1qRpxj",
+            "QmShCGUPPASXFTBJGUAbyfkUy3ntQxuy4FUSupV1UjRqk6",
+            "QmQwR1UZTxDz2T8qdZBCC5qTvLZnnPrWp2LvtdkKUPhsyh",
+            "QmPFVbtH6Dqf35Rc4UFkTcrFkPrTym7KS1RqVcA6gv8uMq",
+            "QmWBFyiMbJxSsmaudS7rQnt6tkDFrbDYjkVpsjLUT8bwqS",
+            "QmXth7PrfapKZmC3GE7kucQWCBgXqyYHeDRLibmBaCK5wq",
+            "QmWSHWupzYH2ZrC8teiYQATUC14go7Gx9k7GYXrdwuLnFr",
+            "Qmamu7JPzTFnyUcpo2qSuEpsFkYEnewCcU2PixQ3v7QCr1",
+            "QmbZdk1SKmTg2ivwyqoHjRMUi4WTkF9sZfDx6hyjJGMU5a",
+            "QmbL6gjKM1LPBEgqAoDUvKAHdp1zAAkeD78UZS4BSLwJCY",
+            "QmSFZZEu5SF4Yes1YLvuQyU5LK1in2knq5dma9Dd2ezjy2",
+            "QmRpiFpFuzaQvuSbukUzZUB6BjzFKCMYK4saaJvsMSo1Ab",
+            "QmPBrnRNZvidUzWT4NkvhGfJwCzfNk1WFvBF4PYh1rW9de",
+            "QmP4FJ4jyk9TDcuUzMbtCThSraAj3FKC9q6LLMDfPTtnqF",
+            "QmR1kZwr4zrrkVMjtNrZSZNAP7btbNNhUCDzFn7vjytQWU",
+            "QmVRvtjmWLpMphqAj9k1bySbZTUN2C9sZ64JUrh9wanLj5",
+            "QmbeQDMbw8cdvyBZ9BsKTWfe2iXUbSXBc5FY9EqFfFgY2Q",
+            "QmZsTuTBFzveqUWyE3K7LPrLeTEaquyNU7YQbYfqQfJNLp",
+            "QmTBKAHg6VFnNkn2bBvi4Uk9CpTDpxEKUm5BsbjXcuwARw",
+            "Qmd38Q7j9pczrWZ9M1jZEoX4xx6E8E41w2dEbud3KYv2YX"
+          ]
+        }
+        ```
 
 # Group block
 
