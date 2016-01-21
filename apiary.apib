@@ -4,7 +4,397 @@ FORMAT: 1A
 
 The API for interacting with IPFS nodes.
 
-# Group add
+The HTTP API is currently accepting all methods, so GET will work just as well as POST for any group. Because of this, the methods shown below are the specifications that should be adhered to, although any will work. For more, see this discussion: https://github.com/ipfs/go-ipfs/issues/2165.
+
+# Group add [POST /add{?arg}{&r,p,t,n,w,H,s}]
+
+Add a file to IPFS.
+
+Note that directories are added recursively, to form the ipfs
+MerkleDAG.
+
+#### curl
+
+    curl -F "file=@test" http://localhost:5001/api/v0/add
+
++ Parameters
+    + arg (string, required) - The path to a file to be added to IPFS.
+    + r (boolean, optional) - Recursive. Add directory paths recursively.
+    + p (boolean, optional) - Progress. Stream progress data.
+    + t (boolean, optional) - Trickle. Use trickle-dag format for dag generation.
+    + n (boolean, optional) - Only-hash. Only chunk and hash - do not write to disk.
+    + w (boolean, optional) - Wrap-with-directory. Wrap files with a directory object.
+    + H (boolean, optional) - Hidden. Include files that are hidden.
+    + s (boolean, optional) - Chunker. Chunking algorithm to use.
+
++ Request Single File (multipart/form-data)
+
+    #### Curl
+
+        curl -F "file=@test" http://localhost:5001/api/v0/add
+
+    + Body
+
+        ```
+        curl -F "file=@test" http://localhost:5001/api/v0/add
+        ```
+
++ Response 200 (application/json)
+
+    Note that the response sends a 100 continuation code before a 200 code.
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Fri, 08 Jan 2016 14:48:18 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes
+        + Name (string)
+        + Hash (Multihash)
+
+    + Body
+
+        ```
+        {
+            "Name":"test",
+            "Hash":"QmePw8gVcBMb8x6kAep6aMBAX23hCSk6iZW3i9VKkiFhu1"
+        }
+        ```
+
++ Request Progress (multipart/form-data)
+
+    #### Curl
+
+        curl -F "file=@test" http://localhost:5001/api/v0/add?p
+
+    + Body
+
+        ```
+        curl -F "file=@test" http://localhost:5001/api/v0/add?p
+        ```
+
++ Response 200 (application/json)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Thu, 21 Jan 2016 14:00:51 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        + Object (object)
+            - Name: test/test (string)
+            - Bytes: 12 (number)
+        + Object (object)
+            - Name: test/test (string)
+            - Hash (Multihash)
+
+    + Body
+
+        ```
+        {
+          "Name": "test",
+          "Bytes": 12
+        }
+        {
+          "Name": "test",
+          "Hash": "QmePw8gVcBMb8x6kAep6aMBAX23hCSk6iZW3i9VKkiFhu1"
+        }
+        ```
+
++ Request Trickle (multipart/form-data)
+
+    #### Curl
+
+        curl -F "file=@test" http://localhost:5001/api/v0/add?t
+
+    + Body
+
+        ```
+        curl -F "file=@test" http://localhost:5001/api/v0/add?t
+        ```
+
++ Response 200 (application/json)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Thu, 21 Jan 2016 14:00:51 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        + Object (object)
+            - Name: test/test (string)
+            - Hash (Multihash)
+
+    + Body
+
+        ```
+        {
+          "Name": "test",
+          "Hash": "QmePw8gVcBMb8x6kAep6aMBAX23hCSk6iZW3i9VKkiFhu1"
+        }
+        ```
+
++ Request Only Hash (multipart/form-data)
+
+    #### Curl
+
+        curl -F "file=@test" http://localhost:5001/api/v0/add?n
+
+    + Body
+
+        ```
+        curl -F "file=@test" http://localhost:5001/api/v0/add?n
+        ```
+
++ Response 200 (application/json)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Thu, 21 Jan 2016 14:00:51 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        + Object (object)
+            - Name: test/test (string)
+            - Hash (Multihash)
+
+    + Body
+
+        ```
+        {
+          "Name": "test",
+          "Bytes": 12
+        }
+        {
+          "Name": "test",
+          "Hash": "QmePw8gVcBMb8x6kAep6aMBAX23hCSk6iZW3i9VKkiFhu1"
+        }
+        ```
+
++ Request Wrap with Directory (multipart/form-data)
+
+    #### Curl
+
+        curl -F "file=@test" http://localhost:5001/api/v0/add?w
+
+    + Body
+
+        ```
+        curl -F "file=@test" http://localhost:5001/api/v0/add?w
+        ```
+
++ Response 200 (application/json)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Thu, 21 Jan 2016 14:00:51 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        + Object (object)
+            - Name: test/test (string)
+            - Hash (Multihash)
+
+    + Body
+
+        ```
+        {
+          "Name": "test",
+          "Hash": "QmePw8gVcBMb8x6kAep6aMBAX23hCSk6iZW3i9VKkiFhu1"
+        }
+        {
+          "Name": "",
+          "Hash": "QmV7sQezAjKh9pokjUPLL7ebuMF5t56UmfhK4cJncCcrNZ"
+        }
+        ```
+
++ Request Hidden (multipart/form-data)
+
+    #### Curl
+
+        curl -F "file=@test" http://localhost:5001/api/v0/add?H
+
+    + Body
+
+        ```
+        curl -F "file=@test" http://localhost:5001/api/v0/add?H
+        ```
+
++ Response 200 (application/json)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Thu, 21 Jan 2016 14:00:51 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        + Object (object)
+            - Name: test/test (string)
+            - Hash (Multihash)
+
+    + Body
+
+        ```
+        {
+          "Name": "test",
+          "Hash": "QmePw8gVcBMb8x6kAep6aMBAX23hCSk6iZW3i9VKkiFhu1"
+        }
+        ```
+
++ Request Chunker (multipart/form-data)
+
+    #### Curl
+
+        curl -F "file=@test" http://localhost:5001/api/v0/add?s
+
+    + Body
+
+        ```
+        curl -F "file=@test" http://localhost:5001/api/v0/add?s
+        ```
+
++ Response 200 (application/json)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Thu, 21 Jan 2016 14:00:51 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        + Object (object)
+            - Name: test/test (string)
+            - Hash (Multihash)
+
+    + Body
+
+        ```
+        {
+          "Name": "test",
+          "Hash": "QmePw8gVcBMb8x6kAep6aMBAX23hCSk6iZW3i9VKkiFhu1"
+        }
+        ```
+
++ Request Recursive (multipart/form-data)
+
++ Response 200 (application/json)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Thu, 21 Jan 2016 13:09:00 GMT
+        Connection: close
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        + Object (object)
+            - Name: test/test (string)
+            - Bytes: 12 (number)
+        + Object (object)
+            - Name: test/test (string)
+            - Hash (Multihash)
+
+    + Body
+
+        ```
+        {
+          "Name": "test/test",
+          "Bytes": 12
+        }
+        {
+          "Name": "test/test",
+          "Hash": "QmePw8gVcBMb8x6kAep6aMBAX23hCSk6iZW3i9VKkiFhu1"
+        }
+        {
+          "Name": "test",
+          "Hash": "QmV7sQezAjKh9pokjUPLL7ebuMF5t56UmfhK4cJncCcrNZ"
+        }
+        ```
+
+
+
++ Request Empty Arguments
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/add
+
+    + Body
+
+      ```
+      curl -i http://localhost:5001/api/v0/add
+      ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 08 Jan 2016 15:22:01 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Body
+
+        ```
+        File argument `path` is required
+        ```
 
 # Group bitswap
 
@@ -167,6 +557,27 @@ The API for interacting with IPFS nodes.
 # Group version
 
 # Data Structures
+
+## ndjson (object)
+
+Newline delimited JSON
+
+### Sample
+
+  ```
+  {
+    "Name": "test/test",
+    "Bytes": 12
+  }
+  {
+    "Name": "test/test",
+    "Hash": "QmePw8gVcBMb8x6kAep6aMBAX23hCSk6iZW3i9VKkiFhu1"
+  }
+  {
+    "Name": "test",
+    "Hash": "QmV7sQezAjKh9pokjUPLL7ebuMF5t56UmfhK4cJncCcrNZ"
+  }
+  ```
 
 ## Multihash (string)
 An hash as defined [here](https://github.com/jbenet/multihash)
