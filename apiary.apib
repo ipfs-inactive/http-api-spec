@@ -406,11 +406,402 @@ MerkleDAG.
 
 # Group block
 
-## get
+Manipulate raw IPFS blocks.
 
-## put
+## block [GET /block]
 
-## stat
++ Request Without Subcommands
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/block
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/block
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 29 Jan 2016 21:23:38 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "This command can't be called directly. Try one of its subcommands."
+        - Code: 1
+
+    + Body
+
+        ```
+        {
+          "Message": "This command can't be called directly. Try one of its subcommands.",
+          "Code": 1
+        }
+        ```
+
+## get [POST /block/get{?arg}]
+
+Store data as a raw ipfs block.
+
++ Parameters
+    + arg (Multihash, required) - hash of the block to be fetched
+
++ Request No Arguments
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/block/get
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/block/get
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 29 Jan 2016 21:46:01 GMT
+        Content-Length: 26
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'key' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For instance:
+
+        curl -i http://localhost:5001/api/v0/block/get?arg=kitten
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/block/get?arg=
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/block/get?arg=
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 29 Jan 2016 21:46:59 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "Not a valid hash"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "Not a valid hash",
+          "Code": 0
+        }
+        ```
+
++ Request With Valid Argument
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/block/get?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/block/get?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: text/plain
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 04 Feb 2016 22:51:40 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        hello world
+        ```
+
+## put [POST /block/put{?arg}]
+
+Stores input as an IPFS block
+
+'ipfs block put' is a plumbing command for storing raw IPFS blocks.
+
++ Parameters
+    + arg (string, required) - The data to be stored as an IPFS block.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/block/put
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/block/put
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 29 Jan 2016 21:48:34 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        File argument 'data' is required
+        ```
+
++ Request Invalid Argument (multipart/form-data)
+
+    The response is the same if there is no data provided. For example:
+
+        curl -i -F "data=" http://localhost:5001/api/v0/block/put
+
+    #### curl
+
+        curl -i -F "data=invalid" http://localhost:5001/api/v0/block/put
+
+    + Body
+
+        ```
+        curl -i -F "data=invalid" http://localhost:5001/api/v0/block/put
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 29 Jan 2016 21:59:43 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "mime: no media type"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "mime: no media type",
+          "Code": 0
+        }
+        ```
+
++ Request Valid Argument (multipart/form-data)
+
+    In the example provided, the 'test' file has the following contents:
+
+        hello world
+
+    #### curl
+
+        curl -i -F "data=@test" http://localhost:5001/api/v0/block/put
+
+    + Body
+
+        ```
+        curl -i -F "data=@test" http://localhost:5001/api/v0/block/put
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 29 Jan 2016 21:56:18 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Key: "QmZjTnYw2TFhn9Nn7tjmPSoTBoY7YRkwPzwSrSbabY24Kp" (Multihash)
+        - Size: 12 (number)
+
+    + Body
+
+        ```
+        {
+          "Key": "QmZjTnYw2TFhn9Nn7tjmPSoTBoY7YRkwPzwSrSbabY24Kp",
+          "Size": 12
+        }
+        ```
+
+## stat [POST /block/stat?{arg}]
+Retrieve information on a raw ipfs block.
+
++ Parameters
+    + arg (Multihash, required) - Hash of the block to retrieve stats on.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/block/stat
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/block/stat
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 29 Jan 2016 21:25:34 GMT
+        Content-Length: 26
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Body
+
+        ```
+        Argument 'key' is required
+        ```
+
++ Request Invalid Argument
+
+    The response is the same if there is no argument provided. For example:
+
+        curl -i -F "data=" http://localhost:5001/api/v0/block/stat/arg=
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/block/stat/arg=kitten
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/block/stat/arg=kitten
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 29 Jan 2016 21:27:22 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "Not a valid hash"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "Not a valid hash",
+          "Code": 0
+        }
+        ```
+
++ Request Valid Argument
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/block/stat?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/block/stat?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 29 Jan 2016 21:40:38 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + Key (Multihash)
+        + Size (number) - the size of the block in bytes
+
+    + Body
+
+        ```
+        {
+          "Key": "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ",
+          "Size": 55
+        }
+        ```
 
 # Group bootstrap
 
