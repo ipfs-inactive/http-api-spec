@@ -1622,6 +1622,45 @@ file inside your IPFS repository.
         }
         ```
 
++ Request As SubCommand
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/config/API.HTTPHeaders
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/config/API.HTTPHeaders
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Tue, 02 Feb 2016 16:59:11 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + `Key`: "Datastore" (string)
+        + `Value`: null (object, nullable) - The config entry
+
+    + Body
+
+        ```
+        {
+          "Key": "API.HTTPHeaders",
+          "Value": null
+        }
+        ```
+
 + Request With POST
 
     #### curl
