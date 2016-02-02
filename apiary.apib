@@ -990,6 +990,199 @@ Outputs the list of peers that were removed.
 
 # Group id
 
+Prints out information about the specified peer,
+if no peer is specified, prints out local peers info.
+
+'ipfs id' supports the format option for output with the following keys:
+<id> : the peers id
+<aver>: agent version
+<pver>: protocol version
+<pubkey>: public key
+<addrs>: addresses (newline delimited)
+
+## id [GET /id{?arg}{&format}]
+Show IPFS Node ID info
+
++ Parameters
+
+    + arg (string, required) - peerID of node to look up
+    + format (string, optional) - optional output format
+
++ Request Without Arguments
+
+    This will default to showing your ID.
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/id
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/id
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Tue, 02 Feb 2016 22:10:37 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + ID (Multihash)
+        + PublicKey (string)
+        + Addresses (SwarmAddrs)
+        + AgentVersion (string)
+        + ProtocolVersion (string)
+
+    + Body
+
+        ```
+        {
+          "ID": "Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH",
+          "PublicKey": "CAASpgIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDsXD74cPfcI0dJJzg9N3BApJvlTDmW2GsGfvjmq7Bpm++0JI3LvC3cASPqLb8aiJlynqqzgNkX/xZtAdn0ua63VUWZvamuC2HBEke2IGUF4mkgDdSTaKYMl8NlaSNZDUUthcljZ2aqkdXP+W217U/NjINksYll5IBBPGJqH5Wamb5uNXQM9LQOZSW/qP+T+NoaQGfid21oorHyeSHcugxNdvgPV0RXC6IfZS/1NkupNz2mboXdppKRs3hDKVrtz6/tYGi8kBDvx8susTxw4x8YbRHVnpjh9fIg++PLQUm5xaxQu89YSLsx23Wz3Twq2jg6gi2Tl8GZtgBaZwD9KWLpAgMBAAE=",
+          "Addresses": [
+            "/ip4/127.0.0.1/tcp/4001/ipfs/Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH",
+            "/ip4/10.0.0.42/tcp/4001/ipfs/Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH",
+            "/ip6/::1/tcp/4001/ipfs/Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH",
+            "/ip6/2601:184:4400:78fc:62f8:1dff:fed2:1970/tcp/4001/ipfs/Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH",
+            "/ip6/2601:184:4400:78fc:d00c:bbbe:d064:a237/tcp/4001/ipfs/Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH",
+            "/ip4/50.136.95.149/tcp/4001/ipfs/Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH"
+          ],
+          "AgentVersion": "go-ipfs/0.4.0-dev",
+          "ProtocolVersion": "ipfs/0.1.0"
+        }
+        17
+        ```
++ Request With Empty Arguments
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/id?arg=
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/id?arg=
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Tue, 02 Feb 2016 22:11:24 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "Invalid peer id" (string)
+        - Code: 1 (number)
+
+    + Body
+
+        ```
+        {
+          "Message": "Invalid peer id",
+          "Code": 1
+        }
+        ```
+
++ Request With Invalid Arguments
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/config/id?arg=kitten
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/config/id?arg=kitten
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Tue, 02 Feb 2016 22:12:29 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "routing: not found" (string)
+        - Code: 0 (number)
+
+    + Body
+
+        ```
+        {
+          "Message": "routing: not found",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i -X POST http://localhost:5001/api/v0/id?arg=QmepgFW7BHEtU4pZJdxaNiv75mKLLRQnPi1KaaXmQN4V1a
+
+    + Body
+
+        ```
+        curl -i -X POST http://localhost:5001/api/v0/id?arg=QmepgFW7BHEtU4pZJdxaNiv75mKLLRQnPi1KaaXmQN4V1a
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Tue, 02 Feb 2016 22:07:08 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + ID (Multihash)
+        + PublicKey (string)
+        + Addresses (SwarmAddrs)
+        + AgentVersion (string)
+        + ProtocolVersion (string)
+
+    + Body
+
+        ```
+        {
+          "ID": "QmepgFW7BHEtU4pZJdxaNiv75mKLLRQnPi1KaaXmQN4V1a",
+          "PublicKey": "CAASpgIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC8hSwYY1FXqjT5M36O/Q5fBeDhXE5ePvGAeN3MIibfChqQpgqBbXQi1gAp4TQypSTKl/AMy7hfzsKauieim7jHMgIYAB4pLoBQD1qGVn/n7CqzAR3gDg9umIGuAy15oT0uaqMDqSepfnyxEyPDqfDklgvmS/MAwfBHjH2IPcMIaFgZ6d6gVlhmwuH8WVQ/geumDqyKuU9Jy+SUozmxEu2Baylg4fuqxaxoqOiPFZeWKSCFAngFj3NPmLApE0Fy48/eEZ+t7iP6s/raupP4+Jk/AFNDJNos4VxUnLJpZ1g6W5vYkkt1kXbMTaqxFVryCdCW2UEOwEzjGPGkcIE4RJrHAgMBAAE=",
+          "Addresses": [
+            "/ip4/172.17.0.2/udp/4002/utp",
+            "/ip4/188.40.116.66/tcp/4001",
+            "/ip4/127.0.0.1/udp/4002/utp",
+            "/ip4/172.17.0.2/tcp/4001",
+            "/ip4/127.0.0.1/tcp/4001"
+          ],
+          "AgentVersion": "go-ipfs/0.4.0-dev",
+          "ProtocolVersion": "ipfs/0.1.0"
+        }
+        ```
+
 # Group init
 
 # Group log
