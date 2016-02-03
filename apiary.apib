@@ -1009,20 +1009,48 @@ Outputs the list of peers that were removed.
 ## resolve
 
 # Group object
+Interact with ipfs objects.
 
-## data
+`ipfs object` is a plumbing command used to manipulate DAG objects
+directly.
 
-## get
+## object [GET /object]
 
-## links
++ Request Without Subcommands
 
-## new
+    #### curl
 
-## patch
+        curl -i http://localhost:5001/api/v0/object
 
-## put
+    + Body
 
-## stat
+        curl -i http://localhost:5001/api/v0/object
+
++ Response 400
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 19:02:10 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "This command can't be called directly. Try one of its subcommands."
+        - Code: 1
+
+    + Body
+
+        ```
+        {
+          "Message": "This command can't be called directly. Try one of its subcommands.",
+          "Code": 1
+        }
+        ```
+
 
 # Group pin
 
