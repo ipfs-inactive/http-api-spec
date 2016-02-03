@@ -1051,6 +1051,146 @@ directly.
         }
         ```
 
+## data [GET /object/data{?arg}]
+Outputs the raw bytes in an IPFS object.
+
++ Parameters
+    + arg (required, string) - Key of the object to retrieve, in base58-encoded multihash format
+
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/object/data
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/object/data
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Wed, 03 Feb 2016 19:09:38 GMT
+        Content-Length: 26
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Body
+
+        ```
+        Argument 'key' is required
+        ```
+
+
++ Request With Empty Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/data?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/data?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 20:50:57 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/data?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/data?arg=kitten"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 20:50:57 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/data?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/data?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: text/plain
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Wed, 03 Feb 2016 20:52:12 GMT
+        Transfer-Encoding: chunked
+        ```
+    + Attributes
+
+    + Body
+
+        ```
+        ```
 
 # Group pin
 
