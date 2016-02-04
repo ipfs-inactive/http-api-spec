@@ -1716,6 +1716,173 @@ encoded object. However, unlike with `data`, `protobuf` will 500.
         No marshaller found for encoding type 'protobuf'
         ```
 
+## new [GET /object/new{?arg}]
+Creates a new object from an ipfs template
+
+By default it creates and returns a new empty merkledag node, but
+you may pass an optional template argument to create a preformatted
+node.
+
+#### Bugs
+
+Encoding is not specified in the IPFS CLI man pages, and `protobuf` is not available.
+
++ Parameters
+    + arg (enum[string], optional) - Template used to create a prefomatted node.
+        + Members
+            - unixfs-dir
+    + encoding (enum[string], optional) - Encoding format for response.
+        + Members
+            - xml
+            - json
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/new"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/new"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 14:45:06 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Hash (Multihash)
+        - Links () - // TODO What format is this?
+
+    + Body
+
+        ```
+        {
+          "Hash": "QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n",
+          "Links": null
+        }
+        ```
+
++ Request With Empty Argument
+
+    The response is identical to a command with an invalid argument. For example:
+
+        curl -i "http://localhost:5001/api/v0/object/new?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/new?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/new?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 14:50:39 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "template '' not found"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "template '' not found",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/new?arg=unixfs-dir"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/new?arg=unixfs-dir"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 14:52:31 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Hash (Multihash)
+        - Links () - // TODO What should this be?
+
+    + Body
+
+        ```
+        {
+          "Hash": "QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn",
+          "Links": null
+        }
+        ```
+
++ Request With Argument And XML Encoding
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/new?arg=unixfs-dir&encoding=xml"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/new?arg=unixfs-dir&encoding=xml"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/xml
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 14:52:31 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        <Object><Hash>QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn</Hash></Object>
+        ```
+
 # Group pin
 
 ## add
