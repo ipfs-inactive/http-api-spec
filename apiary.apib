@@ -2053,6 +2053,130 @@ Stores input as a DAG object, outputs its key
         }
         ```
 
+## stat [GET /object/stat{?arg}]
+Get stats for the DAG node named by <key>.
+
+'ipfs object stat' is a plumbing command to print DAG node statistics.
+
++ Parameters
+    + arg (string, required) - Key of the object to retrieve (in base58-encoded multihash format)
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/stat"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/stat"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 04 Feb 2016 17:15:20 GMT
+        Content-Length: 26
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'key' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is identical to a command with an invalid argument. For example:
+
+        curl -i "http://localhost:5001/api/v0/object/stat?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/stat?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/stat?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 17:15:45 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/stat?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/stat?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 17:20:58 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes
+        - `Hash`: "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ" (Multihash) - number of links in link table
+        - `NumLinks`: 1 (number) - number of links in link table
+        - `BlockSize`: 53 (number) - size of the raw, encoded data
+        - `LinksSize`: 53 (number) - size of the links segment
+        - `DataSize`: 2 (number) - size of the data segment
+        - `CumulativeSize`: 443417 (number) - cumulative size of object and its references
+
+    + Body
+
+        ```
+        {
+          "Hash": "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ",
+          "NumLinks": 1,
+          "BlockSize": 55,
+          "LinksSize": 53,
+          "DataSize": 2,
+          "CumulativeSize": 443417
+        }
+        ```
+
 # Group pin
 
 ## add
