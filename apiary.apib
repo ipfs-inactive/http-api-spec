@@ -1002,6 +1002,85 @@ Outputs the list of peers that were removed.
 
 # Group mount
 
+Mounts IPFS to the filesystem (read-only).
+
+Mount ipfs at a read-only mountpoint on the OS (default: /ipfs and /ipns).
+All ipfs objects will be accessible under that directory. Note that the
+root will not be listable, as it is virtual. Access known paths directly.
+
++ Parameters
+    + ipfs-path (string, optional) - The path where IPFS should be mounted
+    + ipns-path (string, optional) - The path where IPNS should be mounted
+
++ Request
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/mount
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/mount
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 23:10:05 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "unable to check fuse version.\n\nDear User,\n\nBefore mounting, we must check your version of OSXFUSE. We are protecting\nyou from a nasty kernel panic we found in OSXFUSE versions \u003c2.7.2.[1]. To\nmake matters worse, it's harder than it should be to check whether you have\nthe right version installed...[2]. We've automated the process with the\nhelp of a little tool. We tried to install it, but something went wrong[3].\nPlease install it yourself by running:\n\n\tgo get github.com/jbenet/go-fuse-version/fuse-version\n\nYou can also stop ipfs from running these checks and use whatever OSXFUSE\nversion you have by running:\n\n\tipfs config DontCheckOSXFUSE true\n\n[1]: https://github.com/ipfs/go-ipfs/issues/177\n[2]: https://github.com/ipfs/go-ipfs/pull/533\n[3]: exit status 2\n# github.com/jbenet/go-fuse-version\n../go/src/github.com/jbenet/go-fuse-version/version_darwin.go:6:11: fatal error: 'fuse/fuse.h' file not found\n #include \u003cfuse/fuse.h\u003e\n          ^\n1 error generated.\n\n",
+          "Code": 0
+        }
+        ```
+
++ Request With Options
+
+    The response appears to be the same for any option provided.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/mount&ipfs-mount=\"~\""
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/mount&ipfs-mount=\"~\""
+        ```
+
++ Response 404
+
+    + Headers
+
+        ```
+        Date: Thu, 04 Feb 2016 23:12:47 GMT
+        Content-Length: 18
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        404 page not found
+        ```
+
 # Group name
 
 ## publish
