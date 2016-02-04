@@ -1883,6 +1883,176 @@ Encoding is not specified in the IPFS CLI man pages, and `protobuf` is not avail
         <Object><Hash>QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn</Hash></Object>
         ```
 
+## put [GET /object/put{?arg}{&inputenc}]
+Stores input as a DAG object, outputs its key
+
++ Parameters
+    + arg (string, required) - Data to be stored as a DAG object
+    + inputenc (enum[string], optional) - Encoding type of input data
+        + Default: `json`
+        + Members
+            + `protobuf`
+            + `json`
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/put"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/put"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 04 Feb 2016 15:50:59 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        File argument 'data' is required
+        ```
+
++ Request With Empty Argument
+
+        The response is identical to a command with an invalid argument. For example:
+
+        curl -i "http://localhost:5001/api/v0/object/put?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/put?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/put?arg="
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 04 Feb 2016 15:50:59 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        File argument 'data' is required
+        ```
+
++ Request With Argument
+
+    This assumes that 'test' is a file that is correctly-coded JSON with a 'Data' field, like so:
+
+        ```
+        {
+            "Data": "hello world"
+        }
+        ```
+
+    #### curl
+
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/put"
+
+    + Body
+
+        ```
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/put"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 16:42:42 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Hash (Multihash)
+        - Links (array, nullable)
+
+    + Body
+
+        ```
+        {
+          "Hash": "QmU1Sq1B7RPQD2XcQNLB58qJUyJffVJqihcxmmN1STPMxf",
+          "Links": []
+        }
+        ```
+
++ Request With Argument And Inputenc Option
+
+    This assumes that 'test' is a file that is correctly-coded JSON with a 'Data' field, like so:
+
+        ```
+        {
+            "Data": "hello world"
+        }
+        ```
+
+    #### Bugs
+
+    This ought to work. But it does not. TODO: Fix.
+
+    #### curl
+
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/put&inputenc=json"
+
+    + Body
+
+        ```
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/put&inputenc=json"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 17:11:57 GMT
+        Connection: close
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "This command can't be called directly. Try one of its subcommands."
+        - Code: 1
+
+    + Body
+
+        ```
+        {
+          "Message": "This command can't be called directly. Try one of its subcommands.",
+          "Code": 1
+        }
+        ```
+
 # Group pin
 
 ## add
