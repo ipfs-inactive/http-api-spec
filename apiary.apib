@@ -1491,6 +1491,231 @@ Get and serialize the DAG node named by <key>
         "  :^Ep\|.t|dUcat.jpg
         ```
 
+## links [GET /object/links{?arg}]
+Outputs the links pointed to by the specified object
+
+#### Bugs
+
+While `encoding` is not specified in the API, it can be applied to return an `xml`
+encoded object. However, unlike with `data`, `protobuf` will 500.
+
++ Parameters
+    + arg (string, required) - Key of the object to retrieve, in base58-encoded multihash format
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/links"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/links"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Wed, 03 Feb 2016 21:34:30 GMT
+        Content-Length: 26
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'key' is required
+        ```
+
++ Request With Empty Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/links?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/links?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 21:34:52 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalud ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/links?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/links?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 21:34:52 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalud ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/links?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/links?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 21:35:55 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Hash (Multihash)
+        + Links (array)
+            + (object)
+                - Name: "cat.jpg" (string)
+                - Hash (Multihash)
+                - Size: 443362 (number)
+
+    + Body
+
+        ```
+        {
+          "Hash": "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ",
+          "Links": [
+            {
+              "Name": "cat.jpg",
+              "Hash": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+              "Size": 443362
+            }
+          ]
+        }
+        ```
+
++ Request With Argument And XML Encoding
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/links?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&encoding=xml"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/links?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&encoding=xml"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/xml
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 21:35:55 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        <Object><Hash>QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ</Hash><Links><Name>cat.jpg</Name><Hash>Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u</Hash><Size>443362</Size></Links></Object>
+        ```
+
++ Request With Argument And Protobuf Encoding
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/links?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&encoding=protobuf"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/links?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&encoding=protobuf"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: text/plain; charset=utf-8
+        X-Content-Type-Options: nosniff
+        Date: Wed, 03 Feb 2016 21:38:54 GMT
+        Content-Length: 49
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        No marshaller found for encoding type 'protobuf'
+        ```
+
 # Group pin
 
 ## add
