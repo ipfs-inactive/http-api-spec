@@ -1883,6 +1883,96 @@ Encoding is not specified in the IPFS CLI man pages, and `protobuf` is not avail
         <Object><Hash>QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn</Hash></Object>
         ```
 
+## patch [GET /object/patch{?arg1,arg2}{&name,ref}]
+Create a new merkledag object based on an existing one
+
+'patch' adds and removes links from objects, creating a new object as a result. This is the merkle-dag version of modifying an object. It can also set the data inside a node with `set-data` and append to that data as well with `append-data`.
+
++ Parameters
+    + arg1 (string, required) - the hash of the node to modify
+    + arg2 (enum[string], required) - the operation to perform
+        + Members:
+            + `add-link` - with `<name> <ref>`, adds a link to a node
+            + `rm-link` - with `<name>`, removes a link from a node
+            + `set-data` -  sets a node's data
+            + `append-data` - appends to a node's data
+    + name (string, optional) - used with `<add-link>` and `<rm-link>`
+    + ref (string, optional) - used with `<add-link> <name>`
+    + create (boolean, optional) - create intermediate directories on `<add-link>`
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/patch"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/patch"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 04 Feb 2016 15:00:12 GMT
+        Content-Length: 27
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Body
+
+        ```
+        Argument 'root' is required
+        ```
+
++ Request Without Arguments And Empty Options
+
+    This is included because the response is significantly different.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/patch&"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/patch&"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 15:20:45 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "This command can't be called directly. Try one of its subcommands."
+        - Code: 1
+
+    + Body
+
+        ```
+        {
+          "Message": "This command can't be called directly. Try one of its subcommands.",
+          "Code": 1
+        }
+        ```
+
++ Request With Only Root Argument
++ Request With Empty Root Argument
++ Request With With Root And Commands Argument, But No Args
++ Request With Invalid Args
++ Request With Invalid Root Hash
+
 ## put [GET /object/put{?arg}{&inputenc}]
 Stores input as a DAG object, outputs its key
 
