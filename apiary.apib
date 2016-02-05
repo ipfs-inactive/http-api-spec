@@ -1723,9 +1723,253 @@ Show IPFS Node ID info
 
 # Group log
 
-## level
+Interact with the daemon log output.
 
-## tail
+'ipfs log' contains utility commands to affect or read the logging
+output of a running daemon.
+
+This command cannot be called directly.
+
+## level [POST /log/level{?arg1,arg2}]
+'ipfs log level' is a utility command used to change the logging
+output of a running daemon.
+
++ Parameters
+    + arg1 (string) - The subsystem logging identifier. Use `all` for all subsystems.
+        + Members
+            - bitstwap
+            - blockstore
+            - dht
+            - merkledag
+            - all
+    + arg2 (enum[string])
+        + Members
+            - debug
+            - info
+            - warning
+            - error
+            - fatal
+            - panic
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/log/level"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/log/level"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 05 Feb 2016 21:12:32 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'subsystem' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the first argument is invalid. For example:
+
+        curl -i -X POST "http://localhost:5001/api/v0/log/level?arg=kitten"
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/log/level?arg="
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/log/level?arg="
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 05 Feb 2016 21:13:04 GMT
+        Content-Length: 28
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'level' is required
+        ```
+
++ Request With Invalid Subsystem Argument
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/log/level?arg=kitten&arg=info"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/log/level?arg=kitten&arg=info"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 05 Feb 2016 21:22:27 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "Error: No such logger"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "Error: No such logger",
+          "Code": 0
+        }
+        ```
+
++ Request With Invalid Log Argument
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/log/level?arg=dht&arg=kitten"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/log/level?arg=dht&arg=kitten"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 05 Feb 2016 21:22:27 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "logger: invalid log level"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "logger: invalid log level",
+          "Code": 0
+        }
+        ```
+
++ Request With Valid Arguments
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/log/level?arg=dht&arg=info"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/log/level?arg=dht&arg=info"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 05 Feb 2016 21:25:20 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Message (string)
+
+    + Body
+
+        ```
+        {
+          "Message": "Changed log level of 'dht' to 'info'\n"
+        }
+        ```
+
+## tail [GET /log/tail]
+`ipfs log tail` is a utility command used to read log output as it is written.
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/log/tail"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/log/tail"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: text/plain
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Fri, 05 Feb 2016 21:36:44 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - event (string)
+        - peerID (Multihash)
+        - session (string)
+        - system (string)
+        - time (string)
+
+    + Body
+
+        ```
+        {
+          "event": "updatePeer",
+          "peerID": "QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ",
+          "session": "90950f01-a408-455a-a560-767f326b7331",
+          "system": "dht",
+          "time": "2016-02-05T21:36:44.191536188Z"
+        }
+        ```
 
 # Group ls
 
