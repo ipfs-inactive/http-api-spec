@@ -4460,6 +4460,332 @@ trip latency information.
 
 # Group refs
 
+Retrieves the object named by <ipfs-path> and displays the link
+hashes it contains.
+
+## refs [GET /refs{?arg}{&format,edges,unique,recursive}]
+Lists links (references) from an object
+
+#### curl
+    curl -i http://localhost:5001/api/v0/refs?arg=/ipfs/QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg
+
++ Parameters
+    + arg (string, required) - Path to the object or objects to list refs from.
+    + format (string, optional) - Emit edges with given format. Tokens: `<src> <dst> <linkname>`.
+    + edges (boolean, optional) - Emit edge format: `<from> -> <to>`. Alias: e.
+    + unique (boolean, optional) - Omit duplicate refs from output. Alias: u.
+    + recursive (boolean, optional) - Recursively list links of child nodes. Alias: r.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/refs"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/refs"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 05 Feb 2016 17:30:09 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'ipfs-path' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if there is an invalid argument. For example:
+
+        curl -i "http://localhost:5001/api/v0/refs?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/refs?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/refs?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 05 Feb 2016 17:30:51 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmPEKipMh6LsXzvtLxunSPP7ZsBM8y9xQ2SQQwBXy5UY6e"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmPEKipMh6LsXzvtLxunSPP7ZsBM8y9xQ2SQQwBXy5UY6e"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Fri, 05 Feb 2016 17:31:52 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes
+
+    + Body
+
+        ```
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Fri, 05 Feb 2016 17:33:49 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Ref (Multihash)
+        - Err (string)
+
+    + Body
+
+        ```
+        {
+          "Ref": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+          "Err": ""
+        }
+        ```
+
++ Request With Argument And Format Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&format=<linkname>"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&format=<linkname>"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Fri, 05 Feb 2016 17:36:20 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Ref (string)
+        - Err (string)
+
+    + Body
+
+        ```
+        {
+          "Ref": "cat.jpg",
+          "Err": ""
+        }
+        ```
+
++ Request With Argument And Edge Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&edges"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&edges"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Fri, 05 Feb 2016 17:37:42 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Ref (string)
+        - Err (string)
+
+    + Body
+
+        ```
+        {
+          "Ref": "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ -\u003e Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+          "Err": ""
+        }
+        ```
+
++ Request With Argument And Recursive Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&recursive"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&recursive"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Fri, 05 Feb 2016 17:39:22 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Ref (Multihash)
+        - Err (string)
+
+    + Body
+
+        ```
+        {
+          "Ref": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+          "Err": ""
+        }
+        {
+          "Ref": "QmPEKipMh6LsXzvtLxunSPP7ZsBM8y9xQ2SQQwBXy5UY6e",
+          "Err": ""
+        }
+        {
+          "Ref": "QmT8onRUfPgvkoPMdMvCHPYxh98iKCfFkBYM1ufYpnkHJn",
+          "Err": ""
+        }
+        ```
+
+## local [GET /refs/local]
+
+Lists all local references.
+
+Displays the hashes of all local objects.
+
+#### Bugs
+
+    - The `format` option has no effect on the output.
+    - If an argument is included, an `invalid ipfs paths ref` error is thrown,
+    although there is no possible valid ipfs paths ref.
+
++ Request
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/refs/local
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/refs/local
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: text/plain
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Fri, 05 Feb 2016 17:46:36 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+        - (Multihash) - Newline delimited multihashes
+
+    + Body
+
+        ```
+        QmNLjhs2cWVGopVTE5KqCZBdX7TE6i9AU1y8pwytt7cyzC
+        QmNLwdgyRiTuMf9M3Fjtu2TpMjz2CgZS4YgeuqjLHv3rjq
+        ```
+
 ## local
 
 # Group repo
