@@ -2480,10 +2480,309 @@ included in the output of this command.
 ## query
 
 # Group diag
+Generate diagnostic reports.
 
-## net
+This command can't be called directly.
 
-## sys
+## net [GET /diag/net{?vis}]
+Sends out a message to each node in the network recursively
+requesting a listing of data about them including number of
+connected peers and latencies between them.
+
+The given timeout will be decremented 2s at every network hop,
+ensuring peers try to return their diagnostics before the initiator's
+timeout. If the timeout is too small, some peers may not be reached.
+30s and 60s are reasonable timeout values, though network vary.
+The default timeout is 20 seconds.
+
++ Parameters
+    + vis (enum[string], optional)
+        + Members
+            - `plain text` - Easy to read. Default.
+            - `d3` - JSON ready to be fed into d3view.
+            - `dot` - Graphviz format.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/diag/net"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/diag/net"
+        ```
+
++ Response 200
+
+    The response Body is exceedingly large: here, it has been sampled.
+    The format is `plain text`.
+
+    + Headers
+
+        ```
+        Content-Type: text/plain
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Fri, 05 Feb 2016 23:09:17 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ID Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH up 184 seconds connected to 10:
+            ID QmSdFMkJGoG1VRxUfrKGivxUvnfefUsGPrAVtAug8CJRm6 connections: 1 latency: 243965153 ns
+            ID QmZzPcDwgaoqhvfE1QW91J8SG9G2M8wGJaaPmNDKRGw1LN connections: 1 latency: 371879189 ns
+            ID QmSoLPppuBtQSGwKDZT2M73ULpjvfd3aZ6ha4oFGL1KrGM connections: 1 latency: 607917705 ns
+            ID QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ connections: 1 latency: 293064495 ns
+            ID QmSoLnSGccFuZQJzRadHn95W2CrSFmZuTdDWP8HXaHca9z connections: 1 latency: 1159858705 ns
+            ID QmTv99LaBwegvtRgUaUUy6JSzF6q8i2FCJdy7fJQxqAtU8 connections: 1 latency: 244056752 ns
+            ID QmSoLueR4xBeUbY9WZ9xGUUxunbKWcrNFTDAadQJmocnWm connections: 1 latency: 164713121 ns
+            ID QmT19P4HExyfDqZAU65LWyuuJU31G8uWKPoFkQPEcqYGD2 connections: 1 latency: 298962573 ns
+            ID QmVjEQAUXCEQMDmvgtsd5f2EsgTbg33Cpis5TDM3uVP9Vs connections: 1 latency: 349706701 ns
+            ID QmSoLSafTMBsPKadTEgaXctDQVcqN88CNLHXMkTNwMKPnu connections: 1 latency: 3586431786 ns
+        ID QmSoLueR4xBeUbY9WZ9xGUUxunbKWcrNFTDAadQJmocnWm up 18824 seconds connected to 68:
+            ...
+        ```
+
++ Request With Vis Option d3
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/diag/net?vis=d3"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/diag/net?vis=d3"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: text/plain
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Fri, 05 Feb 2016 23:12:46 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + links (array)
+            + (object)
+                - source (number)
+                - target (number)
+                - value (number)
+        + nodes (array)
+            - (object)
+                - name (Multihash)
+                - rtkey (Multihash)
+                - value (number)
+
+    + Body
+
+        ```
+        {
+          "links": [
+            {
+              "source": 0,
+              "target": 22,
+              "value": 3
+            },
+            ...
+          ],
+          "nodes": [
+            {
+              "name": "Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH",
+              "rtkey": "FuYMoHi3adbGrgACqL7tWSQnEVNANZ9NToPo9VTD9VWe",
+              "value": 10
+            },
+            ...
+          ]
+        }
+        ```
+
++ Request With Vis Option `dot`
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/diag/net?vis=dot"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/diag/net?vis=dot"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: text/plain
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Fri, 05 Feb 2016 23:16:08 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        digraph "diag-net" {
+        subgraph cluster_L { L [shape=box fontsize=32 label="Nodes: 84\l"] }
+        N0 [label="Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH
+        23 conns" fontsize=8 shape=box tooltip="Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH (23 conns)"]
+        ...
+        44 conns" fontsize=8 shape=box tooltip="QmavYZiVcX18nfw5fNwrXSUCCDKjWpgaSTG4onHCqTgL5w (44 conns)"]
+        N0 -> N37 [label=" 67442950" weight=1 tooltip="Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH ... Qmda2AecGMjJ96P7tgcyveEx7EDWF4JghPfr2jAW7ov6HG (67442950)" labeltooltip="Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH ... Qmda2AecGMjJ96P7tgcyveEx7EDWF4JghPfr2jAW7ov6HG (67442950)" style="dotted"]
+        ...
+        ```
+
+## sys [GET /diag/sys]
+Print out information about your computer to aid in debugging.
+
++ Request
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/diag/sys
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/diag/sys
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 05 Feb 2016 23:23:17 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - diskinfo (object)
+            - `free_space`: 6639185920 (number)
+            - `fstype`: hfs (string)
+            - `total_space`: 120101797888 (number)
+            - `used_space`: 113462611968 (number)
+        - environment (object)
+            - GOPATH: `/Users/dignifiedquire/.go` (string)
+            - IPFS_PATH (string, nullable)
+        - `ipfs_git_sha` (string, nullable)
+        - `ipfs_version`: `0.3.9` (string)
+        - memory (object)
+            - swap (object)
+                - total: 3072000 (number)
+                - used: 1935000 (number)
+                - free: 1137000 (number)
+                - used_percent: 62.98828125 (number)
+                - sin: 0 (number)
+                - sout: 0 (number)
+            - virt (object)
+                - total: 4294967296 (number)
+                - available: 682414080 (number)
+                - used: 4277125120 (number)
+                - used_percent: 84.11130905151367 (number)
+                - free: 17842176 (number)
+                - active: 671182848 (number)
+                - inactive: 664559616 (number)
+                - buffers: 0 (number)
+                - cached: 664571904 (number)
+                - wired: 1469018112 (number)
+                - shared: 0 (number)
+            - net (object)
+            - `interface_addresses` (array)
+                - "/ip6/::1" (MultiAddr)
+        - runtime (object)
+            - arch: amd64 (string)
+            - compiler: gc (string)
+            - gomaxprocs: 3 (number)
+            - numcpu: 4 (number)
+            - numgoroutines: 145 (number)
+            - os: darwin (string)
+            - version: `go1.5.1` (string)
+
+    + Body
+
+        ```
+        {
+          "diskinfo": {
+            "free_space": 10991816704,
+            "fstype": "hfs",
+            "total_space": 499071844352,
+            "used_space": 488080027648
+          },
+          "environment": {
+            "GOPATH": "/Users/richard/src/go",
+            "IPFS_PATH": ""
+          },
+          "ipfs_git_sha": "",
+          "ipfs_version": "0.4.0-dev",
+          "memory": {
+            "swap": {
+              "total": 1024000,
+              "used": 4500,
+              "free": 1019500,
+              "used_percent": 0.439453125,
+              "sin": 0,
+              "sout": 0
+            },
+            "virt": {
+              "total": 17179869184,
+              "available": 5769371648,
+              "used": 16170459136,
+              "used_percent": 66.41783714294434,
+              "free": 1009410048,
+              "active": 8633831424,
+              "inactive": 3408060416,
+              "buffers": 0,
+              "cached": 4759961600,
+              "wired": 2031640576,
+              "shared": 0
+            }
+          },
+          "net": {
+            "interface_addresses": [
+              "/ip6/::1",
+              "/ip4/127.0.0.1",
+              "/ip6/fe80::1",
+              "/ip6/fe80::62f8:1dff:fed2:1970",
+              "/ip6/2601:184:4400:78fc:62f8:1dff:fed2:1970",
+              "/ip6/2601:184:4400:78fc:2120:5f12:5e93:6cf2",
+              "/ip4/10.0.0.42",
+              "/ip6/fe80::2cbf:91ff:fe23:aee6",
+              "/ip6/fe80::e587:3267:259f:fb4b"
+            ]
+          },
+          "runtime": {
+            "arch": "amd64",
+            "compiler": "gc",
+            "gomaxprocs": 3,
+            "numcpu": 8,
+            "numgoroutines": 244,
+            "os": "darwin",
+            "version": "go1.5.1"
+          }
+        }
+        ```
 
 # Group dns
 DNS link resolver.
