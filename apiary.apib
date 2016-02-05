@@ -2486,6 +2486,129 @@ included in the output of this command.
 ## sys
 
 # Group dns
+DNS link resolver.
+
+## dns [GET /dns{?arg}]
+Multihashes are hard to remember, but domain names are usually easy to
+remember. To create memorable aliases for multihashes, DNS TXT
+records can point to other DNS links, IPFS objects, IPNS keys, etc.
+This command resolves those links to the referenced object.
+
+The following response expamles assume this DNS TXT record:
+
+```
+ipfs.io. TXT "dnslink=/ipfs/QmRzTuh2Lpuz7Gr39stNr6mTFdqAghsZec1JoUnfySUzcy ..."
+```
+
++ Parameters
+    + arg (string, required) - DNS name
+    + recursive (string, optional) - Resolve until the result is not a DNS link
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dns"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dns"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 05 Feb 2016 23:30:20 GMT
+        Content-Length: 34
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'domain-name' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/dns?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dns?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dns?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 05 Feb 2016 23:31:17 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "not a valid domain name"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "not a valid domain name",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dns?arg=ipfs.io"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dns?arg=ipfs.io"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 05 Feb 2016 23:32:31 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Path (string)
+
+    + Body
+
+        ```
+        {
+          "Path": "/ipfs/QmZAxDc6toRXbwC3kbDzfJhtqRsgdqpJChykEHU7hT98hS"
+        }
+        ```
 
 # Group file
 
