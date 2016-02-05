@@ -3087,6 +3087,142 @@ output of a running daemon.
         ```
 
 # Group ls
+List links from an object.
+
+## ls [GET /ls{?arg}{&headers}]
+Retrieves the object named by <ipfs-or-ipns-path> and displays the links
+it contains, with the following format:
+
+      <link base58 hash> <link size in bytes> <link name>
+
++ Parameters
+    + arg (string, required) - The path to the IPFS object or objects to list links from
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/ls"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/ls"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 05 Feb 2016 23:37:48 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'ipfs-path' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if there is an invalid argument. For example:
+
+        curl -i "http://localhost:5001/api/v0/ls?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/ls?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/ls?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 05 Feb 2016 23:38:06 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/ls?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/ls?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 05 Feb 2016 23:39:04 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + `Objects` (array)
+            + (object)
+                - `Hash` (string)
+                + `Links` (array)
+                    + (object)
+                        - `Name` (string)
+                        - `Hash` (string)
+                        - `Size` (number)
+                        - `Type` (number)
+
+    + Body
+
+        ```
+        {
+          "Objects": [
+            {
+              "Hash": "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ",
+              "Links": [
+                {
+                  "Name": "cat.jpg",
+                  "Hash": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+                  "Size": 443362,
+                  "Type": 2
+                }
+              ]
+            }
+          ]
+        }
+        ```
 
 # Group mount
 
