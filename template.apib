@@ -1,0 +1,108 @@
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/ls"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/ls"
+        ```
+
++ Response
+
+    + Headers
+
+        ```
+        ```
+
+    + Attributes
+
+    + Body
+
+        ```
+        ```
+
++ Request With Empty Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/ls?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/ls?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        ```
+
+    + Attributes (Error)
+        - Message
+        - Code
+
+    + Body
+
+        ```
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/ls?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/ls?arg=kitten"
+        ```
+
++ Response 500
+
+
+    + Headers
+
+        ```
+        ```
+
+    + Attributes (Error)
+        - Message
+        - Code
+
+    + Body
+
+        ```
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/ls?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/ls?arg="
+        ```
+
++ Response
+
+    + Headers
+
+        ```
+        ```
+
+    + Attributes
+
+    + Body
+
+        ```
+        ```
