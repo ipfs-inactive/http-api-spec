@@ -3985,6 +3985,205 @@ size is the IPFS link size.
 
 # Group get
 
+## get [POST /get{?arg}{&output,archive,compress,compression%2Dlevel}]
+Download IPFS objects.
+
+Retrieves the object named by <ipfs-or-ipns-path> and stores the data to disk.
+
++ Parameters
+    + arg (string, required) - The path to the IPFS object or objects to be outputted.
+    + output (string, optional) - The path where the output should be stored. Default: './<ipfs-path>'.
+    + archive (boolean, optional) - Output a TAR archive. Default: false.
+    + compress (boolean, optional) - Compress the output with GZIP compression. Default: false.
+    + compression-level (enum[int], optional) - The level of compression.
+        + Members
+            + Default: -1
+            + 0
+            + 1
+            + 2
+            + 3
+            + 4
+            + 5
+            + 6
+            + 7
+            + 8
+            + 9
+
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/get"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/get"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Sat, 06 Feb 2016 23:21:32 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'ipfs-path' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/get?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/get?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/get?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Sat, 06 Feb 2016 23:23:02 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Directory Multihash
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/get?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/get?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Sat, 06 Feb 2016 23:27:54 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "this dag node is a directory"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "this dag node is a directory",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/get?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/get?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: text/plain
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Sat, 06 Feb 2016 23:24:48 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o0000644000000000000000000000001412655500300016646 0ustar0000000000000000hello world
+        ```
+
++ Request With Argument And Compression Options
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/get?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&compress=true&compression-level=1"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/get?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&compress=true&compression-level=1"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: text/plain
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Sat, 06 Feb 2016 23:28:35 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ?       n???H???W(?/?I???-?
+        ```
+
 # Group id
 
 Prints out information about the specified peer.
