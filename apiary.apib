@@ -959,6 +959,38 @@ Outputs the list of peers that were removed.
 
 # Group daemon
 
+Run a network-connected IPFS node.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/daemon"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/daemon"
+        ```
+
++ Response 404
+
+    + Headers
+
+        ```
+        Date: Sat, 06 Feb 2016 22:37:34 GMT
+        Content-Length: 18
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        404 page not found
+        ```
+
 # Group dht
 
 ## findpeer
