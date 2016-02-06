@@ -981,7 +981,161 @@ Outputs the list of peers that were removed.
 
 # Group file
 
-## ls
+Interact with IPFS objects representing Unix filesystems.
+
+This provides a familiar interface to file systems represented
+by IPFS objects, which hides IPFS implementation details like layout
+objects (e.g. fanout and chunking).
+
+This command can't be called directly.
+
+## ls [GET /file/ls{?arg}]
+List directory contents for Unix-filesystem object
+
+Retrieves the object named by <ipfs-or-ipns-path> and displays the
+contents.
+
+The JSON output contains size information.  For files, the child size
+is the total size of the file contents.  For directories, the child
+size is the IPFS link size.
+
++ Parameters
+    + arg (string, required) - The path to the IPFS object or objects to list links from
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/file/ls"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/file/ls"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Sat, 06 Feb 2016 23:13:03 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'ipfs-path' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/file/ls?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/file/ls?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/file/ls?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Sat, 06 Feb 2016 23:13:43 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/file/ls?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/file/ls?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Sat, 06 Feb 2016 23:15:00 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes
+        + Argument (object)
+            - Key (Multihash) - Where 'Key' is the IPFS object's multihash
+        + Objects (object)
+            + Key (object) - Where 'Key' is the IPFS object's multihash
+                - Hash (Multihash)
+                - Size (number)
+                - Type (string)
+                - Links (array)
+                    - (object)
+                        - Name (string)
+                        - Hash (Multihash)
+                        - Size (number)
+                        - Type (string)
+
+    + Body
+
+        ```
+        {
+          "Arguments": {
+            "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ": "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+          },
+          "Objects": {
+            "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ": {
+              "Hash": "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ",
+              "Size": 0,
+              "Type": "Directory",
+              "Links": [
+                {
+                  "Name": "cat.jpg",
+                  "Hash": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+                  "Size": 443230,
+                  "Type": "File"
+                }
+              ]
+            }
+          }
+        }
+        ```
 
 # Group get
 
