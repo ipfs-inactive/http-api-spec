@@ -3317,7 +3317,7 @@ the private key enables publishing new (signed) values.
 This command can't be called directly.
 
 ## publish [POST /name/publish{?arg}{&resolve,lifetime,ttl}]
-Publish an object to IPNS
+Publish an object to IPNS.
 
 #### Bugs
 
@@ -3328,9 +3328,16 @@ Publish an object to IPNS
     + arg (string, required) - IPFS path of the object to be published. Default: your own identity public key.
     + resolve (boolean, optional) - Resolve given path before publishing
         + Default: `true`
-    + lifetime (string, optional) - Time duration that the record will be valid for.
-        + Default: `24hrs`
-    + ttl (string, optional) - Time duration this record should be cached for. (Caution: experimental).
+    + lifetime (enum[string], optional) - Time duration that the record will be valid for. This accepts durations such as '300s', '1.5h' or '2h45m'.
+        + Members
+            + Default: `24hrs`
+            + ns
+            + us - Or 'µs'.
+            + ms
+            + s
+            + m
+            + h
+    + ttl (string, optional) - Time duration this record should be cached for. Caution: experimental.
 
 + Request Without Arguments
 
