@@ -715,6 +715,8 @@ Retrieve information on a raw ipfs block.
         Content-Type: text/plain; charset=utf-8
         ```
 
+    + Attributes (string)
+
     + Body
 
         ```
@@ -1504,28 +1506,28 @@ Retrieves the object named by <ipfs-or-ipns-path> and outputs the data it contai
 
 # Group config
 
-## config [GET /config{?arg1,arg2}{&bool,json}]
+## config [POST /config{?arg1,arg2}{&bool,json}]
 
 'ipfs config' controls configuration variables. It works
-much like `git config`. The configuration values are stored in a config
+much like 'git config'. The configuration values are stored in a config
 file inside your IPFS repository.
 
 + Parameters
-    + arg1: "Datastore.Path" (string, required) - The key of the config entry
-    + arg2: "~/.ipfs/datastore" (string, required) - The value to set the config entry to
-    + bool (boolean, optional) - Set a boolean
-    + json (boolean, optional) - Parse stringified JSON
+    + arg1: "Datastore.Path" (string, required) - The key of the config entry.
+    + arg2: "~/.ipfs/datastore" (string, required) - The value to set the config entry to.
+    + bool (boolean, optional) - Set a boolean.
+    + json (boolean, optional) - Parse stringified JSON.
 
 + Request Without Arguments
 
     #### curl
 
-        curl -i http://localhost:5001/api/v0/config
+        curl -i -X POST "http://localhost:5001/api/v0/config"
 
     + Body
 
         ```
-        curl -i http://localhost:5001/api/v0/config
+        curl -i -X POST "http://localhost:5001/api/v0/config"
         ```
 
 + Response 400
@@ -1548,15 +1550,15 @@ file inside your IPFS repository.
 
     #### curl
 
-        curl -i http://localhost:5001/api/v0/config?arg=kitten
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=kitten"
 
     + Body
 
         ```
-        curl -i http://localhost:5001/api/v0/config?arg=kitten
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=kitten"
         ```
 
-+ Response 500 (application/json)
++ Response 500
 
     + Headers
 
@@ -1587,12 +1589,12 @@ file inside your IPFS repository.
 
     #### curl
 
-        curl -i http://localhost:5001/api/v0/config?arg=API.HTTPHeaders
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=API.HTTPHeaders"
 
     + Body
 
         ```
-        curl -i http://localhost:5001/api/v0/config?arg=API.HTTPHeaders
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=API.HTTPHeaders"
         ```
 
 + Response 200
@@ -1611,7 +1613,7 @@ file inside your IPFS repository.
 
     + Attributes (object)
         + `Key`: "Datastore" (string)
-        + `Value`: null (object, nullable) - The config entry
+        + `Value`: null (object, nullable) - The config entry.
 
     + Body
 
@@ -1622,16 +1624,16 @@ file inside your IPFS repository.
         }
         ```
 
-+ Request As SubCommand
++ Request As Subcommand
 
     #### curl
 
-        curl -i http://localhost:5001/api/v0/config/API.HTTPHeaders
+        curl -i -X POST "http://localhost:5001/api/v0/config/API.HTTPHeaders"
 
     + Body
 
         ```
-        curl -i http://localhost:5001/api/v0/config/API.HTTPHeaders
+        curl -i -X POST "http://localhost:5001/api/v0/config/API.HTTPHeaders"
         ```
 
 + Response 200
@@ -1650,7 +1652,7 @@ file inside your IPFS repository.
 
     + Attributes (object)
         + `Key`: "Datastore" (string)
-        + `Value`: null (object, nullable) - The config entry
+        + `Value`: null (object, nullable) - The config entry.
 
     + Body
 
@@ -1661,16 +1663,16 @@ file inside your IPFS repository.
         }
         ```
 
-+ Request With POST
++ Request With Both Args
 
     #### curl
 
-        curl -i "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=kitten"
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=kitten"
 
     + Body
 
         ```
-        curl -i "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=kitten"
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=kitten"
         ```
 
 + Response 200
@@ -1699,16 +1701,16 @@ file inside your IPFS repository.
         }
         ```
 
-+ Request With POST and JSON Flag With Invalid JSON Argument
++ Request With Both Args and JSON Flag With Invalid JSON Argument
 
     #### curl
 
-        curl -i "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=kitten&json"
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=kitten&json"
 
     + Body
 
         ```
-        curl -i "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=kitten&json"
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=kitten&json"
         ```
 
 + Response 500
@@ -1737,16 +1739,16 @@ file inside your IPFS repository.
         }
         ```
 
-+ Request With POST and JSON Flag With Valid JSON Argument
++ Request With Both Args and JSON Flag With Valid JSON Argument
 
     #### curl
 
-        curl -i "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=\"kitten\"&json"
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=\"kitten\"&json"
 
     + Body
 
         ```
-        curl -i "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=\"kitten\"&json"
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=\"kitten\"&json"
         ```
 
 + Response 200
@@ -1782,12 +1784,12 @@ Opens the config file for editing in $EDITOR
 
     ### curl
 
-        curl -i http://localhost:5001/api/v0/config/edit
+        curl -i "http://localhost:5001/api/v0/config/edit"
 
     + Body
 
         ```
-        curl -i http://localhost:5001/api/v0/config/edit
+        curl -i "http://localhost:5001/api/v0/config/edit"
         ```
 
 + Response 200
@@ -1811,7 +1813,7 @@ Opens the config file for editing in $EDITOR
         ```
         ```
 
-## replace [GET /config/replace{?arg}]
+## replace [POST /config/replace{?arg}]
 Replaces the config with <file>
 
 Make sure to back up the config file first if neccessary, this operation
@@ -1819,7 +1821,7 @@ can't be undone.
 
 #### curl
 
-    curl -i -F "file=@test" http://localhost:5001/api/v0/config/replace
+    curl -i -X POST -F "file=@test" "http://localhost:5001/api/v0/config/replace"
 
 + Parameters
 
@@ -1829,12 +1831,12 @@ can't be undone.
 
     #### curl
 
-         curl -i "http://localhost:5001/api/v0/config/replace"
+         curl -i -X POST "http://localhost:5001/api/v0/config/replace"
 
     + Body
 
         ```
-        curl -i "http://localhost:5001/api/v0/config/replace"
+        curl -i -X POST "http://localhost:5001/api/v0/config/replace"
         ```
 
 + Response 400
@@ -1864,12 +1866,12 @@ can't be undone.
 
     #### curl
 
-        curl -i -F "file=@test" http://localhost:5001/api/v0/config/replace
+        curl -i -X POST -F "file=@test" http://localhost:5001/api/v0/config/replace
 
     + Body
 
         ```
-        curl -i -F "file=@test" http://localhost:5001/api/v0/config/replace
+        curl -i -X POST -F "file=@test" http://localhost:5001/api/v0/config/replace
         ```
 
 + Response 500
@@ -1903,12 +1905,12 @@ can't be undone.
 
     #### curl
 
-        curl -i -F "file=@test" http://localhost:5001/api/v0/config/replace
+        curl -i -X POST -F "file=@test" http://localhost:5001/api/v0/config/replace
 
     + Body
 
         ```
-        curl -i -F "file=@test" http://localhost:5001/api/v0/config/replace
+        curl -i -X POST -F "file=@test" http://localhost:5001/api/v0/config/replace
         ```
 
 + Response 200
@@ -1947,7 +1949,7 @@ included in the output of this command.
 
     #### curl
 
-        curl -i http://localhost:5001/api/v0/config/show
+        curl -i "http://localhost:5001/api/v0/config/show"
 
     + Body
 
@@ -1987,12 +1989,12 @@ included in the output of this command.
 
     #### curl
 
-        curl -i http://localhost:5001/api/v0/config/show
+        curl -i "http://localhost:5001/api/v0/config/show"
 
     + Body
 
         ```
-        curl -i http://localhost:5001/api/v0/config/show
+        curl -i "http://localhost:5001/api/v0/config/show"
         ```
 
 + Response 200
