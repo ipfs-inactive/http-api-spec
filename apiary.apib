@@ -1554,6 +1554,50 @@ root will not be listable, as it is virtual. Access known paths directly.
 
 # Group version
 
+Show version details about the IPFS node.
+
+## version [GET /version]
+Returns the current version of ipfs and exits.
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/version"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/version"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Tue, 02 Feb 2016 22:15:17 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Version: "0.4.0-dev" (string)
+        - Commit: "b036b23a233a64faa6a456522b0f45763be70e64" (string)
+        - Repo:  "3" (string)
+
+    + Body
+
+        ```
+        {
+          "Version": "0.4.0-dev",
+          "Commit": "",
+          "Repo": "3"
+        }
+        ```
+
 # Data Structures
 
 ## Error (object)
