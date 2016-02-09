@@ -990,8 +990,8 @@ Outputs the list of peers that were removed.
 
 # Group id
 
-Prints out information about the specified peer,
-if no peer is specified, prints out local peers info.
+Prints out information about the specified peer.
+If no peer is specified, prints out local peers info.
 
 'ipfs id' supports the format option for output with the following keys:
 <id> : the peers id
@@ -1000,13 +1000,13 @@ if no peer is specified, prints out local peers info.
 <pubkey>: public key
 <addrs>: addresses (newline delimited)
 
-## id [GET /id{?arg}{&format}]
+## id [POST /id{?arg}{&format}]
 Show IPFS Node ID info
 
 + Parameters
 
     + arg (string, required) - peerID of node to look up
-    + format (string, optional) - optional output format
+    + format (string, optional) - Output format.
 
 + Request Without Arguments
 
@@ -1014,12 +1014,12 @@ Show IPFS Node ID info
 
     #### curl
 
-        curl -i http://localhost:5001/api/v0/id
+        curl -i -X POST "http://localhost:5001/api/v0/id"
 
     + Body
 
         ```
-        curl -i http://localhost:5001/api/v0/id
+        curl -i -X POST "http://localhost:5001/api/v0/id"
         ```
 
 + Response 200
@@ -1060,16 +1060,17 @@ Show IPFS Node ID info
         }
         17
         ```
+
 + Request With Empty Arguments
 
     #### curl
 
-        curl -i http://localhost:5001/api/v0/id?arg=
+        curl -i -X POST "http://localhost:5001/api/v0/id?arg="
 
     + Body
 
         ```
-        curl -i http://localhost:5001/api/v0/id?arg=
+        curl -i -X POST "http://localhost:5001/api/v0/id?arg="
         ```
 
 + Response 400
@@ -1101,12 +1102,12 @@ Show IPFS Node ID info
 
     #### curl
 
-        curl -i http://localhost:5001/api/v0/config/id?arg=kitten
+        curl -i -X POST "http://localhost:5001/api/v0/config/id?arg=kitten"
 
     + Body
 
         ```
-        curl -i http://localhost:5001/api/v0/config/id?arg=kitten
+        curl -i -X POST "http://localhost:5001/api/v0/config/id?arg=kitten"
         ```
 
 + Response 500
@@ -1138,12 +1139,12 @@ Show IPFS Node ID info
 
     #### curl
 
-        curl -i -X POST http://localhost:5001/api/v0/id?arg=QmepgFW7BHEtU4pZJdxaNiv75mKLLRQnPi1KaaXmQN4V1a
+        curl -i -X POST "http://localhost:5001/api/v0/id?arg=QmepgFW7BHEtU4pZJdxaNiv75mKLLRQnPi1KaaXmQN4V1a"
 
     + Body
 
         ```
-        curl -i -X POST http://localhost:5001/api/v0/id?arg=QmepgFW7BHEtU4pZJdxaNiv75mKLLRQnPi1KaaXmQN4V1a
+        curl -i -X POST "http://localhost:5001/api/v0/id?arg=QmepgFW7BHEtU4pZJdxaNiv75mKLLRQnPi1KaaXmQN4V1a"
         ```
 
 + Response 200
