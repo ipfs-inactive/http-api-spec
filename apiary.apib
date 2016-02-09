@@ -993,20 +993,13 @@ Outputs the list of peers that were removed.
 Prints out information about the specified peer.
 If no peer is specified, prints out local peers info.
 
-'ipfs id' supports the format option for output with the following keys:
-<id> : the peers id
-<aver>: agent version
-<pver>: protocol version
-<pubkey>: public key
-<addrs>: addresses (newline delimited)
+## id [POST /id{?arg}]
 
-## id [POST /id{?arg}{&format}]
 Show IPFS Node ID info
 
 + Parameters
 
     + arg (string, required) - peerID of node to look up
-    + format (string, optional) - Output format.
 
 + Request Without Arguments
 
