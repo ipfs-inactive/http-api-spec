@@ -1083,26 +1083,22 @@ Outputs the list of peers that were removed.
 # Group update
 
 # Group version
-Show version details about the ipfs node.
 
-## version [GET /version{&number,commit,repo}]
+Show version details about the IPFS node.
+
+## version [GET /version]
 Returns the current version of ipfs and exits.
-
-+ Parameters
-    + number (boolean, optional) - Only show the version number
-    + commit (boolean, optional) - Show the commit hash
-    + repo (boolean, optional) - Show repo version
 
 + Request
 
     #### curl
 
-        curl -i http://localhost:5001/api/v0/version
+        curl -i "http://localhost:5001/api/v0/version"
 
     + Body
 
         ```
-        curl -i http://localhost:5001/api/v0/version
+        curl -i "http://localhost:5001/api/v0/version"
         ```
 
 + Response 200
