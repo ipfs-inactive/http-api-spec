@@ -6095,8 +6095,52 @@ Displays the hashes of all local objects.
 ## local
 
 # Group repo
+Manipulate the IPFS repo.
 
-## gc
+This command can't be called directly.
+
+## gc [GET /repo/gc]
+Sweep the local set of stored objects and remove ones that are not pinned in
+order to reclaim hard disk space.
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/gc"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/gc"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Thu, 11 Feb 2016 21:45:58 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Key (Multihash)
+
+
+    + Body
+
+        ```
+        {"Key":"QmNLvkCDV6ZjUJsEwGNporYBuZdhWT6q7TBVYQwwRv12HT"}
+        {"Key":"QmNMkhF7m6CjJiNLsDbGrhfTbpjfTUu6qG3SVSMQ32isWb"}
+        ```
 
 # Group resolve
 Resolve the value of names to IPFS.
