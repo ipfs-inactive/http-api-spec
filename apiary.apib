@@ -1739,6 +1739,693 @@ root will not be listable, as it is virtual. Access known paths directly.
 
 # Group update
 
+## update [GET /update]
+Update IPFS.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/update"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/update"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:20:00 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        NAME:
+           ipfs-update - update ipfs
+
+        USAGE:
+           ipfs-update [global options] command [command options] [arguments...]
+           
+        VERSION:
+           0.1.0
+           
+        COMMANDS:
+           versions print out all available versions
+           version  print out currently installed version
+           install  install a version of ipfs
+           stash    stashes copy of currently installed ipfs binary
+           revert   revert to previously installed version of ipfs
+           fetch    fetch a given (default: latest) version of ipfs
+           help, h  Shows a list of commands or help for one command
+           
+        GLOBAL OPTIONS:
+           --verbose        print verbose output
+           --help, -h       show help
+           --version, -v    print the version
+        ```
+
+## versions [GET /update/versions]
+Print out all available versions.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/update/versions"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/update/versions"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:21:19 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        v0.3.10
+        v0.3.2
+        v0.3.4
+        v0.3.5
+        v0.3.6
+        v0.3.7
+        v0.3.8
+        v0.3.9
+        v0.4.0-dev
+        ```
+
+## version [GET /update/version]
+Print out currently installed version.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/update/version"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/update/version"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:21:19 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        v0.4.0-dev
+        ```
+
+## install [GET /update/install{?arg}]
+Install a version of IPFS.
+
++ Parameters
+    + arg (string, required) - The IPFS version to install.
+
++ Request Without Arguments
+
+    The response is the same if the argument is empty. For example:
+
+        curl -i "http://localhost:5001/api/v0/update/install?arg="
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/update/install"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/update/install"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:23:28 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ERROR: Please specify a version to install
+        ```
+
++ Request With Invalid Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/update/install?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/update/install?arg=kitten"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:26:07 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        fetching ipfs version vkitten
+        install failed, reverting changes...
+        ERROR: no link named "vkitten" under QmdvSvgDA2C64eGcRKnWiBwZCdM6WCKSMa38d1hsvMkcRZ 
+        ```
+
++ Request With Valid Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/update/install?arg=v0.3.5"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/update/install?arg=v0.3.5"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:26:07 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        fetching ipfs version v0.3.5
+        binary downloaded, verifying...
+        install failed, reverting changes...
+        ERROR: version didnt match 
+        ```
+
+## stash [GET /update/stash]
+Stashes copy of currently installed IPFS binary.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/update/stash"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/update/stash"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:28:02 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ```
+
+## revert [GET /update/revert{?arg}]
+Revert to previously installed version of IPFS.
+
++ Request Without Arguments
+
+    The response is the same if the argument is empty, invalid, or given. For example:
+
+        curl -i "http://localhost:5001/api/v0/update/revert?arg="
+        curl -i "http://localhost:5001/api/v0/update/revert?arg=kitten"
+        curl -i "http://localhost:5001/api/v0/update/revert?arg=v0.3.10"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/update/revert"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/update/revert"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:30:12 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        reverting to /Users/richard/.ipfs/old-bin/ipfs-v0.4.0-dev
+
+        revert complete.
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/update/revert?arg=v0.3.10"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/update/revert?arg=v0.3.10"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:32:03 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        reverting to /Users/richard/.ipfs/old-bin/ipfs-v0.4.0-dev
+
+        revert complete.
+        ```
+
+## fetch [GET /update/fetch{?arg}]
+fetch a given (default: latest) version of ipfs
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/update/fetch"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/update/fetch"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:33:05 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        fetching ipfs version v0.4.0-dev
+        ```
+
++ Request Without Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/update/fetch?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/update/fetch?arg="
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:33:05 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ERROR: file named "ipfs-v0.4.0-dev" already exists
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/update/fetch?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/update/fetch?arg=kitten"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:33:05 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        fetching ipfs version vkitten
+        ERROR: Failed to fetch binary:  no link named "vkitten" under QmdvSvgDA2C64eGcRKnWiBwZCdM6WCKSMa38d1hsvMkcRZ
+        ```
+
+
++ Request With Valid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/update/fetch?arg=v0.3.10"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/update/fetch?arg=v0.3.10"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:33:05 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        fetching ipfs version v0.3.10
+        ```
+
+## help [GET /update/help{?arg}]
+Shows a list of commands or help for one command
+
+
++ Request Without Arguments
+
+    The response is the same if the argument is empty. For example:
+
+        curl -i "http://localhost:5001/api/v0/update/help?arg="
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/update/help"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/update/help"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:37:25 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        NAME:
+           ipfs-update - update ipfs
+
+        USAGE:
+           ipfs-update [global options] command [command options] [arguments...]
+           
+        VERSION:
+           0.1.0
+           
+        COMMANDS:
+           versions print out all available versions
+           version  print out currently installed version
+           install  install a version of ipfs
+           stash    stashes copy of currently installed ipfs binary
+           revert   revert to previously installed version of ipfs
+           fetch    fetch a given (default: latest) version of ipfs
+           help, h  Shows a list of commands or help for one command
+           
+        GLOBAL OPTIONS:
+           --verbose        print verbose output
+           --help, -h       show help
+           --version, -v    print the version
+        ```
+
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/ls?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/ls?arg=kitten"
+        ```
+
++ Response 200
+
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:39:52 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        No help topic for 'kitten'
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/update/help?arg=fetch"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/update/help?arg=fetch"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:40:40 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        NAME:
+           ipfs-update fetch - fetch a given (default: latest) version of ipfs
+
+        USAGE:
+           ipfs-update fetch [command options] <version>
+
+        OPTIONS:
+           --output     specify where to save the downloaded binary
+        ```
+
 # Group version
 
 Show version details about the IPFS node.
