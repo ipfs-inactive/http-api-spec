@@ -1567,6 +1567,40 @@ Show IPFS Node ID info
 
 # Group init
 
+  Initializes IPFS configuration files and generates a new keypair.
+
+  This is not available in the HTTP API.
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/init"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/init"
+        ```
+
++ Response 404
+
+    + Headers
+
+        ```
+        Date: Thu, 04 Feb 2016 23:39:10 GMT
+        Content-Length: 18
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        404 page not found
+        ```
+
 # Group log
 
 ## level
