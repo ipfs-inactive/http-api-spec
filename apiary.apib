@@ -6314,8 +6314,114 @@ identifiers and resolves them to the referenced item.
         ```
 
 # Group stats
+Query IPFS statistics.
 
-## bw
+This command can't be called directly.
+
+## bw [POST /stats/bw{&peer,proto,poll,interval}]
+Print ipfs bandwidth information.
+
++ Parameters
+    + peer (string, optional) - Specify a peer to print bandwidth for.
+    + proto (string, optional) - Specify a protocol to print bandwidth for.
+    + poll (boolean, optional) - Print bandwidth at an interval.
+    + interval (string, optional) - Time interval to wait between updating output.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/stats/bw"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/stats/bw"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Thu, 11 Feb 2016 21:54:39 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - TotalIn: 119395 (number)
+        - TotalOut: 47349 (number)
+        - RateIn: 296.8016259649661 (number)
+        - RateOut: 199.70053032537362 (number)
+
+    + Body
+
+        ```
+        {
+          "TotalIn": 65845,
+          "TotalOut": 41110,
+          "RateIn": 42.05674059848161,
+          "RateOut": 38.231572699901825
+        }
+        ```
+
++ Request With Poll 
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/stats/bw?poll=true"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/stats/bw?poll=true"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Thu, 11 Feb 2016 21:57:01 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - TotalIn: 119395 (number)
+        - TotalOut: 47349 (number)
+        - RateIn: 296.8016259649661 (number)
+        - RateOut: 199.70053032537362 (number)
+
+    + Body
+
+        ```
+        {
+          "TotalIn": 915924,
+          "TotalOut": 1447341,
+          "RateIn": 645.9019575524085,
+          "RateOut": 785.6200405093209
+        }
+        {
+          "TotalIn": 917684,
+          "TotalOut": 1450578,
+          "RateIn": 550.0080313689939,
+          "RateOut": 738.0719064674622
+        }
+        ```
 
 # Group swarm
 
