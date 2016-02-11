@@ -6430,22 +6430,810 @@ Print ipfs bandwidth information.
         ```
 
 # Group swarm
+Swarm inspection tool.
 
-## addrs
+This command can't be called directly.
 
-### `swarm addrs local`
+## addrs [GET /swarm/addrs]
+List known addresses. Useful for debugging.
 
-## connect
+`ipfs swarm addrs` lists all addresses this node is aware of.
 
-## disconnect
++ Request Without Arguments
 
-## filters
+    #### curl
 
-### `swarm filters add`
+        curl -i "http://localhost:5001/api/v0/swarm/addrs"
 
-### `swarm filters rm`
+    + Body
 
-## peers
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/addrs"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 23:00:03 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + Addrs (SwarmAddrs)
+
+    + Body
+
+        ```
+        {
+          "Addrs": {
+            "QmNfCubGpwYZAQxX8LQDsYgB48C4GbfZHuYdexpX9mbNyT": [
+              "/ip4/127.0.0.1/tcp/4001",
+              "/ip4/192.168.0.101/tcp/4001",
+              "/ip4/70.81.176.29/tcp/48695",
+              "/ip6/::1/tcp/4001"
+            ],
+            ...
+          }
+        }
+        ```
+
+## addrs local [GET /swarm/addrs/local{&id}]
+List all local addresses.
+
+`ipfs swarm addrs local` lists all local addresses the node is listening on.
+
++ Parameters
+    + id (boolean, optional) - Show peer ID in addresses
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/addrs/local"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/addrs/local"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 23:02:24 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + Strings (array)
+            - (MultiAddr)
+
+    + Body
+
+        ```
+        {
+          "Strings": [
+            "/ip4/127.0.0.1/tcp/4001",
+            "/ip4/192.168.1.16/tcp/4001",
+            "/ip4/71.174.227.206/tcp/4001",
+            "/ip6/::1/tcp/4001"
+          ]
+        }
+        ```
+
++ Request With ID Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/addrs/local?id=true"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/addrs/local?id=true"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 23:02:24 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + Strings (array)
+            - (MultiAddr)
+
+    + Body
+
+        ```
+        {
+          "Strings": [
+            "/ip4/127.0.0.1/tcp/4001/ipfs/QmdYnTGEjDHHvbcT6TucgDLBCF3f6cYZUDqMbUVr9bvTh2",
+            "/ip4/192.168.1.16/tcp/4001/ipfs/QmdYnTGEjDHHvbcT6TucgDLBCF3f6cYZUDqMbUVr9bvTh2",
+            "/ip4/71.174.227.206/tcp/4001/ipfs/QmdYnTGEjDHHvbcT6TucgDLBCF3f6cYZUDqMbUVr9bvTh2",
+            "/ip6/::1/tcp/4001/ipfs/QmdYnTGEjDHHvbcT6TucgDLBCF3f6cYZUDqMbUVr9bvTh2"
+          ]
+        }
+        ```
+
+## connect [GET /swarm/connect{?arg}]
+Open a connection to the given address.
+
++ Parameters
+    + arg (MultiAddr, required) - Address of the peer to connect to
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/connect"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/connect"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 11 Feb 2016 23:05:00 GMT
+        Content-Length: 30
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'address' is required
+        ```
+
++ Request With Empty Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/connect?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/connect?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 23:05:22 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid peer address: invalid ipfs address"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid peer address: invalid ipfs address",
+          "Code": 0
+        }
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/disconnect?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/disconnect?arg=kitten"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 23:11:48 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid peer address: invalid multiaddr, must begin with /"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid peer address: invalid multiaddr, must begin with /",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/connect?arg=/ip4/40.78.22.28/tcp/4001/ipfs/QmXsaWN5ygTqHwtfoLk5gX1uvrJrYvgKtwa6TUAh4PpAKW"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/connect?arg=/ip4/40.78.22.28/tcp/4001/ipfs/QmXsaWN5ygTqHwtfoLk5gX1uvrJrYvgKtwa6TUAh4PpAKW"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 23:07:19 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Strings (array)
+            - (string)
+
+    + Body
+
+        ```
+        {
+          "Strings": [
+            "connect QmXsaWN5ygTqHwtfoLk5gX1uvrJrYvgKtwa6TUAh4PpAKW success"
+          ]
+        }
+        ```
+
+## disconnect [GET /swarm/disconnect{?arg}]
+Close the connection to a given address.
+
++ Parameters
+    + arg (MultiAddr, required) - Address of the peer to disconnect from
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/disconnect"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/disconnect"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 11 Feb 2016 23:05:00 GMT
+        Content-Length: 30
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'address' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/disconnect?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/disconnect?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 23:05:22 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid peer address: invalid ipfs address"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid peer address: invalid ipfs address",
+          "Code": 0
+        }
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/disconnect?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/disconnect?arg=kitten"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 23:11:48 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid peer address: invalid multiaddr, must begin with /"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid peer address: invalid multiaddr, must begin with /",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/disconnect?arg=/ip4/40.78.22.28/tcp/4001/ipfs/QmXsaWN5ygTqHwtfoLk5gX1uvrJrYvgKtwa6TUAh4PpAKW"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/disconnect?arg=/ip4/40.78.22.28/tcp/4001/ipfs/QmXsaWN5ygTqHwtfoLk5gX1uvrJrYvgKtwa6TUAh4PpAKW"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 23:13:35 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Strings (array)
+            - (string)
+
+    + Body
+
+        ```
+        {
+          "Strings": [
+            "disconnect QmXsaWN5ygTqHwtfoLk5gX1uvrJrYvgKtwa6TUAh4PpAKW success"
+          ]
+        }
+        ```
+
+## filters [GET /swarm/filters]
+List out all currently applied filters. The subcommands can be used
+to add or remove said filters. Filters are specified using the multiaddr-filter format:
+
+**Example:**
+
+```
+/ip4/192.168.0.0/ipcidr/16
+```
+
+Where the above is equivalent to the standard CIDR:
+
+```
+192.168.0.0/16
+```
+
+Filters default to those specified under the `"Swarm.AddrFilters"` config key.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/filters"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/filters"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 17 Feb 2016 18:58:54 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Strings (array, nullable)
+            - "/ip4/192.168.0.0/ipcidr/16" (MultiAddr)
+
+    + Body
+
+        ```
+        {
+            "Strings": null
+        }
+        ```
+
+
+## filters add [GET /swarm/filters/add{?arg}]
+Add the given multiaddr to the filter list.
+
+'ipfs swarm filters add' will add an address filter to the daemon's swarm.
+Filters applied this way will not persist daemon reboots, to achieve that,
+add your filters to the IPFS config file.
+
++ Parameters
+    + arg (MultiAddr, required) - Address to add to the filter list
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/filters/add"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/filters/add"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 11 Feb 2016 23:17:09 GMT
+        Content-Length: 30
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'address' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/swarm/filters/add?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/filters/add?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/filters/add?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 23:17:31 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid multiaddr-filter format"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid multiaddr-filter format",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/filters/add?arg=/ip4/192.168.0.0/ipcidr/16"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/filters/add?arg=/ip4/192.168.0.0/ipcidr/16"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 23:18:50 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ```
+
+## filters rm [GET /swarm/filters/rm{?arg}]
+Remove the given multiaddr from the filter list.
+
+'ipfs swarm filters rm' will remove an address filter from the daemons swarm.
+Filters removed this way will not persist daemon reboots, to achieve that,
+remove your filters from the IPFS config file.
+
++ Parameters
+    + arg (MultiAddr, required) - Address to remove from the filter list
+
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/filters/rm"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/filters/rm"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 11 Feb 2016 23:17:09 GMT
+        Content-Length: 30
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'address' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/swarm/filters/rm?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/filters/rm?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/filters/rm?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 23:17:31 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid multiaddr-filter format"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid multiaddr-filter format",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/filters/rm?arg=/ip4/192.168.0.0/ipcidr/16"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/filters/rm?arg=/ip4/192.168.0.0/ipcidr/16"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 23:18:50 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ```
+
+
+## peers [GET /swarm/filters/peers]
+List the set of peers the node is connected to.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/filters/peers"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/filters/peers"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 23:21:03 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Strings (array, nullable)
+            - (MultiAddr)
+
+    + Body
+
+        ```
+        {
+          "Strings": null
+        }
+        ```
 
 # Group tar
 
@@ -7039,7 +7827,7 @@ Show the next tour topic.
     + Body
 
         ```
-        
+
         Tour 0.1 - Hello Mars
 
 
