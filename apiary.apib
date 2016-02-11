@@ -3330,12 +3330,477 @@ root will not be listable, as it is virtual. Access known paths directly.
 ## stat
 
 # Group pin
+# Group pin
+Pin (and unpin) objects to local storage.
 
-## add
+This command can't be called directly.
 
-## ls
+## add [GET /pin/add{?arg}{&recursive}]
+Pins objects to local storage.
 
-## rm
+Retrieves the object named by <ipfs-path> and stores it locally
+on disk.
+
++ Parameters
+    + arg (string, required) - Path to object or objects to be pinned
+    + recursive (boolean, optional) - Recursively pin the object linked to by the specified object or objects
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/pin/add"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/pin/add"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 11 Feb 2016 20:55:28 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'ipfs-path' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i -X POST "http://localhost:5001/api/v0/pin/add?arg=kitten"
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/pin/add?arg="
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/pin/add?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 20:55:58 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "pin: invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "pin: invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/pin/add?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/pin/add?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 20:57:37 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + Pinned (array)
+            - (Multihash)
+
+    + Body
+
+        ```
+        {
+          "Pinned": [
+            "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+          ]
+        }
+        ```
+
+## ls [POST /pin/ls{&type,count,quiet}]
+List objects pinned to local storage
+
++ Parameters
+    + type (enum[string], optional) - The type of pinned keys to list.
+        Default: `recursive`
+        Members:
+            + `all`
+            + `direct`
+            + `indirect`
+            + `recursive`
+    + count (boolean, optional) - Show refcount when listing indirect pins.
+    + quiet (boolean, optional) - Write just hashes of objects.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/pin/ls"
+
+    + Body
+
+        ```
+        curl-i -X POST "http://localhost:5001/api/v0/pin/ls"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 21:01:45 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + Keys (object)
+            + (object) - The key is a Multihash
+                - Type (string)
+
+    + Body
+
+        ```
+        {
+          "Keys": {
+            "QmPEKipMh6LsXzvtLxunSPP7ZsBM8y9xQ2SQQwBXy5UY6e": {
+              "Type": "indirect"
+            },
+            "QmPZ9gcCEpqKTo6aq61g2nXGUhM4iCL3ewB6LDXZCtioEB": {
+              "Type": "recursive"
+            },
+            "QmT8onRUfPgvkoPMdMvCHPYxh98iKCfFkBYM1ufYpnkHJn": {
+              "Type": "indirect"
+            },
+            "QmTumTjvcYCAvRRwQ8sDRxh8ezmrcr88YFU7iYNroGGTBZ": {
+              "Type": "recursive"
+            },
+            "QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn": {
+              "Type": "recursive"
+            },
+            "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ": {
+              "Type": "recursive"
+            },
+            "QmXarR6rgkQ2fDSHjSY5nM2kuCXKYGViky5nohtwgF65Ec": {
+              "Type": "recursive"
+            },
+            "QmXifYTiYxz8Nxt3LmjaxtQNLYkjdh324L4r81nZSadoST": {
+              "Type": "recursive"
+            },
+            "QmY5heUM5qgRubMDD1og9fhCPA6QdkMp3QCwd4s7gJsyE7": {
+              "Type": "recursive"
+            },
+            "QmYCvbfNbCwFR45HiNP45rwJgvatpiW38D961L5qAhUM5Y": {
+              "Type": "recursive"
+            },
+            "QmZTR5bcpQD7cFgTorqxZDYaew1Wqgfbd2ud9QqGPAkK2V": {
+              "Type": "recursive"
+            },
+            "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u": {
+              "Type": "indirect"
+            }
+          }
+        }
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl-i -X POST "http://localhost:5001/api/v0/pin/ls?arg=kitten"
+
+    #### curl
+
+        curl-i -X POST "http://localhost:5001/api/v0/pin/ls?arg="
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/pin/ls?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 21:03:09 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/pin/ls?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/pin/ls?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 21:03:53 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + Keys (object)
+            + (object) - The key is a Multihash.
+                - Type (string)
+
+    + Body
+
+        ```
+        {
+          "Keys": {
+            "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ": {
+              "Type": "recursive"
+            }
+          }
+        }
+        ```
+
+## rm [GET /pin/rm{?arg}{&recursive}]
+Removes the pinned object from local storage.
+
++ Parameters
+    + arg (string, required) - Path to object or objects to be unpinned
+    + recursive (boolean, optional) - Recursively unpin the object linked to by the specified object or objects
+        Default: true
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/pin/rm"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/pin/rm"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 11 Feb 2016 21:20:08 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'ipfs-path' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/pin/rm?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/pin/rm?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/pin/rm?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 21:20:34 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/pin/rm?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/pin/rm?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 21:21:19 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + Pinned (array)
+            - (Multihash)
+
+    + Body
+
+        ```
+        {
+          "Pinned": [
+            "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+          ]
+        }
+        ```
+
++ Request With Previously Unpinned Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/pin/rm?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/pin/rm?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 21:22:15 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "not pinned"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "not pinned",
+          "Code": 0
+        }
+        ```
 
 # Group ping
 Send echo request packets to IPFS hosts.
