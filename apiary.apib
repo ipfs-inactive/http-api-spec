@@ -646,7 +646,9 @@ Stores input as an IPFS block
 
     In the example provided, the 'test' file has the following contents:
 
+        ```
         hello world
+        ```
 
     #### curl
 
@@ -1338,22 +1340,13 @@ Outputs the list of peers that were removed.
 
 # Group cat
 
-Show IPFS object data
+Show IPFS object data.
 
 ## cat [GET /cat{?arg}]
 Retrieves the object named by <ipfs-or-ipns-path> and outputs the data it contains.
 
 + Parameters
-    + arg (string, required) - The path to the IPFS object or objects to be outputted
-
-+ Response 200
-
-    + Headers
-
-        ```
-        Transfer-Encoding: chunked
-        X-Stream-Output: 1
-        ```
+    + arg (string, required) - The path to the IPFS object or objects to be outputted.
 
 + Request Without Arguments
 
@@ -1378,6 +1371,8 @@ Retrieves the object named by <ipfs-or-ipns-path> and outputs the data it contai
         ```
 
     + Attributes (string)
+
+        This is the raw content of the file.
 
     + Body
 
@@ -1463,13 +1458,16 @@ Retrieves the object named by <ipfs-or-ipns-path> and outputs the data it contai
           "Message": "this dag node is a directory",
           "Code": 0
         }
+        ```
 
 + Request With Valid Argument
 
     In this request, 'QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o' is the hash for a file, 'test',
     with the following contents
 
+        ```
         hello world
+        ```
 
     #### curl
 
