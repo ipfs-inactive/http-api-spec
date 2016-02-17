@@ -990,17 +990,17 @@ objects (e.g. fanout and chunking).
 This command can't be called directly.
 
 ## ls [GET /file/ls{?arg}]
-List directory contents for Unix-filesystem object
+List directory contents for Unix filesystem object
 
 Retrieves the object named by <ipfs-or-ipns-path> and displays the
 contents.
 
-The JSON output contains size information.  For files, the child size
-is the total size of the file contents.  For directories, the child
+The JSON output contains size information. For files, the child size
+is the total size of the file contents. For directories, the child
 size is the IPFS link size.
 
 + Parameters
-    + arg (string, required) - The path to the IPFS object or objects to list links from
+    + arg (string, required) - The path to the IPFS object or objects to list links from.
 
 + Request Without Arguments
 
@@ -1099,9 +1099,9 @@ size is the IPFS link size.
 
     + Attributes
         + Argument (object)
-            - Key (Multihash) - Where 'Key' is the IPFS object's multihash
+            - Key (Multihash) - Where 'Key' is the IPFS object's multihash.
         + Objects (object)
-            + Key (object) - Where 'Key' is the IPFS object's multihash
+            + Key (object) - Where 'Key' is the IPFS object's multihash.
                 - Hash (Multihash)
                 - Size (number)
                 - Type (string)
