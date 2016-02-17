@@ -1666,20 +1666,1263 @@ root will not be listable, as it is virtual. Access known paths directly.
 ## resolve
 
 # Group object
+Interact with ipfs objects.
 
-## data
+`ipfs object` is a plumbing command used to manipulate DAG objects
+directly.
 
-## get
+## object [GET /object]
 
-## links
++ Request Without Subcommands
 
-## new
+    #### curl
 
-## patch
+        curl -i http://localhost:5001/api/v0/object
 
-## put
+    + Body
 
-## stat
+        curl -i http://localhost:5001/api/v0/object
+
++ Response 400
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 19:02:10 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "This command can't be called directly. Try one of its subcommands."
+        - Code: 1
+
+    + Body
+
+        ```
+        {
+          "Message": "This command can't be called directly. Try one of its subcommands.",
+          "Code": 1
+        }
+        ```
+
+## data [GET /object/data{?arg}]
+Outputs the raw bytes in an IPFS object.
+
++ Parameters
+    + arg (required, string) - Key of the object to retrieve, in base58-encoded multihash format
+
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/object/data
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/object/data
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Wed, 03 Feb 2016 19:09:38 GMT
+        Content-Length: 26
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Body
+
+        ```
+        Argument 'key' is required
+        ```
+
+
++ Request With Empty Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/data?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/data?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 20:50:57 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/data?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/data?arg=kitten"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 20:50:57 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/data?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/data?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: text/plain
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Wed, 03 Feb 2016 20:52:12 GMT
+        Transfer-Encoding: chunked
+        ```
+    + Attributes
+
+    + Body
+
+        ```
+        ```
+
+## get [GET /object/get{?arg}{&encoding}]
+Get and serialize the DAG node named by <key>
+
++ Parameters
+    + arg (string, required) - Key of the object to retrieve (in base58-encoded multihash format)
+    + encoding (enum[string], optional) - Serializes the DAG node to the format specified. Alias: `enc`.
+        + Default: `json`
+        + Members
+            + `json`
+            + `protobuf`
+            + `xml`
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/get"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/get"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Wed, 03 Feb 2016 20:58:03 GMT
+        Content-Length: 26
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes
+
+    + Body
+
+        ```
+        Argument 'key' is required
+        ```
+
++ Request With Empty Argument
+
+    This, and all calls with options, has the same response as it would if an invalid argument is supplied.
+    For the sake of brevity, only this call is listed here.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/get?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/get?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 20:58:32 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/get?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/get?arg=kitten"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 20:58:32 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Invalid Argument And XML Encoding
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/get?arg=kitten&encoding=xml"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/get?arg=kitten&encoding=xml"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/xml
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 20:58:32 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        <Error><Message>invalid ipfs ref path</Message><Code>0</Code></Error>
+        ```
+
++ Request With Invalid Argument And Protobuf Encoding
+
+    #### Bugs
+
+    This comes up with a 200 with no response.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/get?arg=kitten&encoding=protobuf"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/get?arg=kitten&encoding=protobuf"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Date: Wed, 03 Feb 2016 21:12:39 GMT
+        Content-Length: 0
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes
+
+    + Body
+
+        ```
+        ```
+
++ Request With Argument
+
+    This is the same response as if `encoding=json` were added to the request.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/get?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/get?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 20:59:26 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + Links (array)
+            - (object)
+                - Name: "cat.jpg" (string)
+                - Hash (Multihash)
+                - Size: 443362 (number)
+        + Data: "\u0008\u0001" (string)
+
+    + Body
+
+        ```
+        {
+          "Links": [
+            {
+              "Name": "cat.jpg",
+              "Hash": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+              "Size": 443362
+            }
+          ],
+          "Data": "\u0008\u0001"
+        }
+        ```
+
++ Request With Argument And XML Encoding
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/get?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&encoding=xml"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/get?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&encoding=xml"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/xml
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 20:59:26 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        <Node><Links><Name>cat.jpg</Name><Hash>Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u</Hash><Size>443362</Size></Links><Data>��</Data></Node>
+        ```
+
++ Request With Argument And Protobuf Encoding
+
+    #### Bugs
+
+    Note that the `Content-Type` is still specified as `application/json`, although it is a protobuf response.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/get?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&encoding=protobuf"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/get?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&encoding=protobuf"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 20:59:26 GMT
+        Transfer-Encoding: chunked
+        ```
+    + Body
+
+        ```
+        1
+        "  :^Ep\|.t|dUcat.jpg
+        ```
+
+## links [GET /object/links{?arg}]
+Outputs the links pointed to by the specified object
+
+#### Bugs
+
+While `encoding` is not specified in the API, it can be applied to return an `xml`
+encoded object. However, unlike with `data`, `protobuf` will 500.
+
++ Parameters
+    + arg (string, required) - Key of the object to retrieve, in base58-encoded multihash format
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/links"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/links"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Wed, 03 Feb 2016 21:34:30 GMT
+        Content-Length: 26
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'key' is required
+        ```
+
++ Request With Empty Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/links?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/links?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 21:34:52 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalud ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/links?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/links?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 21:34:52 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalud ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/links?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/links?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 21:35:55 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Hash (Multihash)
+        + Links (array)
+            + (object)
+                - Name: "cat.jpg" (string)
+                - Hash (Multihash)
+                - Size: 443362 (number)
+
+    + Body
+
+        ```
+        {
+          "Hash": "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ",
+          "Links": [
+            {
+              "Name": "cat.jpg",
+              "Hash": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+              "Size": 443362
+            }
+          ]
+        }
+        ```
+
++ Request With Argument And XML Encoding
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/links?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&encoding=xml"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/links?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&encoding=xml"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/xml
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Wed, 03 Feb 2016 21:35:55 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        <Object><Hash>QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ</Hash><Links><Name>cat.jpg</Name><Hash>Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u</Hash><Size>443362</Size></Links></Object>
+        ```
+
++ Request With Argument And Protobuf Encoding
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/links?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&encoding=protobuf"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/links?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&encoding=protobuf"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: text/plain; charset=utf-8
+        X-Content-Type-Options: nosniff
+        Date: Wed, 03 Feb 2016 21:38:54 GMT
+        Content-Length: 49
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        No marshaller found for encoding type 'protobuf'
+        ```
+
+## new [GET /object/new{?arg}]
+Creates a new object from an ipfs template
+
+By default it creates and returns a new empty merkledag node, but
+you may pass an optional template argument to create a preformatted
+node.
+
+#### Bugs
+
+Encoding is not specified in the IPFS CLI man pages, and `protobuf` is not available.
+
++ Parameters
+    + arg (enum[string], optional) - Template used to create a prefomatted node.
+        + Members
+            - unixfs-dir
+    + encoding (enum[string], optional) - Encoding format for response.
+        + Members
+            - xml
+            - json
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/new"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/new"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 14:45:06 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Hash (Multihash)
+        - Links () - // TODO What format is this?
+
+    + Body
+
+        ```
+        {
+          "Hash": "QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n",
+          "Links": null
+        }
+        ```
+
++ Request With Empty Argument
+
+    The response is identical to a command with an invalid argument. For example:
+
+        curl -i "http://localhost:5001/api/v0/object/new?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/new?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/new?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 14:50:39 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "template '' not found"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "template '' not found",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/new?arg=unixfs-dir"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/new?arg=unixfs-dir"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 14:52:31 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Hash (Multihash)
+        - Links () - // TODO What should this be?
+
+    + Body
+
+        ```
+        {
+          "Hash": "QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn",
+          "Links": null
+        }
+        ```
+
++ Request With Argument And XML Encoding
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/new?arg=unixfs-dir&encoding=xml"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/new?arg=unixfs-dir&encoding=xml"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/xml
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 14:52:31 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        <Object><Hash>QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn</Hash></Object>
+        ```
+
+## patch [GET /object/patch{?arg1,arg2}{&name,ref}]
+Create a new merkledag object based on an existing one
+
+'patch' adds and removes links from objects, creating a new object as a result. This is the merkle-dag version of modifying an object. It can also set the data inside a node with `set-data` and append to that data as well with `append-data`.
+
++ Parameters
+    + arg1 (string, required) - the hash of the node to modify
+    + arg2 (enum[string], required) - the operation to perform
+        + Members:
+            + `add-link` - with `<name> <ref>`, adds a link to a node
+            + `rm-link` - with `<name>`, removes a link from a node
+            + `set-data` -  sets a node's data
+            + `append-data` - appends to a node's data
+    + name (string, optional) - used with `<add-link>` and `<rm-link>`
+    + ref (string, optional) - used with `<add-link> <name>`
+    + create (boolean, optional) - create intermediate directories on `<add-link>`
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/patch"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/patch"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 04 Feb 2016 15:00:12 GMT
+        Content-Length: 27
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Body
+
+        ```
+        Argument 'root' is required
+        ```
+
++ Request Without Arguments And Empty Options
+
+    This is included because the response is significantly different.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/patch&"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/patch&"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 15:20:45 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "This command can't be called directly. Try one of its subcommands."
+        - Code: 1
+
+    + Body
+
+        ```
+        {
+          "Message": "This command can't be called directly. Try one of its subcommands.",
+          "Code": 1
+        }
+        ```
+
++ Request With Only Root Argument
++ Request With Empty Root Argument
++ Request With With Root And Commands Argument, But No Args
++ Request With Invalid Args
++ Request With Invalid Root Hash
+
+## put [GET /object/put{?arg}{&inputenc}]
+Stores input as a DAG object, outputs its key
+
++ Parameters
+    + arg (string, required) - Data to be stored as a DAG object
+    + inputenc (enum[string], optional) - Encoding type of input data
+        + Default: `json`
+        + Members
+            + `protobuf`
+            + `json`
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/put"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/put"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 04 Feb 2016 15:50:59 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        File argument 'data' is required
+        ```
+
++ Request With Empty Argument
+
+        The response is identical to a command with an invalid argument. For example:
+
+        curl -i "http://localhost:5001/api/v0/object/put?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/put?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/put?arg="
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 04 Feb 2016 15:50:59 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        File argument 'data' is required
+        ```
+
++ Request With Argument
+
+    This assumes that 'test' is a file that is correctly-coded JSON with a 'Data' field, like so:
+
+        ```
+        {
+            "Data": "hello world"
+        }
+        ```
+
+    #### curl
+
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/put"
+
+    + Body
+
+        ```
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/put"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 16:42:42 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Hash (Multihash)
+        - Links (array, nullable)
+
+    + Body
+
+        ```
+        {
+          "Hash": "QmU1Sq1B7RPQD2XcQNLB58qJUyJffVJqihcxmmN1STPMxf",
+          "Links": []
+        }
+        ```
+
++ Request With Argument And Inputenc Option
+
+    This assumes that 'test' is a file that is correctly-coded JSON with a 'Data' field, like so:
+
+        ```
+        {
+            "Data": "hello world"
+        }
+        ```
+
+    #### Bugs
+
+    This ought to work. But it does not. TODO: Fix.
+
+    #### curl
+
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/put&inputenc=json"
+
+    + Body
+
+        ```
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/put&inputenc=json"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 17:11:57 GMT
+        Connection: close
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "This command can't be called directly. Try one of its subcommands."
+        - Code: 1
+
+    + Body
+
+        ```
+        {
+          "Message": "This command can't be called directly. Try one of its subcommands.",
+          "Code": 1
+        }
+        ```
+
+## stat [GET /object/stat{?arg}]
+Get stats for the DAG node named by <key>.
+
+'ipfs object stat' is a plumbing command to print DAG node statistics.
+
++ Parameters
+    + arg (string, required) - Key of the object to retrieve (in base58-encoded multihash format)
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/stat"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/stat"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 04 Feb 2016 17:15:20 GMT
+        Content-Length: 26
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'key' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is identical to a command with an invalid argument. For example:
+
+        curl -i "http://localhost:5001/api/v0/object/stat?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/stat?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/stat?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 17:15:45 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/stat?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/stat?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 17:20:58 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes
+        - `Hash`: "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ" (Multihash) - number of links in link table
+        - `NumLinks`: 1 (number) - number of links in link table
+        - `BlockSize`: 53 (number) - size of the raw, encoded data
+        - `LinksSize`: 53 (number) - size of the links segment
+        - `DataSize`: 2 (number) - size of the data segment
+        - `CumulativeSize`: 443417 (number) - cumulative size of object and its references
+
+    + Body
+
+        ```
+        {
+          "Hash": "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ",
+          "NumLinks": 1,
+          "BlockSize": 55,
+          "LinksSize": 53,
+          "DataSize": 2,
+          "CumulativeSize": 443417
+        }
+        ```
 
 # Group pin
 
