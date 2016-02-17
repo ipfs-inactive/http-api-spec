@@ -3069,17 +3069,18 @@ identifiers and resolves them to the referenced item.
 ## peers
 
 # Group tar
+
 Utility functions for tar files in ipfs
 
 This command can't be called directly.
 
 ## add [POST /tar/add{?arg}]
-Import a tar file into IPFS
+Import a tar file into IPFS.
 
 'ipfs tar add' will parse a tar file and create a merkledag structure to represent it.
 
 + Parameters
-    + arg (string, required) - tar file to add
+    + arg (string, required) - Tar file to add.
 
 + Request Without Arguments
 
@@ -3088,7 +3089,7 @@ Import a tar file into IPFS
         curl -i -F "data=@test" -X POST http://localhost:5001/api/v0/tar/add"
 
     Where 'test' is not a tarball.
-    
+
     #### curl
 
         curl -i "http://localhost:5001/api/v0/tar/add"
@@ -3157,14 +3158,6 @@ Import a tar file into IPFS
           "Name": "test",
           "Hash": "QmUkwXfkw4mHH9PB53b5fR5C1YsjhLxz3LbjBehB9Q6LAG"
         }
-        ```
-
-+ Response 200 (text/plain)
-
-    + Body
-
-        ```
-        QmevjfjydFGfFNTkBpvr8gYwUwFyM5LMe46sNyAQ1Fxw6a
         ```
 
 ## cat [GET /tar/cat{?arg}]
