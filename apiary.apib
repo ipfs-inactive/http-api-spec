@@ -1844,6 +1844,239 @@ root will not be listable, as it is virtual. Access known paths directly.
 ## rm
 
 # Group ping
+Send echo request packets to IPFS hosts.
+
+## ping [GET /ping{?arg}{&count}]
+A tool to test sending data to other nodes. It finds nodes
+via the routing system, sends pings, waits for pongs, and prints out round-
+trip latency information.
+
+
++ Parameters
+    + arg (string, required) - ID of peer to be pinged.
+    + count (number, required) - Number of ping messages to send. Alias: n.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/ping"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/ping"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 11 Feb 2016 21:32:09 GMT
+        Content-Length: 30
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'peer ID' is required
+        ```
+
++ Request With Empty Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/ping?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/ping?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 21:32:30 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "multihash too short. must be > 3 bytes"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "multihash too short. must be > 3 bytes",
+          "Code": 0
+        }
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/ping?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/ping?arg=kitten"
+        ```
+
++ Response 500
+
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 21:33:04 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "multihash length inconsistent: &{6  174 [128 54 35]}"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "multihash length inconsistent: &{6  174 [128 54 35]}",
+          "Code": 0
+        }
+        ```
+
++ Request With Invalid Peer Lookup
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/ping?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/ping?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Thu, 11 Feb 2016 21:33:46 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Success (boolean)
+        - Time (number)
+        - Text (string)
+
+    + Body
+
+        ```
+        {
+          "Success": false,
+          "Time": 0,
+          "Text": "Looking up peer QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        }
+        {
+          "Success": false,
+          "Time": 0,
+          "Text": "Peer lookup error: routing: not found"
+        }
+        ```
+
++ Request With Valid Peer Argument And Count
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/ping?arg=QmT19P4HExyfDqZAU65LWyuuJU31G8uWKPoFkQPEcqYGD2&count=3"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/ping?arg=QmT19P4HExyfDqZAU65LWyuuJU31G8uWKPoFkQPEcqYGD2&count=3"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Thu, 11 Feb 2016 21:35:49 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Success (boolean)
+        - Time (number)
+        - Text (string)
+
+    + Body
+
+        ```
+        {
+          "Success": false,
+          "Time": 0,
+          "Text": "PING QmT19P4HExyfDqZAU65LWyuuJU31G8uWKPoFkQPEcqYGD2."
+        }
+        {
+          "Success": true,
+          "Time": 1074991663,
+          "Text": ""
+        }
+        {
+          "Success": true,
+          "Time": 175805337,
+          "Text": ""
+        }
+        {
+          "Success": true,
+          "Time": 175803520,
+          "Text": ""
+        }
+        {
+          "Success": false,
+          "Time": 0,
+          "Text": "Average latency: 475.53ms"
+        }
+        ```
 
 # Group refs
 
