@@ -1884,12 +1884,391 @@ root will not be listable, as it is virtual. Access known paths directly.
 ## cat
 
 # Group tour
+This is a tour that takes you through various IPFS concepts,
+features, and tools to make sure you get up to speed with
+IPFS very quickly.
 
-## list
+## tour [GET /tour{?arg}]
 
-## next
+Start the tour
 
-## restart
++ Parameters
+    + arg (string, optional) - Topic id to go to
+
++ Request Without Arguments
+
+    The response is the same if the argument is empty. For example:
+
+        curl -i "http://localhost:5001/api/v0/tour?arg="
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/tour"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/tour"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:47:51 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+
+        Tour 0.0 - Hello Mars
+
+
+            check things work
+            
+
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/tour?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/tour?arg=kitten"
+        ```
+
++ Response 200
+
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:48:34 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ERROR
+        no topic with id: kitten
+
+        - * 0.0   Hello Mars
+        -   0.1   Hello Mars
+        -   0.2   About IPFS
+        -   1.1   Filesystem
+        -   1.2   Getting Files
+        -   1.3   Adding Files
+        -   1.4   Directories
+        -   1.5   Distributed
+        -   1.6   Getting Files
+        -   2.0   Basics - init
+        -   2.1   Basics - help
+        -   2.2   Basics - update
+        -   2.3   Basics - config
+        -   3.0   
+        -   3.1   
+        -   3.2   
+        -   3.3   
+        -   3.4   
+        -   3.5   
+        -   3.6   Immutability
+        -   3.7   
+        -   3.8   
+        -   3.9   
+        -   4.0   
+        -   4.1   
+        -   4.2   
+        -   4.3   
+        -   4.4   
+        -   4.5   
+        -   5.0   
+        -   5.1   
+        -   5.2   
+        -   6.0   
+        -   6.1   
+        -   6.2   
+        -   6.3   
+        -   6.4   
+        -   7.0   
+        -   7.1   
+        -   7.2   
+        -   7.3   
+        -   8.0   
+        -   8.1   
+        -   8.2   PKI Review
+        -   8.3   
+        -   8.4   
+        -   8.5   
+        -   8.6   
+        -   9.0   
+        -   9.1   
+        -   9.2   
+        -   10.0  
+        -   10.1  
+        -   10.2  
+        -   10.3  
+        -   10.4  
+        -   10.5  
+        -   11.0  
+        -   11.1  
+        -   11.2  
+        -   11.3  
+        -   11.4  
+        -   11.5  
+        -   11.6  
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/tour?arg=11.5"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/tour?arg=11.5"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:49:37 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+
+        Tour 11.5 - 
+
+
+
+        ```
+
+## list [GET /tour/list]
+Show a list of all tour topics.
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/tour/list"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/tour/list"
+        ```
+
++ Response 200 (text/plain)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:50:39 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        - * 0.0   Hello Mars
+        -   0.1   Hello Mars
+        -   0.2   About IPFS
+        -   1.1   Filesystem
+        -   1.2   Getting Files
+        -   1.3   Adding Files
+        -   1.4   Directories
+        -   1.5   Distributed
+        -   1.6   Getting Files
+        -   2.0   Basics - init
+        -   2.1   Basics - help
+        -   2.2   Basics - update
+        -   2.3   Basics - config
+        -   3.0   
+        -   3.1   
+        -   3.2   
+        -   3.3   
+        -   3.4   
+        -   3.5   
+        -   3.6   Immutability
+        -   3.7   
+        -   3.8   
+        -   3.9   
+        -   4.0   
+        -   4.1   
+        -   4.2   
+        -   4.3   
+        -   4.4   
+        -   4.5   
+        -   5.0   
+        -   5.1   
+        -   5.2   
+        -   6.0   
+        -   6.1   
+        -   6.2   
+        -   6.3   
+        -   6.4   
+        -   7.0   
+        -   7.1   
+        -   7.2   
+        -   7.3   
+        -   8.0   
+        -   8.1   
+        -   8.2   PKI Review
+        -   8.3   
+        -   8.4   
+        -   8.5   
+        -   8.6   
+        -   9.0   
+        -   9.1   
+        -   9.2   
+        -   10.0  
+        -   10.1  
+        -   10.2  
+        -   10.3  
+        -   10.4  
+        -   10.5  
+        -   11.0  
+        -   11.1  
+        -   11.2  
+        -   11.3  
+        -   11.4  
+        -   11.5  
+        -   11.6  
+        ```
+
+
+## next [GET /tour/next]
+Show the next tour topic.
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/tour/next"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/tour/next"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:50:39 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        
+        Tour 0.1 - Hello Mars
+
+
+            how this works
+
+        ```
+
+## restart [GET /tour/restart]
+Restart the IPFS Tour
+
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/tour/restart"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/tour/restart"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:50:39 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ```
 
 # Group update
 
