@@ -3322,22 +3322,13 @@ Publish an object to IPNS.
 #### Bugs
 
 - The `lifetime` option does not appear to work as documented. See https://github.com/ipfs/go-ipfs/issues/2312.
-- ttl format is not specified.
 
 + Parameters
     + arg (string, required) - IPFS path of the object to be published. Default: your own identity public key.
     + resolve (boolean, optional) - Resolve given path before publishing
         + Default: `true`
-    + lifetime (enum[string], optional) - Time duration that the record will be valid for. This accepts durations such as '300s', '1.5h' or '2h45m'.
-        + Members
-            + Default: `24hrs`
-            + ns
-            + us - Or 'µs'.
-            + ms
-            + s
-            + m
-            + h
-    + ttl (string, optional) - Time duration this record should be cached for. Caution: experimental.
+    + lifetime (time, optional) - Time duration that the record will be valid for. Default: 24h.
+    + ttl (time, optional) - Time duration this record should be cached for. Caution: experimental.
 
 + Request Without Arguments
 
@@ -4670,6 +4661,20 @@ The IPFS error object
     + Members
         + `0`
         + `1`
+
+## Time (string)
+
+The time format used in some commands. Note that this is not technically an enumerated type, as multiple
+time formats can be joined. For example, '3h30m'.
+
++ (string) - The time format, composed of a number followed by an enumerated list with the following members.
+    + Members
+        + `ns`
+        + `us` - Or `µs`.
+        + `ms`
+        + `s`
+        + `m`
+        + `h`
 
 ## ndjson (object)
 
