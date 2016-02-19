@@ -3983,6 +3983,19 @@ size is the IPFS link size.
         }
         ```
 
+# Group files
+Manipulate unixfs files.
+
+Files is an API for manipulating ipfs objects as if they were a unix filesystem.
+
+Note:
+Most of the subcommands of 'ipfs files' accept the 'flush' option. It defaults to
+true. Use caution when setting this to false. It will improve performance
+for large numbers of file operations, but it does so at the cost of consistency
+guarantees.
+
+This command can't be called directly.
+
 # Group get
 Download IPFS objects.
 
