@@ -5236,6 +5236,171 @@ Note: all paths must be absolute.
         ```
         ```
 
+## stat [GET /files/stat{?arg}{&flush}]
+Display file status.
+
++ Parameters
+    + arg (string, required) - Path to node to stat.
+    + flush (boolean, optional) - Flush target and ancestors after write. Default: true. Alias: f.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/stat"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/stat"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 19 Feb 2016 16:49:33 GMT
+        Content-Length: 27
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'path' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/stat?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/stat?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:38:34 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "paths must not be empty"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "paths must not be empty"
+        }
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/stat?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/stat?arg=kitten"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:38:37 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "paths must start with a leading slash"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "paths must start with a leading slash"
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/stat?arg=/"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/stat?arg=/"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:50:59 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Blocks (number)
+        - CumulativeSize (number)
+        - Hash (Multihash)
+        - Size (number)
+        - Type (string)
+
+    + Body
+
+        ```
+        {
+          "Blocks": 2,
+          "CumulativeSize": 123,
+          "Hash": "QmZLZmaTGuVBGuuRzqqW7aoigxf1vCjSDgDgZaDNT5xyEi",
+          "Size": 0,
+          "Type": "directory"
+        }
+        ```
+
 # Group get
 Download IPFS objects.
 
