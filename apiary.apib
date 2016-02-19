@@ -4191,6 +4191,158 @@ Remove a file.
         ```
         ```
 
+## flush [GET /files/flush{?arg}{&flush}]
+Flush a given path's data to disk.
+
+Flush a given path to disk. This is only useful when other commands
+are run with the 'flush' optin set to false.
+
++ Parameters
+    + arg (string, required) - Path to flush. Default: '/'.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/flush"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/flush"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:00:10 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ```
+
++ Request With Empty Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/flush?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/flush?arg="
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:00:29 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/flush?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/flush?arg=kitten"
+        ```
+
++ Response 500
+
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:00:51 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "file does not exist"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "file does not exist"
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/flush?arg=/test"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/flush?arg=/test"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:01:27 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ```
+
 # Group get
 Download IPFS objects.
 
