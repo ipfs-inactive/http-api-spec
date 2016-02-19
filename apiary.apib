@@ -3995,7 +3995,7 @@ Retrieves the object named by <ipfs-or-ipns-path> and stores the data to disk.
     + output (string, optional) - The path where the output should be stored. Default: './<ipfs-path>'.
     + archive (boolean, optional) - Output a TAR archive. Default: false.
     + compress (boolean, optional) - Compress the output with GZIP compression. Default: false.
-    + compression-level (enum[int], optional) - The level of compression.
+    + compression-level (enum[number], optional) - The level of compression.
         + Members
             + Default: -1
             + 0
@@ -6936,7 +6936,7 @@ Returns the current version of ipfs and exits.
 The IPFS error object
 
 + message (string) - the error message
-+ code (enum[int]) - the status code
++ code (enum[number]) - the status code
     + Members
         + `0`
         + `1`
