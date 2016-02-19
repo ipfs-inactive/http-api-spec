@@ -4542,6 +4542,245 @@ Move files around. Just like traditional unix mv.
         ```
         ```
 
+## cp [GET /files/cp{?arg,arg2}{&flush}]
+Copy files into mfs.
+
++ Parameters
+    + arg (string, required) - Source file to move.
+    + arg2 (string, required) - Destination to copy object to.
+    + flush (boolean, optional) - Flush target and ancestors after write. Default: true. Alias: f.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/cp"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/cp"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 19 Feb 2016 16:07:11 GMT
+        Content-Length: 29
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'source' is required
+        ```
+
++ Request With Empty Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=&arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=&arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:07:57 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "paths must not be empty"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "paths must not be empty"
+        }
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=kitten&arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=kitten&arg=kitten"
+        ```
+
++ Response 500
+
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:08:45 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "paths must start with a leading slash"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "paths must start with a leading slash"
+        }
+        ```
+
++ Request With Non-Existent Argument
+
+    This call depends upon a file in the Files API called 'here', which must not exist.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/here&arg=/there"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/here&arg=/there"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:10:40 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Code: 0
+        - Message: "file does not exist"
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "file does not exist"
+        }
+        ```
+
++ Request With Existenting Argument
+
+    This call depends upon a file in the Files API called 'hest', which must exist.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/test&arg=/there"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/test&arg=/there"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:10:40 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Code: 0
+        - Message: "directory already has entry by that name"
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "directory already has entry by that name"
+        }
+        ```
+
++ Request With Argument
+
+    This call depends upon a file in the Files API called 'there', and no 'here' file.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/there&arg=/here"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/there&arg=/here"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:21:16 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ```
+
 # Group get
 Download IPFS objects.
 
