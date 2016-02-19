@@ -4343,6 +4343,205 @@ are run with the 'flush' optin set to false.
         ```
         ```
 
+## mv [GET /files/mv{?arg,arg2}{&flush}]
+Move files.
+
+Move files around. Just like traditional unix mv.
+
++ Parameters
+    + arg (string, required) - Source file to move.
+    + arg2 (string, required) - Target path for file to be moved to.
+    + flush (boolean, optional) - Flush target and ancestors after write. Default: true. Alias: f.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/mv"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/mv"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 19 Feb 2016 16:07:11 GMT
+        Content-Length: 29
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'source' is required
+        ```
+
++ Request With Empty Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/mv?arg=&arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/mv?arg=&arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:07:57 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "paths must not be empty"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "paths must not be empty"
+        }
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/mv?arg=kitten&arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/mv?arg=kitten&arg=kitten"
+        ```
+
++ Response 500
+
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:08:45 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "paths must start with a leading slash"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "paths must start with a leading slash"
+        }
+        ```
+
++ Request With Non-Existent Argument
+
+    This call depends upon a file in the Files API called 'here', which must not exist.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/mv?arg=/here&arg=/there"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/mv?arg=/here&arg=/there"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:10:40 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Code: 0
+        - Message: "file does not exist"
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "file does not exist"
+        }
+        ```
+
++ Request With Argument
+
+    This call depends upon a file in the Files API called 'here'.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/mv?arg=/here&arg=/there"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/mv?arg=/here&arg=/there"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:09:45 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ```
+
 # Group get
 Download IPFS objects.
 
