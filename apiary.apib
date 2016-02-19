@@ -5395,6 +5395,420 @@ Display file status.
         }
         ```
 
+## read [GET /files/read{?arg}{&flush,offset,count}]
+Read a file in a given mfs.
+
+Read a specified number of bytes from a file at a given offset. By default, will
+read the entire file similar to unix cat.
+
++ Parameters
+    + arg (string, required) - Path to file to be read.
+    + offset (number, optional) - Offset to read from. Alias: o.
+    + count (number, optional) - Maximum number of bytes to read. Alias: n.
+    + flush (boolean, optional) - Flush target and ancestors after write. Default: true. Alias: f.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/read"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/read"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 19 Feb 2016 16:49:33 GMT
+        Content-Length: 27
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'path' is required
+        ```
+
++ Request With Empty Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/read?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/read?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:38:34 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "paths must not be empty"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "paths must not be empty"
+        }
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/read?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/read?arg=kitten"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 16:38:37 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "paths must start with a leading slash"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "paths must start with a leading slash"
+        }
+        ```
+
++ Request With Argument
+
+    This depends upon a file in the Files API named 'test' with the content:
+
+        ```
+        hello world
+        ```
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/read?arg=/test"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/read?arg=/test"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Fri, 19 Feb 2016 16:58:25 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        hello world
+        ```
+
++ Request With Argument And Offset Option
+
+    This depends upon a file in the Files API named 'test' with the content:
+
+        ```
+        hello world
+        ```
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/read?arg=/test&offset=10"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/read?arg=/test&offset=10"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Fri, 19 Feb 2016 16:58:25 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        d
+        ```
+
++ Request With Argument And Invalid Offset Option
+
+    This depends upon a file in the Files API named 'test' with the content:
+
+        ```
+        hello world
+        ```
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/read?arg=/test&offset=20"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/read?arg=/test&offset=20"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 19 Feb 2016 17:03:38 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Code: 0
+        - Message: "offset was past end of file (20 > 12)"
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "offset was past end of file (20 > 12)"
+        }
+        ```
+
++ Request With Argument And Count Option
+
+    This depends upon a file in the Files API named 'test' with the content:
+
+        ```
+        hello world
+        ```
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/read?arg=/test&count=5"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/read?arg=/test&count=5"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Fri, 19 Feb 2016 16:58:25 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        hello
+        ```
+
++ Request With Argument And Invalid Count Option
+
+    This depends upon a file in the Files API named 'test' with the content:
+
+        ```
+        hello world
+        ```
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/read?arg=/test&count=50"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/read?arg=/test&count=50"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Fri, 19 Feb 2016 16:58:25 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        hello world
+        ```
+
++ Request With Argument And Invalid Count or Offset Option Type
+
+    This depends upon a file in the Files API named 'test' with the content:
+
+        ```
+        hello world
+        ```
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/read?arg=/test&count=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/read?arg=/test&count=kitten"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 19 Feb 2016 17:04:31 GMT
+        Content-Length: 67
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Could not convert value 'kitten' to type 'int' (for option '-count')
+        ```
+
++ Request With Argument And Offset And Count Options
+
+    This depends upon a file in the Files API named 'test' with the content:
+
+        ```
+        hello world
+        ```
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/read?arg=/test&count=5&offset=2"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/read?arg=/test&count=5&offset=2"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Fri, 19 Feb 2016 16:58:25 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        llo w
+        ```
+
 # Group get
 Download IPFS objects.
 
