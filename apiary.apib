@@ -646,7 +646,9 @@ Stores input as an IPFS block
 
     In the example provided, the 'test' file has the following contents:
 
+        ```
         hello world
+        ```
 
     #### curl
 
@@ -1337,6 +1339,166 @@ Outputs the list of peers that were removed.
         ```
 
 # Group cat
+
+Show IPFS object data.
+
+## cat [GET /cat{?arg}]
+Retrieves the object named by <ipfs-or-ipns-path> and outputs the data it contains.
+
++ Parameters
+    + arg (string, required) - The path to the IPFS object or objects to be outputted.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/cat"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/cat"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 05 Feb 2016 17:14:24 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+        This is the raw content of the file.
+
+    + Body
+
+        ```
+        Argument 'ipfs-path' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if there is an invalid argument. For example:
+
+        curl -i "http://localhost:5001/api/v0/cat?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/cat?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/cat?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 05 Feb 2016 17:14:49 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Valid Argument But Invalid DAG Node
+
+    The multihash in this request is for a directory, not for an object.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/cat?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/cat?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 05 Feb 2016 17:16:07 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "this dag node is a directory"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "this dag node is a directory",
+          "Code": 0
+        }
+        ```
+
++ Request With Valid Argument
+
+    In this request, 'QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o' is the hash for a file, 'test',
+    with the following contents
+
+        ```
+        hello world
+        ```
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/cat?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/cat?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: text/plain
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Fri, 05 Feb 2016 17:18:10 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        hello world
+        ```
 
 # Group commands
 
