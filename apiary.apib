@@ -1014,42 +1014,7 @@ Interact with ipfs objects.
 `ipfs object` is a plumbing command used to manipulate DAG objects
 directly.
 
-## object [GET /object]
-
-+ Request Without Subcommands
-
-    #### curl
-
-        curl -i http://localhost:5001/api/v0/object
-
-    + Body
-
-        curl -i http://localhost:5001/api/v0/object
-
-+ Response 400
-
-    + Headers
-
-        ```
-        Content-Type: application/json
-        Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Wed, 03 Feb 2016 19:02:10 GMT
-        Transfer-Encoding: chunked
-        ```
-
-    + Attributes (Error)
-        - Message: "This command can't be called directly. Try one of its subcommands."
-        - Code: 1
-
-    + Body
-
-        ```
-        {
-          "Message": "This command can't be called directly. Try one of its subcommands.",
-          "Code": 1
-        }
-        ```
+This command can't be called directly.
 
 ## data [GET /object/data{?arg}]
 Outputs the raw bytes in an IPFS object.
