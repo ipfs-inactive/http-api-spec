@@ -2493,6 +2493,130 @@ trip latency information.
 ## gc
 
 # Group resolve
+Resolve the value of names to IPFS.
+
+## resolve [GET /resolve{?arg}{&resolve}]
+There are a number of mutable name protocols that can link among
+themselves and into IPNS. For example IPNS references can (currently)
+point at an IPFS object, and DNS links can point at other DNS links, IPNS
+entries, or IPFS objects. This command accepts any of these
+identifiers and resolves them to the referenced item.
+
++ Parameters
+    + arg (string, required) - The name to resolve.
+    + recursive (boolean, optional) - Resolve until the result is an IPFS name. Default: false.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/resolve"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/resolve"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 11 Feb 2016 21:49:48 GMT
+        Content-Length: 27
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'name' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/resolve?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/resolve?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/resolve?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 21:50:15 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/resolve?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/resolve?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 21:50:55 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Path (Multiaddr)
+
+    + Body
+
+        ```
+        {
+          "Path": "/ipfs/QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        }
+        ```
 
 # Group stats
 
