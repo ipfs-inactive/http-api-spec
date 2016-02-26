@@ -534,6 +534,40 @@ Remove a given block from your wantlist.
         }
         ```
 
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/bitswap/unwant?arg=kitten
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/bitswap/unwant?arg=kitten
+        ```
+
++ Response 500 (application/json)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Fri, 26 Feb 2016 16:34:56 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes
+
+    + Body
+
+        ```
+        ```
+
 + Request With Key
 
     #### curl
@@ -559,9 +593,37 @@ Remove a given block from your wantlist.
         Transfer-Encoding: chunked
         Date: Fri, 26 Feb 2016 16:04:39 GMT
         Transfer-Encoding: chunked
+        ```
+
+    + Body
+
+        ```
+        ```
+
++ Request With Multiple Keys
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/bitswap/unwant?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/bitswap/unwant?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ
+        ```
+
++ Response 200 (application/json)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
         Trailer: X-Stream-Error
         Transfer-Encoding: chunked
-        Date: Fri, 29 Jan 2016 20:35:58 GMT
+        Date: Fri, 26 Feb 2016 16:33:32 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -616,7 +678,11 @@ Show blocks currently on the wantlist.
         }
         ```
 
-+ Request Bad Argument
++ Request with Invalid Argument
+
+    The response is the same if the argument is not included. For example:
+
+        curl -i http://localhost:5001/api/v0/bitswap/wantlist?peer=
 
     #### curl
 
