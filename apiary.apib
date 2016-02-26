@@ -466,7 +466,7 @@ Remove a given block from your wantlist.
 + Parameters
     + arg (Multihash, required) - Key to remove from your wantlist.
 
-+ Request No Arguments
++ Request With No Arguments
 
     #### curl
 
@@ -529,7 +529,7 @@ Remove a given block from your wantlist.
 
         ```
         {
-          "Message": "incorrectly formatted key: ",
+          "Message": "Incorrectly formatted key: ",
           "Code": 0
         }
         ```
@@ -635,10 +635,10 @@ Remove a given block from your wantlist.
 ## wantlist [GET /bitswap/wantlist{?peer}]
 Show blocks currently on the wantlist.
 
-+ Parameters
-    + peer (Multihash, optional)
+Print out all blocks currently on the bitswap wantlist for the local peer.
 
-        Specify which peer to show wantlist for. Default: self.
++ Parameters
+    + peer (Multihash, optional) - Specify which peer to show wantlist for. Default: self.
 
 + Request No Arguments
 
