@@ -1104,6 +1104,8 @@ Retrieve information on a raw ipfs block.
         Content-Type: text/plain; charset=utf-8
         ```
 
+    + Attributes (string)
+
     + Body
 
         ```
@@ -1936,11 +1938,532 @@ Lists all available commands (and subcommands) and exits.
 
 # Group config
 
-## edit
+## config [POST /config{?arg1,arg2}{&bool,json}]
 
-## replace
+'ipfs config' controls configuration variables. It works
+much like 'git config'. The configuration values are stored in a config
+file inside your IPFS repository.
 
-## show
++ Parameters
+    + arg1: "Datastore.Path" (string, required) - The key of the config entry.
+    + arg2: "~/.ipfs/datastore" (string, optional) - The value to set the config entry to.
+    + bool (boolean, optional) - Set a boolean. Default: false.
+    + json (boolean, optional) - Parse stringified JSON. Default: false.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/config"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/config"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Tue, 02 Feb 2016 16:37:00 GMT
+        Content-Length: 26
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Body
+
+        ```
+        Argument 'key' is required
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=kitten"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Tue, 02 Feb 2016 17:04:39 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        + Message: "Failed to get config value:  key has no attributes"
+        + Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "Failed to get config value:  key has no attributes",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=API.HTTPHeaders"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=API.HTTPHeaders"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Tue, 02 Feb 2016 16:59:11 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + `Key`: "Datastore" (string)
+        + `Value`: null (object, nullable) - The config entry.
+
+    + Body
+
+        ```
+        {
+          "Key": "API.HTTPHeaders",
+          "Value": null
+        }
+        ```
+
++ Request As Subcommand
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/config/API.HTTPHeaders"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/config/API.HTTPHeaders"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Tue, 02 Feb 2016 16:59:11 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + `Key`: "Datastore" (string)
+        + `Value`: null (object, nullable) - The config entry.
+
+    + Body
+
+        ```
+        {
+          "Key": "API.HTTPHeaders",
+          "Value": null
+        }
+        ```
+
++ Request With Both Args
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=kitten"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=kitten"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Tue, 02 Feb 2016 22:25:00 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Key: "Datastore.Path" (string)
+        - Value: "kitten" (string)
+
+
+    + Body
+
+        ```
+        {
+          "Key": "Datastore.Path",
+          "Value": "kitten"
+        }
+        ```
+
++ Request With Both Args and JSON Flag With Invalid JSON Argument
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=kitten&json"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=kitten&json"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Tue, 02 Feb 2016 22:26:11 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "failed to unmarshal json. invalid character 'k' looking for beginning of value"
+        - Code: 0
+
+
+    + Body
+
+        ```
+        {
+          "Message": "failed to unmarshal json. invalid character 'k' looking for beginning of value",
+          "Code": 0
+        }
+        ```
+
++ Request With Both Args and JSON Flag With Valid JSON Argument
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=\"kitten\"&json"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/config?arg=Datastore.Path&arg=\"kitten\"&json"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Tue, 02 Feb 2016 22:28:37 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Key: "Datastore.Path" (string)
+        - Value: "kitten" (string)
+
+
+    + Body
+
+        ```
+        {
+          "Key": "Datastore.Path",
+          "Value": "kitten"
+        }
+        ```
+
+## replace [POST /config/replace{?arg}]
+Replaces the config with <file>.
+
+Make sure to back up the config file first if neccessary, this operation
+can't be undone.
+
+#### curl
+
+    curl -i -X POST -F "file=@test" "http://localhost:5001/api/v0/config/replace"
+
++ Parameters
+
+    + arg (string, required) - The file to use as the new config.
+
++ Request Without File
+
+    #### curl
+
+         curl -i -X POST "http://localhost:5001/api/v0/config/replace"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/config/replace"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Tue, 02 Feb 2016 22:31:15 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        File argument 'file' is required
+        ```
+
+
++ Request With Badly Configured Config File
+
+    Where 'test' is a file that is not JSON and does not conform to the
+    standard IPFS config file structure.
+
+    #### curl
+
+        curl -i -X POST -F "file=@test" http://localhost:5001/api/v0/config/replace
+
+    + Body
+
+        ```
+        curl -i -X POST -F "file=@test" http://localhost:5001/api/v0/config/replace
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Tue, 02 Feb 2016 21:27:01 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "Failed to decode file as config" (string)
+        - Code: 0 (number)
+
+    + Body
+
+        ```
+        {
+          "Message": "Failed to decode file as config",
+          "Code": 0
+        }
+        ```
+
++ Request With Config File
+
+    #### curl
+
+        curl -i -X POST -F "file=@test" http://localhost:5001/api/v0/config/replace
+
+    + Body
+
+        ```
+        curl -i -X POST -F "file=@test" http://localhost:5001/api/v0/config/replace
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Tue, 02 Feb 2016 21:29:55 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes
+
+    + Body
+
+        ```
+        ```
+
+## show [GET /config/show]
+Outputs the content of the config file
+
+**Warning**
+
+Your private key is stored in the config file, and it will be
+included in the output of this command.
+
++ Request Without Config File
+
+    This request is shown as an example, presuming that ~/.ipfs/config has been
+    deleted, not that it hasn't been specified in the request.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/config/show"
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/config/show
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Tue, 02 Feb 2016 21:38:55 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "open /Users/richard/.ipfs/config: no such file or directory" (string)
+        - Code: 0 (number)
+
+    + Body
+
+        ```
+        {
+          "Message": "open /Users/richard/.ipfs/config: no such file or directory",
+          "Code": 0
+        }
+        ```
+
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/config/show"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/config/show"
+        ```
+
++ Response 200
+
+    A Body is not included here in order to obfuscate the private key.
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
+        Content-Type: text/plain
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Tue, 02 Feb 2016 21:33:14 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + `API` (object)
+            + `HTTPHeaders`: null (string, nullable)
+        + `Addresses` (object)
+            + `API`: "/ip4/127.0.0.1/tcp/5001" (MultiAddr)
+            + `Gateway`: "/ip4/127.0.0.1/tcp/8080" (MultiAddr)
+            + `Swarm` (array)
+                - (SwarmAddrs)
+        + `Bootstrap` (array)
+            - MultiAddr (MultiAddr)
+        + `Datastore` (object)
+            - `GCPeriod`: "" (string)
+            - `NoSync`: false (boolean)
+            - `Params`: null (string, nullable)
+            - `Path`: "" (string)
+            - `StorageGCWatermark`: 90 (number)
+            - `StorageMax`: "10GB" (string)
+            - `Type`: "" (string)
+        + `Discovery` (object)
+            + `MDNS` (object)
+                - `Enabled`: true (boolean)
+                - `Interval`: 10 (number)
+        + `Gateway` (object)
+            - `HTTPHeaders`: null (string, nullable)
+            - `RootRedirect`: "" (string)
+            - `Writable`: false (boolean)
+        + `Identity` (object)
+            - `PeerID`: hash (Multihash)
+            - `PrivKey`: hash (string)
+        + `Ipns` (object)
+            - `RecordLifetime`: "" (string)
+            - `RepublishPeriod`: "" (string)
+            - `ResolveCacheSize`: 128 (number)
+        + `Log` (object)
+            - `MaxAgeDays`: 0 (number)
+            - `MaxBackups`: 1 (number)
+            - `MaxSizeMB`: 250 (number)
+        + `Mounts` (object)
+            - `FuseAllowOther`: false (boolean)
+            - `IPFS`: "/ipfs" (string)
+            - `IPFS`: "/ipns" (string)
+        + `SupernodeRouting` (object)
+            + `Servers` (array)
+                - (SwarmAddrs)
+        + `Swarm` (object)
+            - `AddrFilters`: null (string, nullable)
+        + `Tour` (object)
+            - `Last`: "" (string)
+        + `Version` (object)
+            - `AutoUpdate`: "minor" (string)
+            - `Check`: "error" (string)
+            - `CheckDate`: "0001-01-01T00:00:00Z" (string)
+            - `CheckPeriod`: "172800000000000" (string)
+            - `Current`: "0.4.0-dev" (string)
+        + `id` (Multihash)
 
 # Group dht
 
