@@ -1870,6 +1870,8 @@ Retrieves the object named by <ipfs-or-ipns-path> and outputs the data it contai
 
 + Response 200
 
+    The Content-Type of the response should be `application/x-tar`.
+
     + Headers
 
         ```
@@ -3086,7 +3088,7 @@ Import a tar file into IPFS.
 
     The response is the same if the argument is invalid. For example:
 
-        curl -i -F "data=@test" -X POST http://localhost:5001/api/v0/tar/add"
+        curl -i -F "data=@test" -X POST "http://localhost:5001/api/v0/tar/add"
 
     Where 'test' is not a tarball.
 
@@ -3283,6 +3285,8 @@ Export a tar file from IPFS
         ```
 
 + Request With Argument
+
+    This call depends on the given hash being a tar file.
 
     #### curl
 
