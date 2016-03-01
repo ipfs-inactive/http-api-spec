@@ -1777,40 +1777,6 @@ file inside your IPFS repository.
         }
         ```
 
-## edit [GET /config/edit]
-Opens the config file for editing in $EDITOR
-
-+ Request
-
-    ### curl
-
-        curl -i "http://localhost:5001/api/v0/config/edit"
-
-    + Body
-
-        ```
-        curl -i "http://localhost:5001/api/v0/config/edit"
-        ```
-
-+ Response 200
-
-    + Headers
-
-        ```
-        Access-Control-Allow-Headers: X-Stream-Ouptut, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Ouptut, X-Chunked-Output
-        Content-Type: application/json
-        Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Tue, 02 Feb 2016 17:54:56 GMT
-        Transfer-Encoding: chunked
-        ```
-
-    + Body
-
-        ```
-        ```
-
 ## replace [POST /config/replace{?arg}]
 Replaces the config with <file>.
 
