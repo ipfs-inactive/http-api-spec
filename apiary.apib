@@ -1891,6 +1891,49 @@ Retrieves the object named by <ipfs-or-ipns-path> and outputs the data it contai
 
 # Group commands
 
+Lists all available commands.
+
+## commands [GET /commands]
+
+Lists all available commands (and subcommands) and exits.
+
++ Request
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/commands
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/commands
+        ```
+
++ Response 200 (application/json)
+
+    Due to the size of the response, no Body is included here, and only one level depth for the Attributes.
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 04 Feb 2016 23:21:36 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Name: "ipfs" (string)
+        + Subcommands (array)
+            - Name (string)
+            + Subcommands (object)
+            + Options (array)
+            - ShowOptions: false (boolean)
+        + Options (array)
+            - "{}" (object)
+        - ShowOptions: false (boolean)
+
 # Group config
 
 ## edit
