@@ -1872,6 +1872,8 @@ Retrieves the object named by <ipfs-or-ipns-path> and outputs the data it contai
 
 + Response 200
 
+    The Content-Type of the response should be `application/x-tar`.
+
     + Headers
 
         ```
@@ -3593,9 +3595,255 @@ identifiers and resolves them to the referenced item.
 
 # Group tar
 
-## add
+Utility functions for tar files in ipfs
 
-## cat
+This command can't be called directly.
+
+## add [POST /tar/add{?arg}]
+Import a tar file into IPFS.
+
+'ipfs tar add' will parse a tar file and create a merkledag structure to represent it.
+
++ Parameters
+    + arg (string, required) - Tar file to add.
+
++ Request Without Arguments
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i -F "data=@test" -X POST "http://localhost:5001/api/v0/tar/add"
+
+    Where 'test' is not a tarball.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/tar/add"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/tar/add"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 11 Feb 2016 22:03:51 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        File argument 'file' is required
+        ```
+
++ Request With Argument
+
+    Where 'test' is a tarball in the current directory.
+
+    #### curl
+
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/tar/add?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/tar/add?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 22:07:33 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Name (string)
+        - Hash (Multihash)
+
+    + Body
+
+        ```
+        {
+          "Name": "test",
+          "Hash": "QmUkwXfkw4mHH9PB53b5fR5C1YsjhLxz3LbjBehB9Q6LAG"
+        }
+        ```
+
+## cat [GET /tar/cat{?arg}]
+Export a tar file from IPFS
+
+'ipfs tar cat' will export a tar file from a previously imported one in IPFS.
+
++ Parameters
+    + arg (string, required) - IPFS path of archive to export
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/tar/cat"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/tar/cat"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Thu, 11 Feb 2016 22:11:47 GMT
+        Content-Length: 27
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'path' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/tar/cat?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/tar/cat?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/tar/cat?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 22:12:10 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Valid IPFS Hash But Not A Tarfile
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/tar/cat?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/tar/cat?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 11 Feb 2016 22:13:15 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "not an ipfs archive"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "not an ipfs tarchive",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    This call depends on the given hash being a tar file.
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/tar/cat?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/tar/cat?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Stream-Output: 1
+        Date: Thu, 11 Feb 2016 22:14:37 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        input0000644000076500000240000000200012657203016012731 0ustar00richardstaff00000000000000
+        ```
 
 # Group tour
 This is a tour that takes you through various IPFS concepts,
@@ -3964,6 +4212,7 @@ Restart the IPFS Tour
 + Response 200
 
     + Headers
+
 
         ```
         Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
