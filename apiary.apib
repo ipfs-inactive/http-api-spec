@@ -4000,11 +4000,9 @@ Remove a file.
 
 ### Bugs
 
-- Recursive seems to default to true. CF: https://github.com/ipfs/go-ipfs/issues/2378
-
 + Parameters
     + arg (string, required) - File to remove.
-    + recursive (boolean, optional) - Recursively remove directories. Alias: r.
+    + recursive (boolean, optional) - Recursively remove directories. Default: false. Alias: r.
     + flush (boolean, optional) - Flush target and ancestors after write. Default: true. Alias: f.
 
 + Request Without Arguments
@@ -4153,18 +4151,60 @@ Remove a file.
         ```
         ```
 
++ Request With Argument For Directory Without Recursive
+
+    '/test' here must be a directory, not a file.
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/files/rm?arg=/test"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/files/rm?arg=/test"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 03 Mar 2016 15:53:27 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "/test is a directory, use -r to remove directories"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "/test is a directory, use -r to remove directories"
+        }
+        ```
+
 + Request With Argument And Recursive Option
 
     This request is dependent on there being a 'test' folder in your Files API folder.
 
     #### curl
 
-        curl -i -X POST "http://localhost:5001/api/v0/files/rm?arg=/test&recursive=true"
+        curl -i -X POST "http://localhost:5001/api/v0/files/rm?arg=/test&recursive"
 
     + Body
 
         ```
-        curl -i -X POST "http://localhost:5001/api/v0/files/rm?arg=/test&recursive=true"
+        curl -i -X POST "http://localhost:5001/api/v0/files/rm?arg=/test&recursive"
         ```
 
 + Response 200
