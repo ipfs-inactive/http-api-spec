@@ -2494,12 +2494,6 @@ remember. To create memorable aliases for multihashes, DNS TXT
 records can point to other DNS links, IPFS objects, IPNS keys, etc.
 This command resolves those links to the referenced object.
 
-The following examples assume this DNS TXT record:
-
-```
-ipfs.io TXT "dnslink=/ipfs/QmRzTuh2Lpuz7Gr39stNr6mTFdqAghsZec1JoUnfySUzcy ..."
-```
-
 + Parameters
     + arg (string, required) - DNS name
     + recursive (string, optional) - Resolve until the result is not a DNS link. Default: false.
@@ -2555,10 +2549,13 @@ ipfs.io TXT "dnslink=/ipfs/QmRzTuh2Lpuz7Gr39stNr6mTFdqAghsZec1JoUnfySUzcy ..."
     + Headers
 
         ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
         Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
         Trailer: X-Stream-Error
         Transfer-Encoding: chunked
-        Date: Fri, 05 Feb 2016 23:31:17 GMT
+        Date: Thu, 03 Mar 2016 16:15:01 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -2592,10 +2589,13 @@ ipfs.io TXT "dnslink=/ipfs/QmRzTuh2Lpuz7Gr39stNr6mTFdqAghsZec1JoUnfySUzcy ..."
     + Headers
 
         ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
         Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
         Trailer: X-Stream-Error
         Transfer-Encoding: chunked
-        Date: Fri, 05 Feb 2016 23:32:31 GMT
+        Date: Thu, 03 Mar 2016 16:14:35 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -2606,7 +2606,85 @@ ipfs.io TXT "dnslink=/ipfs/QmRzTuh2Lpuz7Gr39stNr6mTFdqAghsZec1JoUnfySUzcy ..."
 
         ```
         {
-          "Path": "/ipfs/QmZAxDc6toRXbwC3kbDzfJhtqRsgdqpJChykEHU7hT98hS"
+          "Path": "/ipfs/QmUbFnoqVhzPBXq1Bi2Rn9dCYu1csbKuowo7oTj5FCdXQs""
+        }
+        ```
+
++ Request With Valid Argument And No Recursive Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dns?arg=recursive.ipfs.io"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dns?arg=recursive.ipfs.io"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 03 Mar 2016 16:15:54 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Code: 0
+        - Message: "Could not resolve name. Recursion limit exceeded."
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "Could not resolve name (recursion limit exceeded)."
+        }
+        ```
+
++ Request With Valid Argument And Recursive Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dns?arg=recursive.ipfs.io&r"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dns?arg=recursive.ipfs.io&r"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 03 Mar 2016 16:16:49 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Path (string)
+
+    + Body
+
+        ```
+        {
+          "Path": "/ipfs/QmUbFnoqVhzPBXq1Bi2Rn9dCYu1csbKuowo7oTj5FCdXQs"
         }
         ```
 
