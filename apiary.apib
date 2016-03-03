@@ -4233,7 +4233,7 @@ Remove a file.
 Flush a given path's data to disk.
 
 Flush a given path to disk. This is only useful when other commands
-are run with the 'flush' optin set to false.
+are run with the 'flush' option set to false.
 
 + Parameters
     + arg (string, required) - Path to flush. Default: '/'.
@@ -5042,7 +5042,7 @@ Note: all paths must be absolute.
 
 + Parameters
     + arg (string, required) - Path to dir to make.
-    + parents (boolean, optional) - No error if existing, make parent directories as needed. Alias: p.
+    + parents (boolean, optional) - No error if existing, make parent directories as needed. Default: false. Alias: p.
     + flush (boolean, optional) - Flush target and ancestors after write. Default: true. Alias: f.
 
 + Request Without Arguments
@@ -5260,6 +5260,81 @@ Note: all paths must be absolute.
         Trailer: X-Stream-Error
         Transfer-Encoding: chunked
         Date: Fri, 19 Feb 2016 16:39:45 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ```
+
++ Request With Embedded Argument and Without Parents Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/mkdir?arg=/testing/test/test"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/mkdir?arg=/testing/test/test"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 03 Mar 2016 16:00:58 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Code: 0
+        - Message: "file does not exist"
+
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "file does not exist"
+        }
+        ```
+
++ Request With Embedded Argument And Parents Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/files/mkdir?arg=/testing/test/test&parents"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/files/mkdir?arg=/testing/test/test&parents"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 03 Mar 2016 16:00:50 GMT
         Transfer-Encoding: chunked
         ```
 
