@@ -2486,6 +2486,207 @@ included in the output of this command.
 ## sys
 
 # Group dns
+DNS link resolver.
+
+## dns [GET /dns{?arg}]
+Multihashes are hard to remember, but domain names are usually easy to
+remember. To create memorable aliases for multihashes, DNS TXT
+records can point to other DNS links, IPFS objects, IPNS keys, etc.
+This command resolves those links to the referenced object.
+
++ Parameters
+    + arg (string, required) - DNS name
+    + recursive (string, optional) - Resolve until the result is not a DNS link. Default: false.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dns"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dns"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 05 Feb 2016 23:30:20 GMT
+        Content-Length: 34
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'domain-name' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/dns?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dns?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dns?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 03 Mar 2016 16:15:01 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "not a valid domain name"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "not a valid domain name",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dns?arg=ipfs.io"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dns?arg=ipfs.io"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 03 Mar 2016 16:14:35 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Path (string)
+
+    + Body
+
+        ```
+        {
+          "Path": "/ipfs/QmUbFnoqVhzPBXq1Bi2Rn9dCYu1csbKuowo7oTj5FCdXQs""
+        }
+        ```
+
++ Request With Valid Argument And No Recursive Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dns?arg=recursive.ipfs.io"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dns?arg=recursive.ipfs.io"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 03 Mar 2016 16:15:54 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Code: 0
+        - Message: "Could not resolve name. Recursion limit exceeded."
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "Could not resolve name (recursion limit exceeded)."
+        }
+        ```
+
++ Request With Valid Argument And Recursive Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dns?arg=recursive.ipfs.io&r"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dns?arg=recursive.ipfs.io&r"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 03 Mar 2016 16:16:49 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Path (string)
+
+    + Body
+
+        ```
+        {
+          "Path": "/ipfs/QmUbFnoqVhzPBXq1Bi2Rn9dCYu1csbKuowo7oTj5FCdXQs"
+        }
+        ```
 
 # Group file
 
