@@ -4821,7 +4821,7 @@ List directories.
 
 + Parameters
     + arg (string, required) - Path to show listing for. Default: '/'.
-    + l (boolean, optional) - Use long listing format.
+    + l (boolean, optional) - Use long listing format. Default: false.
     + flush (boolean, optional) - Flush target and ancestors after write. Default: true. Alias: f.
 
 + Request Without Arguments
@@ -4961,7 +4961,7 @@ List directories.
         ```
 
     + Attributes (object)
-        + Entries (array)
+        + Entries (array, nullable)
             + (object)
                 - Hash (Multihash)
                 - Name (string)
@@ -4983,7 +4983,7 @@ List directories.
         }
         ```
 
-+ Request With Argument And L Option
++ Request With Argument And List Option
 
     #### curl
 
@@ -5011,7 +5011,7 @@ List directories.
         ```
 
     + Attributes (object)
-        + Entries (array)
+        + Entries (array, nullable)
             + (object)
                 - Hash (Multihash)
                 - Name (string)
