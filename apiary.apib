@@ -2486,6 +2486,207 @@ included in the output of this command.
 ## sys
 
 # Group dns
+DNS link resolver.
+
+## dns [GET /dns{?arg}]
+Multihashes are hard to remember, but domain names are usually easy to
+remember. To create memorable aliases for multihashes, DNS TXT
+records can point to other DNS links, IPFS objects, IPNS keys, etc.
+This command resolves those links to the referenced object.
+
++ Parameters
+    + arg (string, required) - DNS name
+    + recursive (string, optional) - Resolve until the result is not a DNS link. Default: false.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dns"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dns"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 05 Feb 2016 23:30:20 GMT
+        Content-Length: 34
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'domain-name' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/dns?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dns?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dns?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 03 Mar 2016 16:15:01 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "not a valid domain name"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "not a valid domain name",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dns?arg=ipfs.io"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dns?arg=ipfs.io"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 03 Mar 2016 16:14:35 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Path (string)
+
+    + Body
+
+        ```
+        {
+          "Path": "/ipfs/QmUbFnoqVhzPBXq1Bi2Rn9dCYu1csbKuowo7oTj5FCdXQs""
+        }
+        ```
+
++ Request With Valid Argument And No Recursive Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dns?arg=recursive.ipfs.io"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dns?arg=recursive.ipfs.io"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 03 Mar 2016 16:15:54 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Code: 0
+        - Message: "Could not resolve name. Recursion limit exceeded."
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "Could not resolve name (recursion limit exceeded)."
+        }
+        ```
+
++ Request With Valid Argument And Recursive Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dns?arg=recursive.ipfs.io&r"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dns?arg=recursive.ipfs.io&r"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Thu, 03 Mar 2016 16:16:49 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Path (string)
+
+    + Body
+
+        ```
+        {
+          "Path": "/ipfs/QmUbFnoqVhzPBXq1Bi2Rn9dCYu1csbKuowo7oTj5FCdXQs"
+        }
+        ```
 
 # Group file
 
@@ -3309,9 +3510,241 @@ root will not be listable, as it is virtual. Access known paths directly.
 
 # Group name
 
-## publish
+IPFS namespace (IPNS) tool.
 
-## resolve
+IPNS is a PKI namespace, where names are the hashes of public keys, and
+the private key enables publishing new (signed) values.
+
+This command can't be called directly.
+
+## publish [POST /name/publish{?arg}{&resolve,lifetime,ttl}]
+Publish an object to IPNS.
+
+#### Bugs
+
++ Parameters
+    + arg (string, required) - IPFS path of the object to be published. Default: your own identity public key.
+    + resolve (boolean, optional) - Resolve given path before publishing
+        + Default: `true`
+    + lifetime (time, optional) - Time duration that the record will be valid for. Default: 24h.
+    + ttl (time, optional) - Time duration this record should be cached for. Caution: experimental.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/name/publish"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/name/publish"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Sun, 07 Feb 2016 00:40:01 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'ipfs-path' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i -X POST "http://localhost:5001/api/v0/name/publish?arg=kitten"
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/name/publish?arg="
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/name/publish?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Sun, 07 Feb 2016 00:40:25 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/name/publish?arg="
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/name/publish?arg="
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Sun, 07 Feb 2016 00:42:08 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes
+        + Name (Multihash) - IPFS hash
+        + Value (Multihash) - IPFS path
+
+    + Body
+
+        ```
+        {
+          "Name": "Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH",
+          "Value": "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        }
+        ```
+
+## resolve [GET /name/resolve]
+Gets the value currently published at an IPNS name.
+
++ Parameters
+    + arg (string, required) - The IPNS name to resolve. Defaults to your node's peerID.
+    + recursive (boolean, optional) - Resolve until the result is not an IPNS name. Default: false.
+    + nocache (boolean, optional) - Do not used cached entries. Default: false.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/name/resolve"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/name/resolve"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Sun, 07 Feb 2016 00:55:12 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+
+    + Body
+
+        ```
+        {
+          "Path": "/ipfs/QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        }
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/name/resolve?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/name/resolve?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/name/resolve?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        Date: Sun, 07 Feb 2016 01:10:03 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "could not resolve name."
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "could not resolve name.",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/name/resolve?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/name/resolve?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response
+
+    + Headers
+
+        ```
+        ```
+
+    + Attributes
+
+    + Body
+
+        ```
+        ```
 
 # Group object
 
@@ -4427,6 +4860,13 @@ The IPFS error object
     + Members
         + `0`
         + `1`
+
+## Time (string)
+
+The time format used in some commands. Note that this is not technically an enumerated type, as multiple
+time formats can be joined. For example, '3h30m'.
+
++ (string) - The time format, composed of a number followed by an enumerated list with the following members: `ns`, `us` or `µs`, `ms`, `s`, `m`, and `h`.
 
 ## ndjson (object)
 
