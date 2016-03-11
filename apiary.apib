@@ -841,7 +841,7 @@ Manipulate raw IPFS blocks.
 Store data as a raw ipfs block.
 
 + Parameters
-    + arg (Multihash, required) - hash of the block to be fetched
+    + arg (Multihash, required) - The base58 multihash of an existing block to get.
 
 + Request No Arguments
 
@@ -1076,11 +1076,11 @@ Stores input as an IPFS block
         }
         ```
 
-## stat [GET /block/stat?{arg}]
+## stat [GET /block/stat{?arg}]
 Retrieve information on a raw ipfs block.
 
 + Parameters
-    + arg (Multihash, required) - Hash of the block to retrieve stats on.
+    + arg (Multihash, required) - The base58 multihash of an existing block to get.
 
 + Request Without Arguments
 
