@@ -8096,7 +8096,711 @@ node.
         }
         ```
 
-## patch [GET /object/patch]
+## patch append-data [GET /object/patch/append-data{?arg1,arg2}]
+Append data to the data segment of a dag node.
+
+Append data to what already exists in the data segment in the given object.
+
+Note: This does not append data to a file - it modifies the actual raw
+data within an object. Objects have a max size of 1MB and objects larger than
+the limit will not be respected by the network.
+
++ Parameters
+    + arg1 (string, required) - The hash of the node to modify.
+    + arg2 (string, required) - Data to append.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/patch/append-data"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/patch/append-data"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 26 Feb 2016 21:19:26 GMT
+        Content-Length: 27
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'root' is required
+        ```
+
++ Request With Only One Argument
+
+    The response is the same if the given argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/object/patch/append-data?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/patch/append-data?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/patch/append-data?arg="
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 26 Feb 2016 21:19:54 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        File argument 'data' is required
+        ```
+
++ Request With Invalid First Argument
+
+    #### curl
+
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/patch/append-data?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/patch/append-data?arg=kitten"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Date: Tue, 15 Mar 2016 18:20:03 GMT
+        Connection: close
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "invalid ipfs ref path"
+        }
+        ```
+
++ Request With Valid Arguments
+
+    #### curl
+
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/patch/append-data?arg=/ipfs/QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg"
+
+    + Body
+
+        ```
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/patch/append-data?arg=/ipfs/QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Date: Tue, 15 Mar 2016 18:20:18 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Hash (Multihash)
+        - Links (array, nullable)
+
+    + Body
+
+        ```
+        {
+          "Hash": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+          "Links": null
+        }
+        ```
+
+## patch add-link [POST /object/patch/add-link{?arg1,arg2,arg3}{&create}]
+Add a link to a given object.
+
+Add a Merkle-link to the given object and return the hash of the result.
+
++ Parameters
+    + arg1 (string, required) - The hash of the node to modify.
+    + arg2 (string, required) - Name of link to create.
+    + arg3 (string, required) - IPFS object to add link to.
+    + create (boolean, optional) - Create intermediary nodes. Alias: `p`.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/patch/add-link"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/patch/add-link"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 26 Feb 2016 21:19:26 GMT
+        Content-Length: 27
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'root' is required
+        ```
+
++ Request With Only One Argument
+
+    The response is the same if the given argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/object/patch/add-link?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/patch/add-link?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/patch/add-link?arg="
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 26 Feb 2016 21:19:54 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'name' is required
+        ```
+
++ Request With Invalid First Argument
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/object/patch/add-link?arg=&arg=foo&arg=QmTz3oc4gdpRMKP2sdGUPZTAGRngqjsi99BPoztyP53JMM"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/object/patch/add-link?arg=&arg=foo&arg=QmTz3oc4gdpRMKP2sdGUPZTAGRngqjsi99BPoztyP53JMM"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Date: Tue, 15 Mar 2016 18:28:23 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "invalid ipfs ref path"
+        }
+        ```
+
++ Request With Empty Second Argument
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/object/patch/add-link?arg=QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn&arg=&arg=QmTz3oc4gdpRMKP2sdGUPZTAGRngqjsi99BPoztyP53JMM"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/object/patch/add-link?arg=QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn&arg=&arg=QmTz3oc4gdpRMKP2sdGUPZTAGRngqjsi99BPoztyP53JMM"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Date: Tue, 15 Mar 2016 18:33:00 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "cannot create link with no name!"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "cannot create link with no name!"
+        }
+        ```
+
++ Request With Missing Third Argument
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/object/patch/add-link?arg=QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn&arg=foo&arg="
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/object/patch/add-link?arg=QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn&arg=foo&arg="
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Date: Tue, 15 Mar 2016 18:31:31 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Hash (Multihash)
+        - Links (array, nullable)
+
+    + Body
+
+        ```
+        {
+          "Hash": "QmSt5pTDuoZ5xi1iqroo8W57Fvp4U23h5gXfj6X7rWLcbn",
+          "Links": null
+        }
+        ```
+
++ Request With Invalid Third Argument
+
+    #### Bug
+
+    There is no response: the request hangs. See https://github.com/ipfs/go-ipfs/issues/2473 for discussion.
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/object/patch/add-link?arg=QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn&arg=foo&arg=kitten"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/object/patch/add-link?arg=QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn&arg=foo&arg=kitten"
+        ```
+
++ Request With Valid Arguments
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/object/patch/add-link?arg=QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn&arg=foo&arg=QmTz3oc4gdpRMKP2sdGUPZTAGRngqjsi99BPoztyP53JMM"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/object/patch/add-link?arg=QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn&arg=foo&arg=QmTz3oc4gdpRMKP2sdGUPZTAGRngqjsi99BPoztyP53JMM"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Date: Tue, 15 Mar 2016 18:27:15 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Hash (Multihash)
+        - Links (array, nullable)
+
+    + Body
+
+        ```
+        {
+          "Hash": "QmZKetgwm4o3LhNaoLSHv32wBhTwj9FBwAdSchDMKyFQEx",
+          "Links": null
+        }
+        ```
+
+## patch rm-link [POST /object/patch/rm-link{?arg1,arg2}]
+Remove a link from an object.
+
++ Parameters
+    + arg1 (string, required) - The hash of the node to modify.
+    + arg2 (string, required) - Name of the link to remove.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/patch/rm-link"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/patch/rm-link"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 26 Feb 2016 21:19:26 GMT
+        Content-Length: 27
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'root' is required
+        ```
+
++ Request With Only One Argument
+
+    The response is the same if the given argument is invalid or empty. For example:
+
+        curl -i "http://localhost:5001/api/v0/object/patch/rm-link?arg="
+
+    Or:
+
+        curl -i "http://localhost:5001/api/v0/object/patch/rm-link?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/patch/rm-link?arg=QmZKetgwm4o3LhNaoLSHv32wBhTwj9FBwAdSchDMKyFQEx"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/patch/rm-link?arg=QmZKetgwm4o3LhNaoLSHv32wBhTwj9FBwAdSchDMKyFQEx"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 26 Feb 2016 21:19:54 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'link' is required
+        ```
+
++ Request with Invalid Second Argument
+
+    The response is the same if the given argument is empty. For example:
+
+        curl -i "http://localhost:5001/api/v0/object/patch/rm-link?arg=QmZKetgwm4o3LhNaoLSHv32wBhTwj9FBwAdSchDMKyFQEx&arg="
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/patch/rm-link?arg=QmZKetgwm4o3LhNaoLSHv32wBhTwj9FBwAdSchDMKyFQEx&arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/patch/rm-link?arg=QmZKetgwm4o3LhNaoLSHv32wBhTwj9FBwAdSchDMKyFQEx&arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Date: Tue, 15 Mar 2016 18:55:32 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "merkledag not found"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "merkledag: not found"
+        }
+        ```
+
++ Request With Valid Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/patch/rm-link?arg=QmZKetgwm4o3LhNaoLSHv32wBhTwj9FBwAdSchDMKyFQEx&arg=foo"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/patch/rm-link?arg=QmZKetgwm4o3LhNaoLSHv32wBhTwj9FBwAdSchDMKyFQEx&arg=foo"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Date: Tue, 15 Mar 2016 18:57:37 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Hash (Multihash)
+        - Links (array, nullable)
+
+    + Body
+
+        ```
+        {
+          "Hash": "QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn",
+          "Links": null
+        }
+        ```
+
+## patch set-data [POST /object/patch/set-data{?arg1,arg2}]
+Set the data field of an ipfs object.
+
++ Parameters
+    + arg1 (string, required) - The hash of the node to modify.
+    + arg2 (string, required) - Data to set the object to.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/patch/set-data"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/patch/set-data"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 26 Feb 2016 21:19:26 GMT
+        Content-Length: 27
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'root' is required
+        ```
+
++  Request With Invalid Root Argument
+
+    #### curl
+
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/patch/set-data?arg="
+
+    + Body
+
+        ```
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/patch/set-data?arg="
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Date: Tue, 15 Mar 2016 19:10:00 GMT
+        Connection: close
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With No Data Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/patch/set-data?arg=QmZKetgwm4o3LhNaoLSHv32wBhTwj9FBwAdSchDMKyFQEx"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/patch/set-data?arg=QmZKetgwm4o3LhNaoLSHv32wBhTwj9FBwAdSchDMKyFQEx"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 26 Feb 2016 21:19:54 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'data' is required
+        ```
+
++ Request With Valid Arguments
+
+    #### curl
+
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/patch/set-data?arg=QmZKetgwm4o3LhNaoLSHv32wBhTwj9FBwAdSchDMKyFQEx"
+
+    + Body
+
+        ```
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/patch/set-data?arg=QmZKetgwm4o3LhNaoLSHv32wBhTwj9FBwAdSchDMKyFQEx"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Date: Tue, 15 Mar 2016 19:08:54 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Hash (Multihash)
+        - Links (array, nullable)
+
+    + Body
+
+        ```
+        {
+          "Hash": "QmeKqPZ1JDHQetqntjuXAUw6G3X5rm7HBsSpjBn23yttMM",
+          "Links": null
+        }
+        ```
 
 ## put [GET /object/put{?arg}{&inputenc}]
 Stores input as a DAG object, outputs its key.
