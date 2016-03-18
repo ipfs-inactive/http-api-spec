@@ -2484,6 +2484,239 @@ Generate diagnostic reports.
 
 This command can't be called directly.
 
+## cmds clear [GET /diag/cmds/clear{&verbose}]
+Clear inactive requests from the log
+
++ Parameters
+    + verbose (boolean, optional) - Print more verbose output. Alias: v. Default: false.
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/diag/cmds/clear"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/diag/cmds/clear"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Date: Fri, 18 Mar 2016 21:18:21 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ```
+
++ Request With Verbose Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/diag/cmds/clear&verbose=true"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/diag/cmds/clear&verbose=true"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Date: Fri, 18 Mar 2016 21:20:33 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (array)
+        + Object
+            - Active (boolean)
+            + Args (array)
+            - Command (string)
+            - EndTime (string)
+            - ID (number)
+            + Options (object)
+                - encoding (string)
+                - stream-channels (boolean)
+                - verbose (boolean)
+            + StartTime (string)
+        + Object
+            - Active (boolean)
+            + Args (array)
+                - (string)
+            - Command (string)
+            - EndTime (string)
+            - ID (number)
+            + Options (object)
+                - encoding (string)
+            + StartTime (string)
+
+    + Body
+
+        ```
+        [
+          {
+            "Active": false,
+            "Args": [],
+            "Command": "diag/cmds/clear",
+            "EndTime": "2016-03-18T17:20:29.120015034-04:00",
+            "ID": 2,
+            "Options": {
+              "encoding": "json",
+              "stream-channels": true,
+              "verbose": true
+            },
+            "StartTime": "2016-03-18T17:20:29.12000122-04:00"
+          },
+          {
+            "Active": true,
+            "Args": [
+              ""
+            ],
+            "Command": "diag/cmds",
+            "EndTime": "0001-01-01T00:00:00Z",
+            "ID": 3,
+            "Options": {
+              "enc": "json"
+            },
+            "StartTime": "2016-03-18T17:20:33.895622708-04:00"
+          }
+        ]
+        ```
+
+## cmds set-time [GET /diag/cmds/set-time{?arg}]
+Set how long to keep inactive requests in the log.
+
++ Parameters
+    + arg (string, required) - Time to keep inactive requests in log. // TODO Switch to Time on rebase
+
++ Request Without Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/diag/cmds/set-time"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/diag/cmds/set-time"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Fri, 18 Mar 2016 21:28:38 GMT
+        Content-Length: 27
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'time' is required
+        ```
+
++ Request With Empty Argument
+
+    The repsonse is the same if the argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/diag/cmds/set-time?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/diag/cmds/set-time"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/diag/cmds/set-time"
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Date: Fri, 18 Mar 2016 21:29:47 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "time: invalid duration "
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Code": 0,
+          "Message": "time: invalid duration "
+        }
+        ```
+
++ Request With Valid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/diag/cmds/set-time?arg=1s"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/diag/cmds/set-time?arg=1s"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
+        Trailer: X-Stream-Error
+        Date: Fri, 18 Mar 2016 21:31:59 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ```
+
 ## net [GET /diag/net{?vis}]
 Sends out a message to each node in the network recursively
 requesting a listing of data about them including number of
