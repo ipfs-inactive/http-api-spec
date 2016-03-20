@@ -8231,43 +8231,44 @@ Stores input as a DAG object, outputs its key.
 
         ```
         {
-            "Data": "hello world"
+            "data": "hello world"
         }
         ```
 
     #### curl
 
-        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/put&inputenc=json"
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/put?inputenc=json"
 
     + Body
 
         ```
-        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/put&inputenc=json"
+        curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/object/put?inputenc=json"
         ```
 
-+ Response 400
++ Response 200
 
     + Headers
 
         ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
+        Server: go-ipfs/0.4.0-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 04 Feb 2016 17:11:57 GMT
-        Connection: close
+        Date: Sun, 20 Mar 2016 23:32:13 GMT
         Transfer-Encoding: chunked
         ```
 
-    + Attributes (Error)
-        - Message: "This command can't be called directly. Try one of its subcommands."
-        - Code: 1
+    + Attributes (object)
+        - Hash (Multihash)
+        - Links (array, nullable)
 
     + Body
 
         ```
         {
-          "Message": "This command can't be called directly. Try one of its subcommands.",
-          "Code": 1
+          "Hash": "QmU1Sq1B7RPQD2XcQNLB58qJUyJffVJqihcxmmN1STPMxf",
+          "Links": []
         }
         ```
 
