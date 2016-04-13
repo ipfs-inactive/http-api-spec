@@ -3394,13 +3394,12 @@ Stores an IPFS object(s) from a given path locally to disk.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
         Server: go-ipfs/0.4.0-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 20:55:58 GMT
+        Date: Wed, 13 Apr 2016 13:35:19 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -3434,13 +3433,12 @@ Stores an IPFS object(s) from a given path locally to disk.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
         Server: go-ipfs/0.4.0-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 20:57:37 GMT
+        Date: Wed, 13 Apr 2016 13:35:43 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -3499,7 +3497,7 @@ List objects pinned to local storage.
 
     + Attributes (object)
         + Keys (object)
-            + (object) - The key is a Multihash
+            + (object) - The key is a Multihash.
                 - Type (string)
 
     + Body
@@ -3637,9 +3635,8 @@ List objects pinned to local storage.
 Removes the pinned object from local storage.
 
 + Parameters
-    + arg (string, required) - Path to object or objects to be unpinned
-    + recursive (boolean, optional) - Recursively unpin the object linked to by the specified object or objects
-        Default: true
+    + arg (string, required) - Path to object(s) to be unpinned.
+    + recursive (boolean, optional) - Recursively unpin the object linked to by the specified object(s). Default: true.
 
 + Request Without Arguments
 
