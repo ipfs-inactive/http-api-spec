@@ -2478,7 +2478,7 @@ This command can't be called directly.
 Run a `FindPeer` query through the DHT.
 
 + Parameters
-    + arg (string, required) - <peerid> The peer to search for.
+    + arg (string, required) - The peer to search for.
 
 + Request Without Arguments
 
@@ -2634,20 +2634,13 @@ Run a `FindPeer` query through the DHT.
         }
         ```
 
-## findprovs [POST /dht/findprovs{?arg}{&verbose}]
+## findprovs [POST /dht/findprovs{?arg}]
 Run a `FindProviders` query through the DHT.
 
 FindProviders will return a list of peers who are able to provide the value requested.
 
-#### Bugs
-
-- While `verbose` is specified in the HTTP API and is used in the HTTP request,
-it returns no extra information in the ndjson response.
-- An invalid or empty key returns the same response as a normal one.
-
 + Parameters
-    + arg (string, required) - The key to find providers for
-    + verbose (boolean, optional) - Write extra information
+    + arg (string, required) - The key to find providers for.
 
 + Request Without Arguments
 
@@ -2687,15 +2680,17 @@ it returns no extra information in the ndjson response.
 
     #### curl
 
-        curl -i -X POST "http://localhost:5001/api/v0/dht/findprovs?arg="
+        curl -i -X POST "http://localhost:5001/api/v0/dht/findprovs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
 
     + Body
 
         ```
-        curl -i -X POST "http://localhost:5001/api/v0/dht/findprovs?arg="
+        curl -i -X POST "http://localhost:5001/api/v0/dht/findprovs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
         ```
 
 + Response 200
+
+    The response has been truncated to a single ndjson object, as the responses are streamed.
 
     + Headers
 
@@ -2728,20 +2723,13 @@ it returns no extra information in the ndjson response.
         }
         ```
 
-## get [GET /dht/get{?arg}{&verbose}]
-Run a `GetValue` query through the DHT
+## get [GET /dht/get{?arg}]
+Run a `GetValue` query through the DHT.
 
 GetValue will return the value stored in the DHT at the given key.
 
-#### Bugs
-
-- While `verbose` is specified in the HTTP API and is used in the HTTP request,
-it returns no extra information in the ndjson response.
-- An invalid or empty key returns the same response as a normal one.
-
 + Parameters
     + arg (string, required) - The key to find providers for
-    + verbose (boolean, optional) - Write extra information
 
 + Request Without Arguments
 
@@ -2777,6 +2765,8 @@ it returns no extra information in the ndjson response.
 
     The response is the same if the argument is empty or invalid. For example:
 
+        curl -i "http://localhost:5001/api/v0/dht/get?arg=\[kitten\]"
+
     #### curl
 
         curl -i "http://localhost:5001/api/v0/dht/get?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
@@ -2788,6 +2778,8 @@ it returns no extra information in the ndjson response.
         ```
 
 + Response 200
+
+    The response has been truncated to a single ndjson object, as the responses are streamed.
 
     + Headers
 
@@ -2820,21 +2812,14 @@ it returns no extra information in the ndjson response.
         }
         ```
 
-## put [GET /dht/put{?arg1,arg2}{&verbose}]
-Run a `PutValue` query through the DHT
+## put [GET /dht/put{?arg1,arg2}]
+Run a `PutValue` query through the DHT.
 
 PutValue will store the given key value pair in the DHT.
-
-#### Bugs
-
-- While `verbose` is specified in the HTTP API and is used in the HTTP request,
-it returns no extra information in the ndjson response.
-- An invalid or empty key returns the same response as a normal one.
 
 + Parameters
     + arg1 (string, required) - The key to store the value at.
     + arg2 (string, required) - The value to store.
-    + verbose (boolean, optional) - Write extra information.
 
 + Request Without Arguments
 
@@ -2888,7 +2873,7 @@ it returns no extra information in the ndjson response.
         Content-Type: text/plain; charset=utf-8
         ```
 
-    + Attributes (string
+    + Attributes (string)
 
     + Body
 
@@ -2904,12 +2889,12 @@ it returns no extra information in the ndjson response.
 
     #### curl
 
-        curl -i "http://localhost:5001/api/v0/dht/put?arg=kitten"
+        curl -i "http://localhost:5001/api/v0/dht/put?arg=kitten&arg=true"
 
     + Body
 
         ```
-        curl -i "http://localhost:5001/api/v0/dht/put?arg=kitten"
+        curl -i "http://localhost:5001/api/v0/dht/put?arg=kitten&arg=true"
         ```
 
 + Response 200
@@ -2945,24 +2930,13 @@ it returns no extra information in the ndjson response.
         }
         ```
 
-## query [GET /dht/query{?arg}{&verbose}]
+## query [GET /dht/query{?arg}]
 Find the closest peers to a given key by querying through the DHT.
 
-#### Bugs
-
-- While `verbose` is specified in the HTTP API and is used in the HTTP request,
-it returns no extra information in the ndjson response.
-- An invalid or empty key returns the same response as a normal one.
-
 + Parameters
-    + arg (string, required) - <peerid> The peerID to run the query against
-    + verbose (boolean, optional) -  Write extra information
+    + arg (string, required) - The peerID to run the query against.
 
 + Request Without Arguments
-
-    The response is the same if either argument is empty or invalid. For example:
-
-        curl -i "http://localhost:5001/api/v0/dht/put?arg=&arg="
 
     #### curl
 
