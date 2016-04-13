@@ -3340,8 +3340,8 @@ Pins objects to local storage.
 Stores an IPFS object(s) from a given path locally to disk.
 
 + Parameters
-    + arg (string, required) - Path to object or objects to be pinned
-    + recursive (boolean, optional) - Recursively pin the object linked to by the specified object or objects
+    + arg (string, required) - Path to object(s) to be pinned.
+    + recursive (boolean, optional) - Recursively pin the object linked to by the specified object(s). Default: true.
 
 + Request Without Arguments
 
@@ -3459,11 +3459,11 @@ Stores an IPFS object(s) from a given path locally to disk.
         ```
 
 ## ls [POST /pin/ls{&type,count,quiet}]
-List objects pinned to local storage
+List objects pinned to local storage.
 
 + Parameters
     + type (enum[string], optional) - The type of pinned keys to list.
-        Default: `recursive`
+        Default: `all`
         Members:
             + `all`
             + `direct`
@@ -3489,13 +3489,11 @@ List objects pinned to local storage
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
         Server: go-ipfs/0.4.0-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 21:01:45 GMT
+        Date: Wed, 13 Apr 2016 13:36:18 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -3570,13 +3568,12 @@ List objects pinned to local storage
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
         Server: go-ipfs/0.4.0-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 21:03:09 GMT
+        Date: Wed, 13 Apr 2016 13:37:27 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -3610,13 +3607,12 @@ List objects pinned to local storage
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
         Server: go-ipfs/0.4.0-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 21:03:53 GMT
+        Date: Wed, 13 Apr 2016 13:37:42 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -3696,13 +3692,12 @@ Removes the pinned object from local storage.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
         Server: go-ipfs/0.4.0-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 21:20:34 GMT
+        Date: Wed, 13 Apr 2016 13:38:41 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -3736,13 +3731,12 @@ Removes the pinned object from local storage.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
         Server: go-ipfs/0.4.0-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 21:21:19 GMT
+        Date: Wed, 13 Apr 2016 13:38:56 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -3777,13 +3771,12 @@ Removes the pinned object from local storage.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
         Server: go-ipfs/0.4.0-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 21:22:15 GMT
+        Date: Wed, 13 Apr 2016 13:39:09 GMT
         Transfer-Encoding: chunked
         ```
 
