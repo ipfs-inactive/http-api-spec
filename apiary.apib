@@ -3984,6 +3984,210 @@ size is the IPFS link size.
         ```
 
 # Group get
+Download IPFS objects.
+
+## get [POST /get{?arg}{&archive,compress,compression%2Dlevel}]
+Stores to disk the data contained an IPFS or IPNS object(s) at the given path.
+
++ Parameters
+    + arg (string, required) - The path to the IPFS object or objects to be outputted.
+    + archive (boolean, optional) - Output a TAR archive. Default: false.
+    + compress (boolean, optional) - Compress the output with GZIP compression. Default: false.
+    + compression-level (enum[number], optional) - The level of compression.
+        + Members
+            + Default: -1
+            + 0
+            + 1
+            + 2
+            + 3
+            + 4
+            + 5
+            + 6
+            + 7
+            + 8
+            + 9
+
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/get"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/get"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Sat, 06 Feb 2016 23:21:32 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'ipfs-path' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/get?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/get?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/get?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        Date: Tue, 19 Apr 2016 15:05:18 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/get?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/get?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        X-Stream-Output: 1
+        Date: Tue, 19 Apr 2016 15:06:40 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o0000644000000000000000000000001412655500300016646 0ustar0000000000000000hello world
+        ```
+
++ Request With Argument And Compression Options
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/get?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&compress=true&compression-level=1"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/get?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&compress=true&compression-level=1"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        X-Stream-Output: 1
+        Date: Tue, 19 Apr 2016 15:10:02 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        ?       n???H???W(?/?I???-?
+        ```
+
++ Request with Archive
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/get?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&archive=true"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/get?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&archive=true"
+        ```
+
++ Response 200
+
+    The `Content-Type` here should be `application/x-tar`. `text/plain` is the default response for output from go-ipfs, and
+    has been included below as the current response.
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        X-Stream-Output: 1
+        Date: Tue, 19 Apr 2016 15:19:24 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o0000644000000000000000000000001412705446174016664 0ustar0000000000000000hello world
+        ```
 
 # Group id
 
@@ -6737,7 +6941,7 @@ Returns the current version of ipfs and exits.
 The IPFS error object
 
 + message (string) - the error message
-+ code (enum[int]) - the status code
++ code (enum[number]) - the status code
     + Members
         + `0`
         + `1`
