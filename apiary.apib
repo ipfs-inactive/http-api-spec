@@ -1425,6 +1425,7 @@ in the bootstrap list).
 
     #### curl
 
+
          curl -i http://localhost:5001/api/v0/bootstrap/add?default
 
     + Body
@@ -2469,15 +2470,611 @@ included in the output of this command.
 
 # Group dht
 
-## findpeer
+Issue commands directly through the DHT.
 
-## findprovs
+This command can't be called directly.
 
-## get
+## findpeer [GET /dht/findpeer{?arg}]
+Run a `FindPeer` query through the DHT.
 
-## put
++ Parameters
+    + arg (string, required) - The peer to search for.
 
-## query
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dht/findpeer"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dht/findpeer"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Wed, 13 Apr 2016 14:08:32 GMT
+        Content-Length: 29
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'peerID' is required
+        ```
+
++ Request With Empty Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dht/findpeer?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dht/findpeer?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        Date: Wed, 13 Apr 2016 14:08:49 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "multihash too short. must be \u003e 3 bytes"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "multihash too short. must be \u003e 3 bytes",
+          "Code": 0
+        }
+        ```
+
++ Request With Invalid Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dht/findpeer?arg=kitten"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dht/findpeer?arg=kitten"
+        ```
+
++ Response 500
+
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        Date: Wed, 13 Apr 2016 14:09:05 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "multihash length inconsistent: \u0026{6  174 [128 54 35]}"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "multihash length inconsistent: \u0026{6  174 [128 54 35]}",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dht/findpeer?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dht/findpeer?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    The response has been truncated to a single ndjson object, as the responses are streamed.
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        X-Chunked-Output: 1
+        Date: Wed, 13 Apr 2016 14:09:20 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Extra (string)
+        - ID (Multihash)
+        + Responses (array)
+            + (object)
+                - Addrs (MultiAddr)
+                - ID (Multihash)
+        - Type (number)
+
+    + Body
+
+        ```
+        {
+          "Extra": "",
+          "ID": "QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd",
+          "Responses": [
+              {
+                "Addrs": [
+                  "/ip4/10.0.0.116/tcp/14001",
+                  "/ip4/127.0.0.1/tcp/14001",
+                  "/ip4/127.0.0.2/tcp/14001",
+                  "/ip4/62.210.92.54/tcp/14001"
+                ],
+                "ID": "QmdmznJmndCNmfDNZ6pLSFuihXwgSnHbienWCJzJQ4M8By"
+              },
+              ...
+          ],
+          "Type": 0
+        }
+        ```
+
+## findprovs [POST /dht/findprovs{?arg}]
+Run a `FindProviders` query through the DHT.
+
+FindProviders will return a list of peers who are able to provide the value requested.
+
++ Parameters
+    + arg (string, required) - The key to find providers for.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/dht/findprovs"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/dht/findprovs"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Sat, 06 Feb 2016 22:50:36 GMT
+        Content-Length: 26
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'key' is required
+        ```
+
++ Request With Argument
+
+    The response is the same if the argument is empty or invalid. For example:
+
+        curl -i -X POST "http://localhost:5001/api/v0/dht/findprovs?arg=kitten"
+
+    #### curl
+
+        curl -i -X POST "http://localhost:5001/api/v0/dht/findprovs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i -X POST "http://localhost:5001/api/v0/dht/findprovs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    The response has been truncated to a single ndjson object, as the responses are streamed.
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        X-Chunked-Output: 1
+        Date: Wed, 13 Apr 2016 14:10:51 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Extra (string)
+        - ID (Multihash)
+        + Responses (array)
+            + (object)
+                - Addrs (MultiAddr)
+                - ID (Multihash)
+        - Type (number)
+
+    + Body
+
+        ```
+        {
+          "Extra": "",
+          "ID": "QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd",
+          "Responses": [
+              {
+                "Addrs": [
+                  "/ip4/10.0.0.116/tcp/14001",
+                  "/ip4/127.0.0.1/tcp/14001",
+                  "/ip4/127.0.0.2/tcp/14001",
+                  "/ip4/62.210.92.54/tcp/14001"
+                ],
+                "ID": "QmdmznJmndCNmfDNZ6pLSFuihXwgSnHbienWCJzJQ4M8By"
+              },
+              ...
+          ],
+          "Type": 0
+        }
+        ```
+
+## get [GET /dht/get{?arg}]
+Run a `GetValue` query through the DHT.
+
+GetValue will return the value stored in the DHT at the given key.
+
++ Parameters
+    + arg (string, required) - The key to find providers for
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dht/get"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dht/get"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Sat, 06 Feb 2016 22:59:08 GMT
+        Content-Length: 26
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'key' is required
+        ```
+
++ Request With Argument
+
+    The response is the same if the argument is empty or invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/dht/get?arg=\[kitten\]"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dht/get?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dht/get?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    The response has been truncated to a single ndjson object, as the responses are streamed.
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Sat, 06 Feb 2016 22:59:25 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Extra (string)
+        - ID (Multihash)
+        + Responses (array)
+            + (object)
+                - Addrs (MultiAddr)
+                - ID (Multihash)
+        - Type (number)
+
+    + Body
+
+        ```
+        {
+          "Extra": "",
+          "ID": "QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd",
+          "Responses": [
+              {
+                "Addrs": [
+                  "/ip4/10.0.0.116/tcp/14001",
+                  "/ip4/127.0.0.1/tcp/14001",
+                  "/ip4/127.0.0.2/tcp/14001",
+                  "/ip4/62.210.92.54/tcp/14001"
+                ],
+                "ID": "QmdmznJmndCNmfDNZ6pLSFuihXwgSnHbienWCJzJQ4M8By"
+              },
+              ...
+          ],
+          "Type": 0
+        }
+        ```
+
+## put [GET /dht/put{?arg1,arg2}]
+Run a `PutValue` query through the DHT.
+
+PutValue will store the given key value pair in the DHT.
+
++ Parameters
+    + arg1 (string, required) - The key to store the value at.
+    + arg2 (string, required) - The value to store.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dht/put"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dht/put"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Sat, 06 Feb 2016 23:01:30 GMT
+        Content-Length: 26
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'key' is required
+        ```
+
++ Request With Empty Or Invalid First Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dht/put?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dht/put?arg="
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Sat, 06 Feb 2016 23:02:04 GMT
+        Content-Length: 28
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'value' is required
+        ```
+
++ Request With Arguments
+
+    The response is the same if either argument is empty or invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/dht/put?arg=&arg="
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dht/put?arg=kitten&arg=true"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dht/put?arg=kitten&arg=true"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Content-Type: application/json
+        Trailer: X-Stream-Error
+        Transfer-Encoding: chunked
+        X-Chunked-Output: 1
+        Date: Sat, 06 Feb 2016 22:59:25 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Extra (string)
+        - ID (Multihash)
+        + Responses (array)
+            + (object)
+                - Addrs (MultiAddr)
+                - ID (Multihash)
+        - Type (number)
+
+    + Body
+
+        ```
+        {
+          "Extra": "",
+          "ID": "QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd",
+          "Responses": [
+              {
+                "Addrs": [
+                  "/ip4/10.0.0.116/tcp/14001",
+                  "/ip4/127.0.0.1/tcp/14001",
+                  "/ip4/127.0.0.2/tcp/14001",
+                  "/ip4/62.210.92.54/tcp/14001"
+                ],
+                "ID": "QmdmznJmndCNmfDNZ6pLSFuihXwgSnHbienWCJzJQ4M8By"
+              },
+              ...
+          ],
+          "Type": 0
+        }
+        ```
+
+
+
+## query [GET /dht/query{?arg}]
+Find the closest peers to a given key by querying through the DHT.
+
++ Parameters
+    + arg (string, required) - The peerID to run the query against.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dht/query"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dht/query"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Sat, 06 Feb 2016 23:04:52 GMT
+        Content-Length: 29
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'peerID' is required
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/dht/query?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/dht/query?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        X-Chunked-Output: 1
+        Date: Wed, 13 Apr 2016 14:24:22 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Extra (string)
+        - ID (Multihash)
+        + Responses (array)
+            + (object)
+                - Addrs (MultiAddr)
+                - ID (Multihash)
+        - Type (number)
+
+    + Body
+
+        ```
+        {
+          "Extra": "",
+          "ID": "QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd",
+          "Responses": [
+              {
+                "Addrs": [
+                  "/ip4/10.0.0.116/tcp/14001",
+                  "/ip4/127.0.0.1/tcp/14001",
+                  "/ip4/127.0.0.2/tcp/14001",
+                  "/ip4/62.210.92.54/tcp/14001"
+                ],
+                "ID": "QmdmznJmndCNmfDNZ6pLSFuihXwgSnHbienWCJzJQ4M8By"
+              },
+              ...
+          ],
+          "Type": 0
+        }
+        ```
 
 # Group diag
 Generate diagnostic reports.
