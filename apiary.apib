@@ -4082,43 +4082,6 @@ Stores to disk the data contained an IPFS or IPNS object(s) at the given path.
         }
         ```
 
-+ Request With Directory Multihash
-
-    #### curl
-
-        curl -i "http://localhost:5001/api/v0/get?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
-
-    + Body
-
-        ```
-        curl -i "http://localhost:5001/api/v0/get?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
-        ```
-
-+ Response 500
-
-    + Headers
-
-        ```
-        Content-Type: application/json
-        Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Sat, 06 Feb 2016 23:27:54 GMT
-        Transfer-Encoding: chunked
-        ```
-
-    + Attributes (Error)
-        - Message: "this dag node is a directory"
-        - Code: 0
-
-    + Body
-
-        ```
-        {
-          "Message": "this dag node is a directory",
-          "Code": 0
-        }
-        ```
-
 + Request With Argument
 
     #### curl
