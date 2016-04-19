@@ -3986,12 +3986,11 @@ size is the IPFS link size.
 # Group get
 Download IPFS objects.
 
-## get [POST /get{?arg}{&output,archive,compress,compression%2Dlevel}]
+## get [POST /get{?arg}{&archive,compress,compression%2Dlevel}]
 Stores to disk the data contained an IPFS or IPNS object(s) at the given path.
 
 + Parameters
     + arg (string, required) - The path to the IPFS object or objects to be outputted.
-    + output (string, optional) - The path where the output should be stored. Default: './<ipfs-path>'.
     + archive (boolean, optional) - Output a TAR archive. Default: false.
     + compress (boolean, optional) - Compress the output with GZIP compression. Default: false.
     + compression-level (enum[number], optional) - The level of compression.
