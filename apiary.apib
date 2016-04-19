@@ -6435,9 +6435,7 @@ Swarm inspection tool.
 This command can't be called directly.
 
 ## addrs [GET /swarm/addrs]
-List known addresses. Useful for debugging.
-
-`ipfs swarm addrs` lists all addresses this node is aware of.
+List known addresses.
 
 + Request Without Arguments
 
@@ -6456,13 +6454,12 @@ List known addresses. Useful for debugging.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 23:00:03 GMT
+        Date: Tue, 19 Apr 2016 16:18:52 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6486,12 +6483,10 @@ List known addresses. Useful for debugging.
         ```
 
 ## addrs local [GET /swarm/addrs/local{&id}]
-List all local addresses.
-
-`ipfs swarm addrs local` lists all local addresses the node is listening on.
+List all local addresses the node is listening on.
 
 + Parameters
-    + id (boolean, optional) - Show peer ID in addresses
+    + id (boolean, optional) - Show peer ID in addresses.
 
 + Request Without Arguments
 
@@ -6510,13 +6505,12 @@ List all local addresses.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 23:02:24 GMT
+        Date: Tue, 19 Apr 2016 16:20:39 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6554,13 +6548,12 @@ List all local addresses.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 23:02:24 GMT
+        Date: Tue, 19 Apr 2016 16:21:43 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6634,13 +6627,12 @@ Open a connection to the given address.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 23:05:22 GMT
+        Date: Tue, 19 Apr 2016 16:22:04 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6674,13 +6666,12 @@ Open a connection to the given address.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 23:11:48 GMT
+        Date: Tue, 19 Apr 2016 16:22:23 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6714,13 +6705,12 @@ Open a connection to the given address.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 23:07:19 GMT
+        Date: Tue, 19 Apr 2016 16:22:50 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6742,7 +6732,7 @@ Open a connection to the given address.
 Close the connection to a given address.
 
 + Parameters
-    + arg (MultiAddr, required) - Address of the peer to disconnect from
+    + arg (MultiAddr, required) - Address of the peer to disconnect from.
 
 + Request Without Arguments
 
@@ -6793,13 +6783,12 @@ Close the connection to a given address.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 23:05:22 GMT
+        Date: Tue, 19 Apr 2016 16:23:18 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6833,13 +6822,12 @@ Close the connection to a given address.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 23:11:48 GMT
+        Date: Tue, 19 Apr 2016 16:23:29 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6873,13 +6861,12 @@ Close the connection to a given address.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 23:13:35 GMT
+        Date: Tue, 19 Apr 2016 16:23:42 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -7135,13 +7122,12 @@ remove your filters from the IPFS config file.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 23:17:31 GMT
+        Date: Tue, 19 Apr 2016 16:29:31 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -7175,13 +7161,12 @@ remove your filters from the IPFS config file.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 23:18:50 GMT
+        Date: Tue, 19 Apr 2016 16:29:41 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -7213,13 +7198,12 @@ List the set of peers the node is connected to.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 11 Feb 2016 23:21:03 GMT
+        Date: Tue, 19 Apr 2016 16:29:51 GMT
         Transfer-Encoding: chunked
         ```
 
