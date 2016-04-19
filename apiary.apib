@@ -6095,8 +6095,97 @@ Displays the hashes of all local objects.
 ## local
 
 # Group repo
+Manipulate the IPFS repo.
 
-## gc
+This command can't be called directly.
+
+## gc [GET /repo/gc]
+Sweep the local set of stored objects and remove ones that are not pinned in
+order to reclaim hard disk space.
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/repo/gc"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/repo/gc"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        X-Chunked-Output: 1
+        Date: Tue, 19 Apr 2016 15:44:31 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Key (Multihash) The key which has been removed.
+
+
+    + Body
+
+        ```
+        {"Key":"QmNLvkCDV6ZjUJsEwGNporYBuZdhWT6q7TBVYQwwRv12HT"}
+        {"Key":"QmNMkhF7m6CjJiNLsDbGrhfTbpjfTUu6qG3SVSMQ32isWb"}
+        ```
+
+## stat [GET /repo/stat]
+Get stats for the currently used repo. This is a plumbing command that will scan the local
+set of stored objects and print repo statistics.
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/repo/stat"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/repo/stat"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        Date: Tue, 19 Apr 2016 15:38:07 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - NumObjects (number) Number of objects in the local repo.
+        - RepoPath (number) Size in bytes that the repo is currently taking.
+        - RepoSize (string) The path to the repo being currently used.
+
+
+    + Body
+
+        ```
+        {
+          "NumObjects": 167,
+          "RepoPath": "/Users/richard/.ipfs",
+          "RepoSize": 22289161
+        }
+        ```
 
 # Group resolve
 Resolve the value of names to IPFS.
