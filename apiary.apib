@@ -6107,12 +6107,12 @@ order to reclaim hard disk space.
 
     #### curl
 
-        curl -i "http://localhost:5001/api/v0/gc"
+        curl -i "http://localhost:5001/api/v0/repo/gc"
 
     + Body
 
         ```
-        curl -i "http://localhost:5001/api/v0/gc"
+        curl -i "http://localhost:5001/api/v0/repo/gc"
         ```
 
 + Response 200
@@ -6120,14 +6120,13 @@ order to reclaim hard disk space.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
         X-Chunked-Output: 1
-        Date: Thu, 11 Feb 2016 21:45:58 GMT
+        Date: Tue, 19 Apr 2016 15:44:31 GMT
         Transfer-Encoding: chunked
         ```
 
