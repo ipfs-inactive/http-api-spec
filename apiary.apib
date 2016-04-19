@@ -8442,10 +8442,6 @@ Add a Merkle-link to the given object and return the hash of the result.
 
 + Request With Invalid Third Argument
 
-    #### Bug
-
-    There is no response: the request hangs. See https://github.com/ipfs/go-ipfs/issues/2473 for discussion.
-
     #### curl
 
         curl -i -X POST "http://localhost:5001/api/v0/object/patch/add-link?arg=QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn&arg=foo&arg=kitten"
@@ -8835,7 +8831,7 @@ Stores input as a DAG object, outputs its key.
 
 + Request With Empty Argument
 
-        The response is identical to a command with an invalid argument. For example:
+    The response is identical to a command with an invalid argument. For example:
 
         curl -i "http://localhost:5001/api/v0/object/put?arg=kitten"
 
