@@ -4151,6 +4151,44 @@ Stores to disk the data contained an IPFS or IPNS object(s) at the given path.
         ?       n???H???W(?/?I???-?
         ```
 
++ Request with Archive
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/get?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&archive=true"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/get?arg=QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&archive=true"
+        ```
+
++ Response 200
+
+    The `Content-Type` here should be `application/x-tar`. `text/plain` is the default response for output from go-ipfs, and
+    has been included below as the current response.
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        X-Stream-Output: 1
+        Date: Tue, 19 Apr 2016 15:19:24 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o0000644000000000000000000000001412705446174016664 0ustar0000000000000000hello world
+        ```
+
 # Group id
 
 Prints out information about the specified peer.
