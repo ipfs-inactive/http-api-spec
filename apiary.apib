@@ -4460,6 +4460,297 @@ trip latency information.
 
 # Group refs
 
+Displays the link hashes an IPFS or IPNS object(s) contains, with the following format:
+
+    <link base58 hash>
+
+## refs [GET /refs{?arg}{&format,edges,unique,recursive}]
+Lists links (references) from an object.
+
++ Parameters
+    + arg (string, required) - Path to the object or objects to list refs from.
+    + edges (boolean, optional) - Emit edge format: `<from> -> <to>`. Alias: e.
+    + unique (boolean, optional) - Omit duplicate refs from output. Alias: u.
+    + recursive (boolean, optional) - Recursively list links of child nodes. Alias: r.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/refs"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/refs"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Tue, 19 Apr 2016 14:12:30 GMT
+        Content-Length: 32
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'ipfs-path' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if there is an invalid argument. For example:
+
+        curl -i "http://localhost:5001/api/v0/refs?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/refs?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/refs?arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        Date: Tue, 19 Apr 2016 14:12:20 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path"
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmPEKipMh6LsXzvtLxunSPP7ZsBM8y9xQ2SQQwBXy5UY6e"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmPEKipMh6LsXzvtLxunSPP7ZsBM8y9xQ2SQQwBXy5UY6e"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        X-Chunked-Output: 1
+        Date: Tue, 19 Apr 2016 14:12:09 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes
+
+    + Body
+
+        ```
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        X-Chunked-Output: 1
+        Date: Tue, 19 Apr 2016 14:11:59 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Ref (Multihash)
+        - Err (string)
+
+    + Body
+
+        ```
+        {
+          "Ref": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+          "Err": ""
+        }
+        ```
+
++ Request With Argument And Edge Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&edges"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&edges"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        X-Chunked-Output: 1
+        Date: Tue, 19 Apr 2016 14:11:46 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Ref (string)
+        - Err (string)
+
+    + Body
+
+        ```
+        {
+          "Ref": "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ -\u003e Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+          "Err": ""
+        }
+        ```
+
++ Request With Argument And Recursive Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&recursive"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&recursive"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        X-Chunked-Output: 1
+        Date: Tue, 19 Apr 2016 14:11:36 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Ref (Multihash)
+        - Err (string)
+
+    + Body
+
+        ```
+        {
+          "Ref": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+          "Err": ""
+        }
+        {
+          "Ref": "QmPEKipMh6LsXzvtLxunSPP7ZsBM8y9xQ2SQQwBXy5UY6e",
+          "Err": ""
+        }
+        {
+          "Ref": "QmT8onRUfPgvkoPMdMvCHPYxh98iKCfFkBYM1ufYpnkHJn",
+          "Err": ""
+        }
+        ```
+
+## local [GET /refs/local]
+
+Lists all local references.
+
+Displays the hashes of all local objects.
+
++ Request
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/refs/local
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/refs/local
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: text/plain
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        X-Stream-Output: 1
+        Date: Tue, 19 Apr 2016 14:11:14 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (string)
+        - (Multihash) - Newline delimited multihashes
+
+    + Body
+
+        ```
+        QmNLjhs2cWVGopVTE5KqCZBdX7TE6i9AU1y8pwytt7cyzC
+        QmNLwdgyRiTuMf9M3Fjtu2TpMjz2CgZS4YgeuqjLHv3rjq
+        ```
+
 ## local
 
 # Group repo
