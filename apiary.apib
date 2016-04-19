@@ -6141,6 +6141,52 @@ order to reclaim hard disk space.
         {"Key":"QmNMkhF7m6CjJiNLsDbGrhfTbpjfTUu6qG3SVSMQ32isWb"}
         ```
 
+## stat [GET /repo/stat]
+Get stats for the currently used repo. This is a plumbing command that will scan the local
+set of stored objects and print repo statistics.
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/repo/stat"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/repo/stat"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
+        Trailer: X-Stream-Error
+        Date: Tue, 19 Apr 2016 15:38:07 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - NumObjects (number) Number of objects in the local repo.
+        - RepoPath (number) Size in bytes that the repo is currently taking.
+        - RepoSize (string) The path to the repo being currently used.
+
+
+    + Body
+
+        ```
+        {
+          "NumObjects": 167,
+          "RepoPath": "/Users/richard/.ipfs",
+          "RepoSize": 22289161
+        }
+        ```
+
 # Group resolve
 Resolve the value of names to IPFS.
 
