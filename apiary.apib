@@ -7430,7 +7430,6 @@ Outputs the raw bytes in an IPFS object.
 + Parameters
     + arg (required, string) - Key of the object to retrieve, in base58-encoded multihash format
 
-
 + Request Without Arguments
 
     #### curl
@@ -7689,10 +7688,6 @@ Get and serialize the DAG node named by <key>.
 
 + Request With Invalid Argument And Protobuf Encoding
 
-    #### Bugs
-
-    This comes up with a 200 with no response. It should be a 500.
-
     #### curl
 
         curl -i -X POST "http://localhost:5001/api/v0/object/get?arg=kitten&encoding=protobuf"
@@ -7703,7 +7698,7 @@ Get and serialize the DAG node named by <key>.
         curl -i -X POST "http://localhost:5001/api/v0/object/get?arg=kitten&encoding=protobuf"
         ```
 
-+ Response 200
++ Response 500
 
     + Headers
 
@@ -7809,7 +7804,7 @@ Get and serialize the DAG node named by <key>.
 
     #### Bugs
 
-    Note that the `Content-Type` is still specified as `application/json`, although it is a protobuf response.
+    Note that the `Content-Type` is still specified as `application/json`, although it is a protobuf response. This only applies for the current go-ipfs implementation.
 
     #### curl
 
