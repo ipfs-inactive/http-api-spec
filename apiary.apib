@@ -4052,18 +4052,17 @@ Remove a file.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 15:02:35 GMT
+        Date: Tue, 19 Apr 2016 16:42:51 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
-        - Message: "paths must not be empty"
+        - Message: "Paths must not be empty."
         - Code: 0
 
     + Body
@@ -4071,7 +4070,7 @@ Remove a file.
         ```
         {
           "Code": 0,
-          "Message": "paths must not be empty"
+          "Message": "Paths must not be empty."
         }
         ```
 
@@ -4092,18 +4091,17 @@ Remove a file.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 15:03:10 GMT
+        Date: Tue, 19 Apr 2016 16:43:04 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
-        - Message: "paths must start with a leading slash"
+        - Message: "Paths must start with a leading slash."
         - Code: 0
 
     + Body
@@ -4111,13 +4109,16 @@ Remove a file.
         ```
         {
           "Code": 0,
-          "Message": "paths must start with a leading slash"
+          "Message": "Paths must start with a leading slash."
         }
         ```
 
 + Request With Argument
 
     This request is dependent on there being a 'test' file in your Files API folder.
+    To create this file, run:
+
+        url -i "http://localhost:5001/api/v0/files/cp?arg=/ipfs/QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&arg=/test"
 
     #### curl
 
@@ -4134,13 +4135,12 @@ Remove a file.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 15:37:01 GMT
+        Date: Tue, 19 Apr 2016 18:41:36 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -4154,6 +4154,9 @@ Remove a file.
 + Request With Argument For Directory Without Recursive
 
     '/test' here must be a directory, not a file.
+    To create this folder, run:
+
+        curl -i "http://localhost:5001/api/v0/files/mkdir?arg=/test"
 
     #### curl
 
@@ -4170,13 +4173,12 @@ Remove a file.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 03 Mar 2016 15:53:27 GMT
+        Date: Tue, 19 Apr 2016 18:42:34 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -4196,6 +4198,9 @@ Remove a file.
 + Request With Argument And Recursive Option
 
     This request is dependent on there being a 'test' folder in your Files API folder.
+    To create this folder, run:
+
+        curl -i "http://localhost:5001/api/v0/files/mkdir?arg=/test"
 
     #### curl
 
@@ -4212,13 +4217,12 @@ Remove a file.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 15:39:19 GMT
+        Date: Tue, 19 Apr 2016 18:42:48 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -4230,9 +4234,9 @@ Remove a file.
         ```
 
 ## flush [GET /files/flush{?arg}{&flush}]
-Flush a given path's data to disk.
+Flush a given path's data to disk. 
 
-Flush a given path to disk. This is only useful when other commands
+This is only useful when other commands
 are run with the 'flush' option set to false.
 
 + Parameters
@@ -4255,13 +4259,12 @@ are run with the 'flush' option set to false.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:00:10 GMT
+        Date: Tue, 19 Apr 2016 18:43:15 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -4289,13 +4292,12 @@ are run with the 'flush' option set to false.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:00:29 GMT
+        Date: Tue, 19 Apr 2016 18:43:25 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -4323,13 +4325,12 @@ are run with the 'flush' option set to false.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:00:51 GMT
+        Date: Tue, 19 Apr 2016 18:43:35 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -4363,13 +4364,12 @@ are run with the 'flush' option set to false.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:01:27 GMT
+        Date: Tue, 19 Apr 2016 18:43:46 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -4437,18 +4437,17 @@ Move files around. Just like traditional unix mv.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:07:57 GMT
+        Date: Tue, 19 Apr 2016 18:44:04 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
-        - Message: "paths must not be empty"
+        - Message: "Paths must not be empty."
         - Code: 0
 
     + Body
@@ -4456,7 +4455,7 @@ Move files around. Just like traditional unix mv.
         ```
         {
           "Code": 0,
-          "Message": "paths must not be empty"
+          "Message": "Paths must not be empty."
         }
         ```
 
@@ -4477,18 +4476,17 @@ Move files around. Just like traditional unix mv.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:08:45 GMT
+        Date: Tue, 19 Apr 2016 18:44:21 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
-        - Message: "paths must start with a leading slash"
+        - Message: "Paths must start with a leading slash."
         - Code: 0
 
     + Body
@@ -4496,13 +4494,16 @@ Move files around. Just like traditional unix mv.
         ```
         {
           "Code": 0,
-          "Message": "paths must start with a leading slash"
+          "Message": "Paths must start with a leading slash."
         }
         ```
 
 + Request With Non-Existent Argument
 
-    This call depends upon a file in the Files API called 'here', which must not exist.
+    This call depends upon a file in the Files API called 'here'. This file must not exist.
+    To ensure this file does not exist, run:
+
+        curl -i "http://localhost:5001/api/v0/files/rm?arg=/here"
 
     #### curl
 
@@ -4519,13 +4520,12 @@ Move files around. Just like traditional unix mv.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:10:40 GMT
+        Date: Tue, 19 Apr 2016 18:44:54 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -4544,7 +4544,9 @@ Move files around. Just like traditional unix mv.
 
 + Request With Argument
 
-    This call depends upon a file in the Files API called 'here'.
+    This call depends upon a file in the Files API called 'here'. To create such a file, run:
+
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/ipfs/QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&arg=/here"
 
     #### curl
 
@@ -4561,13 +4563,12 @@ Move files around. Just like traditional unix mv.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:09:45 GMT
+        Date: Tue, 19 Apr 2016 18:46:03 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -4603,7 +4604,7 @@ Copy files into mfs.
     + Headers
 
         ```
-        Date: Fri, 19 Feb 2016 16:07:11 GMT
+        Date: Tue, 19 Apr 2016 18:46:14 GMT
         Content-Length: 29
         Content-Type: text/plain; charset=utf-8
         ```
@@ -4633,18 +4634,17 @@ Copy files into mfs.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:07:57 GMT
+        Date: Tue, 19 Apr 2016 18:48:20 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
-        - Message: "paths must not be empty"
+        - Message: "Paths must not be empty."
         - Code: 0
 
     + Body
@@ -4652,7 +4652,7 @@ Copy files into mfs.
         ```
         {
           "Code": 0,
-          "Message": "paths must not be empty"
+          "Message": "Paths must not be empty."
         }
         ```
 
@@ -4673,18 +4673,17 @@ Copy files into mfs.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:08:45 GMT
+        Date: Tue, 19 Apr 2016 18:48:37 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
-        - Message: "paths must start with a leading slash"
+        - Message: "Paths must start with a leading slash."
         - Code: 0
 
     + Body
@@ -4692,13 +4691,16 @@ Copy files into mfs.
         ```
         {
           "Code": 0,
-          "Message": "paths must start with a leading slash"
+          "Message": "Paths must start with a leading slash."
         }
         ```
 
 + Request With Non-Existent Argument
 
     This call depends upon a file in the Files API called 'here', which must not exist.
+    To make sure it does not, run this first:
+
+        curl -i "http://localhost:5001/api/v0/files/rm?arg=/here"
 
     #### curl
 
@@ -4738,18 +4740,21 @@ Copy files into mfs.
         }
         ```
 
-+ Request With Existenting Argument
++ Request With Existing Argument
 
-    This call depends upon a file in the Files API called 'hest', which must exist.
+    This call depends upon a file in the Files API called 'here', which must exist.
+    To create this file, run:
+
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/ipfs/QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&arg=/here"
 
     #### curl
 
-        curl -i "http://localhost:5001/api/v0/files/cp?arg=/test&arg=/there"
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/here&arg=/there"
 
     + Body
 
         ```
-        curl -i "http://localhost:5001/api/v0/files/cp?arg=/test&arg=/there"
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/here&arg=/there"
         ```
 
 + Response 500
@@ -4757,13 +4762,12 @@ Copy files into mfs.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:10:40 GMT
+        Date: Tue, 19 Apr 2016 18:54:12 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -4782,16 +4786,20 @@ Copy files into mfs.
 
 + Request With Argument
 
-    This call depends upon a file in the Files API called 'there', and no 'here' file.
+    This call depends upon a file in the Files API called 'here', and no 'there' file.
+    To create this file, run:
+
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/ipfs/QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&arg=/here"
+        curl -i "http://localhost:5001/api/v0/files/rm?arg=/there"
 
     #### curl
 
-        curl -i "http://localhost:5001/api/v0/files/cp?arg=/there&arg=/here"
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/here&arg=/there"
 
     + Body
 
         ```
-        curl -i "http://localhost:5001/api/v0/files/cp?arg=/there&arg=/here"
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/here&arg=/there"
         ```
 
 + Response 200
@@ -4799,13 +4807,12 @@ Copy files into mfs.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:21:16 GMT
+        Date: Tue, 19 Apr 2016 18:51:23 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -4871,18 +4878,17 @@ List directories.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:30:10 GMT
+        Date: Tue, 19 Apr 2016 18:54:27 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
-        - Message: "paths must not be empty"
+        - Message: "Paths must not be empty."
         - Code: 0
 
     + Body
@@ -4890,7 +4896,7 @@ List directories.
         ```
         {
           "Code": 0,
-          "Message": "paths must not be empty"
+          "Message": "Paths must not be empty."
         }        ```
 
 + Request With Invalid Argument
@@ -4910,18 +4916,17 @@ List directories.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:30:12 GMT
+        Date: Tue, 19 Apr 2016 18:54:48 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
-        - Message: "paths must start with a leading slash"
+        - Message: "Paths must start with a leading slash."
         - Code: 0
 
     + Body
@@ -4929,7 +4934,7 @@ List directories.
         ```
         {
           "Code": 0,
-          "Message": "paths must start with a leading slash"
+          "Message": "Paths must start with a leading slash."
         }
         ```
 
@@ -4950,13 +4955,12 @@ List directories.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:31:10 GMT
+        Date: Tue, 19 Apr 2016 18:55:04 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -5000,13 +5004,12 @@ List directories.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:31:10 GMT
+        Date: Tue, 19 Apr 2016 18:55:19 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -5092,18 +5095,17 @@ Note: all paths must be absolute.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:38:34 GMT
+        Date: Tue, 19 Apr 2016 18:55:35 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
-        - Message: "paths must not be empty"
+        - Message: "Paths must not be empty."
         - Code: 0
 
     + Body
@@ -5111,7 +5113,7 @@ Note: all paths must be absolute.
         ```
         {
           "Code": 0,
-          "Message": "paths must not be empty"
+          "Message": "Paths must not be empty."
         }
         ```
 
@@ -5133,18 +5135,17 @@ Note: all paths must be absolute.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:38:37 GMT
+        Date: Tue, 19 Apr 2016 18:55:50 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
-        - Message: "paths must start with a leading slash"
+        - Message: "Paths must start with a leading slash."
         - Code: 0
 
     + Body
@@ -5152,7 +5153,7 @@ Note: all paths must be absolute.
         ```
         {
           "Code": 0,
-          "Message": "paths must start with a leading slash"
+          "Message": "Paths must start with a leading slash."
         }
         ```
 
@@ -5173,13 +5174,12 @@ Note: all paths must be absolute.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:39:38 GMT
+        Date: Tue, 19 Apr 2016 18:56:04 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -5198,6 +5198,9 @@ Note: all paths must be absolute.
 
 + Request With Existing File Argument
 
+    This depends upon a file or directory called '/test' already existing.
+    To ensure this is true, run the command twice.
+
     #### curl
 
         curl -i "http://localhost:5001/api/v0/files/mkdir?arg=/test"
@@ -5213,13 +5216,12 @@ Note: all paths must be absolute.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:39:38 GMT
+        Date: Tue, 19 Apr 2016 18:56:19 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -5253,13 +5255,12 @@ Note: all paths must be absolute.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:39:45 GMT
+        Date: Tue, 19 Apr 2016 18:57:04 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -5287,13 +5288,12 @@ Note: all paths must be absolute.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 03 Mar 2016 16:00:58 GMT
+        Date: Tue, 19 Apr 2016 18:57:29 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -5328,13 +5328,12 @@ Note: all paths must be absolute.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Thu, 03 Mar 2016 16:00:50 GMT
+        Date: Tue, 19 Apr 2016 18:58:05 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -5401,18 +5400,17 @@ Display file status.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:38:34 GMT
+        Date: Tue, 19 Apr 2016 18:58:20 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
-        - Message: "paths must not be empty"
+        - Message: "Paths must not be empty."
         - Code: 0
 
     + Body
@@ -5420,7 +5418,7 @@ Display file status.
         ```
         {
           "Code": 0,
-          "Message": "paths must not be empty"
+          "Message": "Paths must not be empty."
         }
         ```
 
@@ -5441,18 +5439,17 @@ Display file status.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:38:37 GMT
+        Date: Tue, 19 Apr 2016 18:58:38 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
-        - Message: "paths must start with a leading slash"
+        - Message: "Paths must start with a leading slash."
         - Code: 0
 
     + Body
@@ -5460,7 +5457,7 @@ Display file status.
         ```
         {
           "Code": 0,
-          "Message": "paths must start with a leading slash"
+          "Message": "Paths must start with a leading slash."
         }
         ```
 
@@ -5481,13 +5478,12 @@ Display file status.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:50:59 GMT
+        Date: Tue, 19 Apr 2016 18:59:03 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -5569,18 +5565,17 @@ read the entire file similar to unix cat.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:38:34 GMT
+        Date: Tue, 19 Apr 2016 18:59:19 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
-        - Message: "paths must not be empty"
+        - Message: "Paths must not be empty."
         - Code: 0
 
     + Body
@@ -5588,7 +5583,7 @@ read the entire file similar to unix cat.
         ```
         {
           "Code": 0,
-          "Message": "paths must not be empty"
+          "Message": "Paths must not be empty."
         }
         ```
 
@@ -5609,18 +5604,17 @@ read the entire file similar to unix cat.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 16:38:37 GMT
+        Date: Tue, 19 Apr 2016 18:59:36 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
-        - Message: "paths must start with a leading slash"
+        - Message: "Paths must start with a leading slash."
         - Code: 0
 
     + Body
@@ -5628,7 +5622,7 @@ read the entire file similar to unix cat.
         ```
         {
           "Code": 0,
-          "Message": "paths must start with a leading slash"
+          "Message": "Paths must start with a leading slash."
         }
         ```
 
@@ -5639,6 +5633,11 @@ read the entire file similar to unix cat.
         ```
         hello world
         ```
+
+    To make sure that this exists, run the following:
+
+        curl -i "http://localhost:5001/api/v0/files/rm?arg=/test&recursive=true"
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/ipfs/QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&arg=/test"
 
     #### curl
 
@@ -5655,14 +5654,13 @@ read the entire file similar to unix cat.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: text/plain
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
         X-Stream-Output: 1
-        Date: Fri, 19 Feb 2016 16:58:25 GMT
+        Date: Tue, 19 Apr 2016 19:02:00 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -5682,6 +5680,11 @@ read the entire file similar to unix cat.
         hello world
         ```
 
+    To make sure that this exists, run the following:
+
+        curl -i "http://localhost:5001/api/v0/files/rm?arg=/test&recursive=true"
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/ipfs/QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&arg=/test"
+
     #### curl
 
         curl -i "http://localhost:5001/api/v0/files/read?arg=/test&offset=10"
@@ -5697,14 +5700,13 @@ read the entire file similar to unix cat.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: text/plain
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
         X-Stream-Output: 1
-        Date: Fri, 19 Feb 2016 16:58:25 GMT
+        Date: Tue, 19 Apr 2016 19:02:16 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -5724,6 +5726,11 @@ read the entire file similar to unix cat.
         hello world
         ```
 
+    To make sure that this exists, run the following:
+
+        curl -i "http://localhost:5001/api/v0/files/rm?arg=/test&recursive=true"
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/ipfs/QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&arg=/test"
+
     #### curl
 
         curl -i "http://localhost:5001/api/v0/files/read?arg=/test&offset=20"
@@ -5739,26 +5746,25 @@ read the entire file similar to unix cat.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 17:03:38 GMT
+        Date: Tue, 19 Apr 2016 19:02:55 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
         - Code: 0
-        - Message: "offset was past end of file (20 > 12)"
+        - Message: "Offset was past end of file (20 > 12)."
 
     + Body
 
         ```
         {
           "Code": 0,
-          "Message": "offset was past end of file (20 > 12)"
+          "Message": "Offset was past end of file (20 > 12)."
         }
         ```
 
@@ -5769,6 +5775,11 @@ read the entire file similar to unix cat.
         ```
         hello world
         ```
+
+    To make sure that this exists, run the following:
+
+        curl -i "http://localhost:5001/api/v0/files/rm?arg=/test&recursive=true"
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/ipfs/QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&arg=/test"
 
     #### curl
 
@@ -5785,14 +5796,13 @@ read the entire file similar to unix cat.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: text/plain
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
         X-Stream-Output: 1
-        Date: Fri, 19 Feb 2016 16:58:25 GMT
+        Date: Tue, 19 Apr 2016 19:03:33 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -5812,6 +5822,11 @@ read the entire file similar to unix cat.
         hello world
         ```
 
+    To make sure that this exists, run the following:
+
+        curl -i "http://localhost:5001/api/v0/files/rm?arg=/test&recursive=true"
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/ipfs/QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&arg=/test"
+
     #### curl
 
         curl -i "http://localhost:5001/api/v0/files/read?arg=/test&count=50"
@@ -5827,14 +5842,13 @@ read the entire file similar to unix cat.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: text/plain
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
         X-Stream-Output: 1
-        Date: Fri, 19 Feb 2016 16:58:25 GMT
+        Date: Tue, 19 Apr 2016 19:03:53 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -5853,6 +5867,11 @@ read the entire file similar to unix cat.
         ```
         hello world
         ```
+
+    To make sure that this exists, run the following:
+
+        curl -i "http://localhost:5001/api/v0/files/rm?arg=/test&recursive=true"
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/ipfs/QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&arg=/test"
 
     #### curl
 
@@ -5890,6 +5909,11 @@ read the entire file similar to unix cat.
         hello world
         ```
 
+    To make sure that this exists, run the following:
+
+        curl -i "http://localhost:5001/api/v0/files/rm?arg=/test&recursive=true"
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/ipfs/QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&arg=/test"
+
     #### curl
 
         curl -i "http://localhost:5001/api/v0/files/read?arg=/test&count=5&offset=2"
@@ -5905,14 +5929,13 @@ read the entire file similar to unix cat.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: text/plain
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
         X-Stream-Output: 1
-        Date: Fri, 19 Feb 2016 16:58:25 GMT
+        Date: Tue, 19 Apr 2016 19:04:25 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6006,6 +6029,8 @@ merkledag root.
 
 + Request With Empty Argument And Data File
 
+    This request depends upon no file in the Files API at '/test', and an empty file 'test'.
+
     #### curl
 
         curl -i -X POST -F "data=test" "http://localhost:5001/api/v0/files/write?arg=/test"
@@ -6021,27 +6046,26 @@ merkledag root.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 17:42:07 GMT
+        Date: Tue, 19 Apr 2016 19:06:29 GMT
         Connection: close
         Transfer-Encoding: chunked
         ```
 
     + Attributes (Error)
         - Code: 0
-        - Message: "paths must not be empty"
+        - Message: "file does not exist"
 
     + Body
 
         ```
         {
           "Code": 0,
-          "Message": "paths must not be empty"
+          "Message": "file does not exist"
         }
         ```
 
@@ -6049,7 +6073,7 @@ merkledag root.
 
     #### curl
 
-    curl -i -X POST -F "data=test" "http://localhost:5001/api/v0/files/write?arg=/"
+        curl -i -X POST -F "data=test" "http://localhost:5001/api/v0/files/write?arg=/"
 
     + Body
 
@@ -6062,13 +6086,12 @@ merkledag root.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 17:42:05 GMT
+        Date: Tue, 19 Apr 2016 19:08:01 GMT
         Connection: close
         Transfer-Encoding: chunked
         ```
@@ -6088,6 +6111,12 @@ merkledag root.
 
 + Request With Argument
 
+    This request depends upon a file '/test' existing in the Files API, and a file 'test' existing locally.
+    To make sure that this exists, run the following:
+
+        curl -i "http://localhost:5001/api/v0/files/rm?arg=/test&recursive=true"
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/ipfs/QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&arg=/test"
+
     #### curl
 
         curl -i -X POST -F "data=@test" "http://localhost:5001/api/v0/files/write?arg=/test"
@@ -6103,13 +6132,12 @@ merkledag root.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 17:44:13 GMT
+        Date: Tue, 19 Apr 2016 19:09:16 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6128,9 +6156,10 @@ merkledag root.
         hello world
         ```
 
-    #### Bugs
+    To make sure that this exists, run the following:
 
-    - Currently, offset behaves erratically. See https://github.com/ipfs/go-ipfs/issues/2380 for more.
+        curl -i "http://localhost:5001/api/v0/files/rm?arg=/test&recursive=true"
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/ipfs/QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&arg=/test"
 
     #### curl
 
@@ -6147,13 +6176,12 @@ merkledag root.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 17:44:13 GMT
+        Date: Tue, 19 Apr 2016 19:10:19 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6181,13 +6209,12 @@ merkledag root.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 17:44:13 GMT
+        Date: Tue, 19 Apr 2016 19:10:37 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6199,9 +6226,16 @@ merkledag root.
         ```
 + Request With Argument With Truncate Option
 
-    #### Bugs
+    Here, '/test' is a file with the following contents:
 
-    Due to the lack of a body response, I do not know if this is working correctly. Running `ipfs files read /test` after shows no effect.
+        ```
+        hello world
+        ```
+
+    To make sure that this exists, run the following:
+
+        curl -i "http://localhost:5001/api/v0/files/rm?arg=/test&recursive=true"
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/ipfs/QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&arg=/test"
 
     #### curl
 
@@ -6218,13 +6252,12 @@ merkledag root.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 17:44:13 GMT
+        Date: Tue, 19 Apr 2016 19:10:49 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6237,9 +6270,16 @@ merkledag root.
 
 + Request With Argument With Count Option
 
-    #### Bugs
+    Here, '/test' is a file with the following contents:
 
-    Due to the lack of a body response, I do not know if this is working correctly. Running `ipfs files read /test` after shows no effect.
+        ```
+        hello world
+        ```
+
+    To make sure that this exists, run the following:
+
+        curl -i "http://localhost:5001/api/v0/files/rm?arg=/test&recursive=true"
+        curl -i "http://localhost:5001/api/v0/files/cp?arg=/ipfs/QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o&arg=/test"
 
     #### curl
 
@@ -6256,13 +6296,12 @@ merkledag root.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 19 Feb 2016 17:44:13 GMT
+        Date: Tue, 19 Apr 2016 19:11:32 GMT
         Transfer-Encoding: chunked
         ```
 
