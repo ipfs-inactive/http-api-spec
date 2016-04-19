@@ -6325,9 +6325,17 @@ Print ipfs bandwidth information.
     + peer (string, optional) - Specify a peer to print bandwidth for.
     + proto (string, optional) - Specify a protocol to print bandwidth for.
     + poll (boolean, optional) - Print bandwidth at an interval. Default: false.
-    + interval (string, optional) - Time interval to wait between updating output.
+    + interval (string, optional) - Time interval to wait between updating output, if `poll` is true.
 
 + Request Without Arguments
+
+    The response format is the same if `peer` is specified as an option. Specifying a peer changes the returned data to show bandwidth utilization between your peer and the given peer. Otherwise, it shows overall bandwidth. Example command:
+
+        curl -i -X POST "http://localhost:5001/api/v0/stats/bw?peer=QmdoxVqayD8z9aummFscKq56hX58VWD4axGYqF7uTdQ2h3"
+
+    The response format is similarly the same if a protocol is provided. Example command:
+
+        curl -i -X POST "http://localhost:5001/api/v0/stats/bw?proto=/ipfs/dht"
 
     #### curl
 
@@ -6344,14 +6352,13 @@ Print ipfs bandwidth information.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
         X-Chunked-Output: 1
-        Date: Thu, 11 Feb 2016 21:54:39 GMT
+        Date: Tue, 19 Apr 2016 15:51:41 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6389,14 +6396,13 @@ Print ipfs bandwidth information.
     + Headers
 
         ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
         X-Chunked-Output: 1
-        Date: Thu, 11 Feb 2016 21:57:01 GMT
+        Date: Tue, 19 Apr 2016 15:51:56 GMT
         Transfer-Encoding: chunked
         ```
 
