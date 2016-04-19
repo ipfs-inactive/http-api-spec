@@ -4469,7 +4469,6 @@ Lists links (references) from an object.
 
 + Parameters
     + arg (string, required) - Path to the object or objects to list refs from.
-    + format (string, optional) - Emit edges with given format. Tokens: `<src> <dst> <linkname>`.
     + edges (boolean, optional) - Emit edge format: `<from> -> <to>`. Alias: e.
     + unique (boolean, optional) - Omit duplicate refs from output. Alias: u.
     + recursive (boolean, optional) - Recursively list links of child nodes. Alias: r.
@@ -4615,44 +4614,6 @@ Lists links (references) from an object.
         }
         ```
 
-+ Request With Argument And Format Option
-
-    #### curl
-
-        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&format=<linkname>"
-
-    + Body
-
-        ```
-        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&format=<linkname>"
-        ```
-
-+ Response 200
-
-    + Headers
-
-        ```
-        Content-Type: application/json
-        Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        X-Chunked-Output: 1
-        Date: Fri, 05 Feb 2016 17:36:20 GMT
-        Transfer-Encoding: chunked
-        ```
-
-    + Attributes (ndjson)
-        - Ref (string)
-        - Err (string)
-
-    + Body
-
-        ```
-        {
-          "Ref": "cat.jpg",
-          "Err": ""
-        }
-        ```
-
 + Request With Argument And Edge Option
 
     #### curl
@@ -4742,12 +4703,6 @@ Lists links (references) from an object.
 Lists all local references.
 
 Displays the hashes of all local objects.
-
-#### Bugs
-
-    - The `format` option has no effect on the output.
-    - If an argument is included, an `invalid ipfs paths ref` error is thrown,
-    although there is no possible valid ipfs paths ref.
 
 + Request
 
