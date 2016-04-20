@@ -10558,7 +10558,7 @@ List all local addresses the node is listening on.
 Open a connection to the given address.
 
 + Parameters
-    + arg (MultiAddr, required) - Address of the peer to connect to
+    + arg (MultiAddr, required) - Address of peer to connect to.
 
 + Request Without Arguments
 
@@ -10711,8 +10711,10 @@ Open a connection to the given address.
 ## disconnect [GET /swarm/disconnect{?arg}]
 Close the connection to a given address.
 
+The disconnect is not permanent; if ipfs needs to talk to that address later, it will reconnect.
+
 + Parameters
-    + arg (MultiAddr, required) - Address of the peer to disconnect from.
+    + arg (MultiAddr, required) - Address of peer to disconnect from.
 
 + Request Without Arguments
 
