@@ -6728,14 +6728,14 @@ output of a running daemon.
             - dht
             - merkledag
             - all
-    + arg2 (enum[string]) - The log level, with 'debug' the most verbose and 'panic' the least verbose.
+    + arg2 (enum[string]) - The log level, with 'debug' the most verbose and 'critical' the least verbose.
         + Members
             - debug
             - info
+            - notice
             - warning
             - error
-            - fatal
-            - panic
+            - critical
 
 + Request Without Arguments
 
@@ -6818,10 +6818,12 @@ output of a running daemon.
     + Headers
 
         ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 05 Feb 2016 21:22:27 GMT
+        Date: Wed, 20 Apr 2016 19:38:32 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6855,10 +6857,12 @@ output of a running daemon.
     + Headers
 
         ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 05 Feb 2016 21:22:27 GMT
+        Date: Wed, 20 Apr 2016 19:38:20 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6892,10 +6896,12 @@ output of a running daemon.
     + Headers
 
         ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 05 Feb 2016 21:25:20 GMT
+        Date: Wed, 20 Apr 2016 19:38:00 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -6930,11 +6936,13 @@ output of a running daemon.
     + Headers
 
         ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: text/plain
+        Server: go-ipfs/0.4.1-dev
         Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
         X-Stream-Output: 1
-        Date: Fri, 05 Feb 2016 21:36:44 GMT
+        Date: Wed, 20 Apr 2016 19:39:05 GMT
         Transfer-Encoding: chunked
         ```
 
