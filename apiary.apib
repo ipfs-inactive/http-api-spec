@@ -801,46 +801,7 @@ Print out all blocks currently on the bitswap wantlist for the local peer.
 
 Manipulate raw IPFS blocks.
 
-## block [GET /block]
-
-+ Request Without Subcommands
-
-    #### curl
-
-        curl -i "http://localhost:5001/api/v0/block"
-
-    + Body
-
-        ```
-        curl -i "http://localhost:5001/api/v0/block"
-        ```
-
-+ Response 400
-
-    + Headers
-
-        ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output
-        Content-Type: application/json
-        Trailer: X-Stream-Error
-        Transfer-Encoding: chunked
-        Date: Fri, 29 Jan 2016 21:23:38 GMT
-        Transfer-Encoding: chunked
-        ```
-
-    + Attributes (Error)
-        - Message: "This command can't be called directly. Try one of its subcommands."
-        - Code: 1
-
-    + Body
-
-        ```
-        {
-          "Message": "This command can't be called directly. Try one of its subcommands.",
-          "Code": 1
-        }
-        ```
+This command can't be called directly.
 
 ## get [GET /block/get{?arg}]
 
