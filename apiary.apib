@@ -2908,6 +2908,7 @@ PutValue will store the given key value pair in the DHT.
 
 + Request With Arguments
 
+    The response has been truncated to a single ndjson object, as the responses are streamed.
     The response is the same if either argument is empty or invalid. For example:
 
         curl -i "http://localhost:5001/api/v0/dht/put?arg=&arg="
