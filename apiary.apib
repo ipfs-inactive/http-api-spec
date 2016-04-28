@@ -39,7 +39,7 @@ MerkleDAG.
         curl -i -F "file=@test" "http://localhost:5001/api/v0/add"
         ```
 
-+ Response 200 (application/json)
++ Response 200
 
     Note that the response sends a 100 continuation code before a 200 code.
 
@@ -81,7 +81,7 @@ MerkleDAG.
         curl -i -F "file=@test" "http://localhost:5001/api/v0/add?p"
         ```
 
-+ Response 200 (application/json)
++ Response 200
 
     + Headers
 
@@ -128,7 +128,7 @@ MerkleDAG.
         curl -i -F "file=@test" "http://localhost:5001/api/v0/add?t"
         ```
 
-+ Response 200 (application/json)
++ Response 200
 
     + Headers
 
@@ -168,7 +168,7 @@ MerkleDAG.
         curl -i -F "file=@test" "http://localhost:5001/api/v0/add?n"
         ```
 
-+ Response 200 (application/json)
++ Response 200
 
     + Headers
 
@@ -212,7 +212,7 @@ MerkleDAG.
         curl -i -F "file=@test" "http://localhost:5001/api/v0/add?w"
         ```
 
-+ Response 200 (application/json)
++ Response 200
 
     + Headers
 
@@ -256,7 +256,7 @@ MerkleDAG.
         curl -i -F "file=@test" "http://localhost:5001/api/v0/add?H"
         ```
 
-+ Response 200 (application/json)
++ Response 200
 
     + Headers
 
@@ -296,7 +296,7 @@ MerkleDAG.
         curl -i -F "file=@test" "http://localhost:5001/api/v0/add?s"
         ```
 
-+ Response 200 (application/json)
++ Response 200
 
     + Headers
 
@@ -326,7 +326,7 @@ MerkleDAG.
 
 + Request Recursive (multipart/form-data)
 
-+ Response 200 (application/json)
++ Response 200
 
     + Headers
 
@@ -415,7 +415,7 @@ Show some diagnostic information on the bitswap agent.
         curl -i http://localhost:5001/api/v0/bitswap/stat
         ```
 
-+ Response 200 (application/json)
++ Response 200
 
     + Attributes (object)
         + ProvideBufLen: 0 (number)
@@ -502,7 +502,7 @@ Remove a given block from your wantlist.
         curl -i http://localhost:5001/api/v0/bitswap/unwant?arg=
         ```
 
-+ Response 500 (application/json)
++ Response 500
 
     + Headers
 
@@ -542,7 +542,7 @@ Remove a given block from your wantlist.
         curl -i http://localhost:5001/api/v0/bitswap/unwant?arg=kitten
         ```
 
-+ Response 500 (application/json)
++ Response 500
 
     + Headers
 
@@ -576,7 +576,7 @@ Remove a given block from your wantlist.
         curl -i http://localhost:5001/api/v0/bitswap/unwant?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ
         ```
 
-+ Response 200 (application/json)
++ Response 200
 
     + Headers
 
@@ -608,7 +608,7 @@ Remove a given block from your wantlist.
         curl -i http://localhost:5001/api/v0/bitswap/unwant?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ
         ```
 
-+ Response 200 (application/json)
++ Response 200
 
     + Headers
 
@@ -1704,7 +1704,7 @@ Outputs the list of peers that were removed.
         curl -i http://localhost:5001/api/v0/bootstrap/rm?arg=/ip4/104.236.176.52/tcp/4001/ipfs/QmSoLnSGccFuZQJzRadHn95W2CrSFmZuTdDWP8HXaHca9z
         ```
 
-+ Response 200 (application/json)
++ Response 200
 
     + Headers
 
@@ -1921,7 +1921,7 @@ Lists all available commands (and subcommands) and exits.
         curl -i http://localhost:5001/api/v0/commands
         ```
 
-+ Response 200 (application/json)
++ Response 200
 
     Due to the size of the response, no Body is included here, and only one level depth for the Attributes.
 
@@ -11684,7 +11684,7 @@ Show a list of all tour topics.
         curl -i "http://localhost:5001/api/v0/tour/list"
         ```
 
-+ Response 200 (text/plain)
++ Response 200
 
     + Headers
 
