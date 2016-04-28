@@ -10088,6 +10088,50 @@ Manipulate the IPFS repo.
 
 This command can't be called directly.
 
+## fsck [GET /repo/fsck]
+Removes repo lockfiles.
+
+This is a plumbing command that will remove repo and level db
+lockfiles, as well as the api file. This command can only run when no ipfs
+daemons are running.
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/repo/fsck"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/repo/fsck"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1
+        Trailer: X-Stream-Error
+        Date: Thu, 28 Apr 2016 21:03:12 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Message (string)
+
+    + Body
+
+        ```
+        {
+          "Message": "Lockfiles have been removed.\n"
+        }
+        ```
+
 ## gc [GET /repo/gc]
 Sweep the local set of stored objects and remove ones that are not pinned in
 order to reclaim hard disk space.
