@@ -1394,7 +1394,6 @@ in the bootstrap list).
 
     #### curl
 
-
         curl -i http://localhost:5001/api/v0/bootstrap/add?default
 
     + Body
@@ -2106,7 +2105,6 @@ file inside your IPFS repository.
         - Key: "Datastore.Path" (string)
         - Value: "kitten" (string)
 
-
     + Body
 
         ```
@@ -2146,7 +2144,6 @@ file inside your IPFS repository.
         - Message: "failed to unmarshal json. invalid character 'k' looking for beginning of value"
         - Code: 0
 
-
     + Body
 
         ```
@@ -2185,7 +2182,6 @@ file inside your IPFS repository.
     + Attributes (object)
         - Key: "Datastore.Path" (string)
         - Value: "kitten" (string)
-
 
     + Body
 
@@ -2239,7 +2235,6 @@ can't be undone.
         ```
         File argument 'file' is required
         ```
-
 
 + Request With Badly Configured Config File
 
@@ -2366,7 +2361,6 @@ included in the output of this command.
           "Code": 0
         }
         ```
-
 
 + Request
 
@@ -2968,8 +2962,6 @@ PutValue will store the given key value pair in the DHT.
           "Type": 0
         }
         ```
-
-
 
 ## query [GET /dht/query{?arg}]
 Find the closest peers to a given key by querying through the DHT.
@@ -5120,7 +5112,6 @@ Note: all paths must be absolute.
 
 + Response 500
 
-
     + Headers
 
         ```
@@ -5289,7 +5280,6 @@ Note: all paths must be absolute.
     + Attributes (Error)
         - Code: 0
         - Message: "file does not exist"
-
 
     + Body
 
@@ -6324,7 +6314,6 @@ Stores to disk the data contained an IPFS or IPNS object(s) at the given path.
             + 7
             + 8
             + 9
-
 
 + Request Without Arguments
 
@@ -7485,7 +7474,6 @@ Outputs the raw bytes in an IPFS object.
         ```
         Argument 'key' is required
         ```
-
 
 + Request With Empty Argument
 
@@ -9580,7 +9568,6 @@ A tool to test sending data to other nodes. It finds nodes
 via the routing system, sends pings, waits for pongs, and prints out round-
 trip latency information.
 
-
 + Parameters
     + arg (string, required) - ID of peer to be pinged.
     + count (number, required) - Number of ping messages to send. Alias: n.
@@ -9667,7 +9654,6 @@ trip latency information.
         ```
 
 + Response 500
-
 
     + Headers
 
@@ -10136,7 +10122,6 @@ order to reclaim hard disk space.
     + Attributes (ndjson)
         - Key (Multihash) The key which has been removed.
 
-
     + Body
 
         ```
@@ -10178,7 +10163,6 @@ set of stored objects and print repo statistics.
         - NumObjects (number) Number of objects in the local repo.
         - RepoPath (number) Size in bytes that the repo is currently taking.
         - RepoSize (string) The path to the repo being currently used.
-
 
     + Body
 
@@ -10943,7 +10927,6 @@ Filters default to those specified under the `"Swarm.AddrFilters"` config key.
         }
         ```
 
-
 ## filters add [GET /swarm/filters/add{?arg}]
 Add the given multiaddr to the filter list.
 
@@ -11070,7 +11053,6 @@ remove your filters from the IPFS config file.
 + Parameters
     + arg (MultiAddr, required) - Address to remove from the filter list
 
-
 + Request Without Arguments
 
     #### curl
@@ -11176,7 +11158,6 @@ remove your filters from the IPFS config file.
 
         ```
         ```
-
 
 ## peers [GET /swarm/filters/peers]
 List the set of peers the node is connected to.
@@ -11538,7 +11519,6 @@ Start the tour
 
 + Response 200
 
-
     + Headers
 
         ```
@@ -11766,7 +11746,6 @@ Show a list of all tour topics.
         -   11.6  
         ```
 
-
 ## next [GET /tour/next]
 Show the next tour topic.
 
@@ -11813,7 +11792,6 @@ Show the next tour topic.
 ## restart [GET /tour/restart]
 Restart the IPFS Tour
 
-
 + Request
 
     #### curl
@@ -11829,7 +11807,6 @@ Restart the IPFS Tour
 + Response 200
 
     + Headers
-
 
         ```
         Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
