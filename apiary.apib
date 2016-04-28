@@ -7419,18 +7419,29 @@ Gets the value currently published at an IPNS name.
         curl -i "http://localhost:5001/api/v0/name/resolve?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
         ```
 
-+ Response
++ Response 200
 
     + Headers
 
         ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1
+        Trailer: X-Stream-Error
+        Date: Thu, 28 Apr 2016 17:19:20 GMT
+        Transfer-Encoding: chunked
         ```
 
-    + Attributes
+    + Attributes (object)
+        - Path (MultiAddr)
 
     + Body
 
         ```
+        {
+          "Path": "/ipfs/QmSiTko9JZyabH56y2fussEt1A5oDqsFXB3CkvAqraFryz"
+        }
         ```
 
 # Group object
