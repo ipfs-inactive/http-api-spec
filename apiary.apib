@@ -2454,10 +2454,10 @@ Issue commands directly through the DHT.
 This command can't be called directly.
 
 ## findpeer [GET /dht/findpeer{?arg}]
-Run a `FindPeer` query through the DHT.
+Query the DHT for all of the multiaddresses associated with a Peer ID.
 
 + Parameters
-    + arg (string, required) - The peer to search for.
+    + arg (string, required) - The ID of the peer to search for.
 
 + Request Without Arguments
 
@@ -2628,9 +2628,7 @@ Run a `FindPeer` query through the DHT.
         ```
 
 ## findprovs [POST /dht/findprovs{?arg}]
-Run a `FindProviders` query through the DHT.
-
-FindProviders will return a list of peers who are able to provide the value requested.
+Find peers in the DHT that can provide a specific value, given a key.
 
 + Parameters
     + arg (string, required) - The key to find providers for.
@@ -2730,9 +2728,9 @@ FindProviders will return a list of peers who are able to provide the value requ
         ```
 
 ## get [GET /dht/get{?arg}]
-Run a `GetValue` query through the DHT.
+Given a key, query the DHT for its best value.
 
-GetValue will return the value stored in the DHT at the given key.
+There may be several different values for a given key stored in the DHT; in this context 'best' means the record that is most desirable. There is no one metric for 'best': it depends entirely on the key type. For IPNS, 'best' is the record that is both valid and has the highest sequence number (freshest). Different key types can specify other 'best' rules.
 
 + Parameters
     + arg (string, required) - The key to find providers for
@@ -2832,9 +2830,17 @@ GetValue will return the value stored in the DHT at the given key.
         ```
 
 ## put [GET /dht/put{?arg1,arg2}]
-Run a `PutValue` query through the DHT.
+Write a key/value pair to the DHT.
 
-PutValue will store the given key value pair in the DHT.
+Given a key of the form /foo/bar and a value of any form, this will write that value to the DHT with that key.
+
+Keys have two parts: a keytype (foo) and the key name (bar). IPNS uses the /ipns keytype, and expects the key name to be a Peer ID. IPNS entries are specifically formatted (protocol buffer).
+
+You may only use keytypes that are supported in your ipfs binary: currently this is only /ipns. Unless you have a relatively deep understanding of the go-ipfs DHT internals, you likely want to be using 'ipfs name publish' instead of this.
+
+Value is arbitrary text. Standard input can be used to provide value.
+
+NOTE: A value may not exceed 2048 bytes.
 
 + Parameters
     + arg1 (string, required) - The key to store the value at.
@@ -2964,7 +2970,7 @@ PutValue will store the given key value pair in the DHT.
         ```
 
 ## query [GET /dht/query{?arg}]
-Find the closest peers to a given key by querying through the DHT.
+Find the closest Peer IDs to a given Peer ID by querying the DHT
 
 + Parameters
     + arg (string, required) - The peerID to run the query against.
