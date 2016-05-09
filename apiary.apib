@@ -7648,11 +7648,194 @@ Outputs the raw bytes in an IPFS object.
         ```
         ```
 
+## diff [GET /object/diff{?arg1,arg2}]
+Takes a diff of the two given objects.
+
+This is used to show the differences between two ipfs objects.
+  
++ Parameters
+    + arg1 (string, required) - Object to diff against.
+    + arg2 (string, required) - Object to diff.
+
++ Request Without Arguments
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/diff"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/diff"
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Tue, 10 May 2016 19:38:44 GMT
+        Content-Length: 28
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'obj_a' is required
+        ```
+
++ Request With Empty Argument
+
+    The response is the same if the argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/ls?arg=kitten"
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/diff?arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/diff?arg="
+        ```
+
++ Response 400
+
+    + Headers
+
+        ```
+        Date: Tue, 10 May 2016 19:39:23 GMT
+        Content-Length: 28
+        Content-Type: text/plain; charset=utf-8
+        ```
+
+    + Attributes (string)
+
+    + Body
+
+        ```
+        Argument 'obj_b' is required
+        ```
+
++ Request With Empty Arguments
+
+    The response is the same if either argument is invalid. For example:
+
+        curl -i "http://localhost:5001/api/v0/ls?arg=kitten&arg="
+        curl -i "http://localhost:5001/api/v0/ls?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&arg="
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/object/diff?arg=&arg="
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/object/diff?arg=&arg="
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1
+        Trailer: X-Stream-Error
+        Date: Tue, 10 May 2016 19:39:58 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message: "invalid ipfs ref path" (string)
+        - Code: 0 (number)
+
+    + Body
+
+        ```
+        {
+          "Message": "invalid ipfs ref path",
+          "Code": 0
+        }
+        ```
+
++ Request With Argument
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/ls?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/ls?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1
+        Trailer: X-Stream-Error
+        Date: Tue, 10 May 2016 19:44:01 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + Objects (array)
+            - Hash (Multihash)
+            + Links (array)
+                - Name (string)
+                - Hash (Multihash)
+                - Size (number)
+                - Type (number)
+
+    + Body
+
+        ```
+        {
+          "Objects": [
+            {
+              "Hash": "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ",
+              "Links": [
+                {
+                  "Name": "cat.jpg",
+                  "Hash": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+                  "Size": 443362,
+                  "Type": 2
+                }
+              ]
+            },
+            {
+              "Hash": "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ",
+              "Links": [
+                {
+                  "Name": "cat.jpg",
+                  "Hash": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+                  "Size": 443362,
+                  "Type": 2
+                }
+              ]
+            }
+          ]
+        }
+        ```
+
 ## get [POST /object/get{?arg}{&encoding}]
 Get and serialize the DAG node named by <key>.
 
 + Parameters
-    + arg (string, required) - Key of the object to retrieve (in base58-encoded multihash format)
+    + arg (string, required) - Key of the object to retrieve (in base58-encoded multihash format).
     + encoding (enum[string], optional) - Serializes the DAG node to the format specified. Alias: `enc`.
         + Default: `json`
         + Members
