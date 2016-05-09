@@ -3062,11 +3062,66 @@ Generate diagnostic reports.
 
 This command can't be called directly.
 
-## cmds clear [GET /diag/cmds/clear{&verbose}]
-Clear inactive requests from the log.
+## cmds [GET /diag/cmds]
+List commands run on this ipfs node.
 
-+ Parameters
-    + verbose (boolean, optional) - Return more verbose output. Alias: v. Default: false.
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/diag/cmds"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/diag/cmds"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1
+        Trailer: X-Stream-Error
+        Date: Tue, 26 Apr 2016 23:21:50 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (array)
+        + (object)
+            - Active (boolean)
+            + Args (array, nullable)
+            - Command (string)
+            - EndTime (string)
+            - ID (number)
+            + Options (object)
+                - enc (string)
+            + StartTime (string)
+
+    + Body
+
+        ```
+        [
+          {
+            "Active": true,
+            "Args": [],
+            "Command": "diag/cmds",
+            "EndTime": "0001-01-01T00:00:00Z",
+            "ID": 19,
+            "Options": {
+              "enc": "json"
+            },
+            "StartTime": "2016-04-26T19:22:41.376294115-04:00"
+          }
+        ]
+        ```
+
+## cmds clear [GET /diag/cmds/clear]
+Clear inactive requests from the log.
 
 + Request
 
@@ -3099,88 +3154,6 @@ Clear inactive requests from the log.
     + Body
 
         ```
-        ```
-
-+ Request With Verbose Option
-
-    #### curl
-
-        curl -i "http://localhost:5001/api/v0/diag/cmds/clear&verbose=true"
-
-    + Body
-
-        ```
-        curl -i "http://localhost:5001/api/v0/diag/cmds/clear&verbose=true"
-        ```
-
-+ Response 200
-
-    + Headers
-
-        ```
-        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
-        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
-        Content-Type: application/json
-        Server: go-ipfs/0.4.1-dev
-        Trailer: X-Stream-Error
-        Date: Tue, 19 Apr 2016 14:27:03 GMT
-        Transfer-Encoding: chunked
-        ```
-
-    + Attributes (array)
-        + Object
-            - Active (boolean)
-            + Args (array)
-            - Command (string)
-            - EndTime (string)
-            - ID (number)
-            + Options (object)
-                - encoding (string)
-                - stream-channels (boolean)
-                - verbose (boolean)
-            + StartTime (string)
-        + Object
-            - Active (boolean)
-            + Args (array)
-                - (string)
-            - Command (string)
-            - EndTime (string)
-            - ID (number)
-            + Options (object)
-                - encoding (string)
-            + StartTime (string)
-
-    + Body
-
-        ```
-        [
-          {
-            "Active": false,
-            "Args": [],
-            "Command": "diag/cmds/clear",
-            "EndTime": "2016-03-18T17:20:29.120015034-04:00",
-            "ID": 2,
-            "Options": {
-              "encoding": "json",
-              "stream-channels": true,
-              "verbose": true
-            },
-            "StartTime": "2016-03-18T17:20:29.12000122-04:00"
-          },
-          {
-            "Active": true,
-            "Args": [
-              ""
-            ],
-            "Command": "diag/cmds",
-            "EndTime": "0001-01-01T00:00:00Z",
-            "ID": 3,
-            "Options": {
-              "enc": "json"
-            },
-            "StartTime": "2016-03-18T17:20:33.895622708-04:00"
-          }
-        ]
         ```
 
 ## cmds set-time [GET /diag/cmds/set-time{?arg}]
