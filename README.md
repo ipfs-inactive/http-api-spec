@@ -13,7 +13,7 @@ Apiary IPFS HTTP API description
 
 You can find the official API spec at the specs repo on:
 
-- https://github.com/ipfs/specs/tree/master/api
+- https://github.com/ipfs/specs/tree/master/public-api
 
 # Want to hack on IPFS?
 

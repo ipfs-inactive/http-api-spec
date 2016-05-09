@@ -27,16 +27,16 @@ MerkleDAG.
     + H (boolean, optional) - Hidden. Include files that are hidden.
     + s (boolean, optional) - Chunker. Chunking algorithm to use.
 
-+ Request Single File (multipart/form-data)
++ Request Single File (multipart/form-data; boundary=CUSTOM)
 
     #### Curl
 
-        curl -i -F "file=@test" "http://localhost:5001/api/v0/add"
+        curl -i -H "Content-Type: multipart/form-data; boundary=CUSTOM" -d $'--CUSTOM\r\nContent-Type: multipart/octet-stream\r\nContent-Disposition: file; filename="test"\r\n\r\nHello World!\n--CUSTOM--' "http://localhost:5001/api/v0/add"
 
     + Body
 
         ```
-        curl -i -F "file=@test" "http://localhost:5001/api/v0/add"
+        curl -i -H "Content-Type: multipart/form-data; boundary=CUSTOM" -d $'--CUSTOM\r\nContent-Type: multipart/octet-stream\r\nContent-Disposition: file; filename="test"\r\n\r\nHello World!\n--CUSTOM--' "http://localhost:5001/api/v0/add"
         ```
 
 + Response 200
@@ -65,7 +65,7 @@ MerkleDAG.
         ```
         {
             "Name":"test",
-            "Hash":"QmePw8gVcBMb8x6kAep6aMBAX23hCSk6iZW3i9VKkiFhu1"
+            "Hash":"QmfM2r8seH2GiRaC4esTjeraXEachRt8ZsSeGaWTPLyMoG"
         }
         ```
 
