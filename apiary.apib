@@ -6881,6 +6881,94 @@ output of a running daemon.
         }
         ```
 
+## ls [GET /log/ls]
+This is a utility command used to list the logging subsystems of a running daemon.
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/log/ls"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/log/ls"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.1
+        Trailer: X-Stream-Error
+        Date: Fri, 06 May 2016 21:13:40 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Strings (array)
+
+    + Body
+
+        ```
+        {
+          "Strings": [
+            "chunk",
+            "mfs",
+            "mount",
+            "core",
+            "merkledag",
+            "table",
+            "bitswap",
+            "reprovider",
+            "core/commands",
+            "lock",
+            "fsrepo",
+            "gc",
+            "cmd/ipfs",
+            "eventlog",
+            "blockset",
+            "offlinerouting",
+            "engine",
+            "supernode",
+            "blockstore",
+            "pin",
+            "coreunix",
+            "core/server",
+            "tarfmt",
+            "blockservice",
+            "path",
+            "dht",
+            "corerepo",
+            "bitswap_network",
+            "namesys",
+            "ipns-repub",
+            "fuse/ipfs",
+            "commands/http",
+            "supernode/proxy",
+            "diagnostics",
+            "dht.pb",
+            "mockrouter",
+            "dagio",
+            "ipfsaddr",
+            "routing/record",
+            "command",
+            "node",
+            "cmds/files",
+            "tour",
+            "config",
+            "importer",
+            "flatfs",
+            "fuse/ipns"
+          ]
+        }
+        ```
+
 ## tail [GET /log/tail]
 `ipfs log tail` is a utility command used to read log output as it is written.
 
