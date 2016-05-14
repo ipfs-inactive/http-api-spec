@@ -9205,7 +9205,7 @@ Stores an IPFS object(s) from a given path locally to disk.
         }
         ```
 
-## ls [POST /pin/ls{&type,count,quiet}]
+## ls [POST /pin/ls{&type,quiet}]
 List objects pinned to local storage.
 
 + Parameters
@@ -9216,8 +9216,7 @@ List objects pinned to local storage.
             + `direct`
             + `indirect`
             + `recursive`
-    + count (boolean, optional) - Show refcount when listing indirect pins.
-    + quiet (boolean, optional) - Write just hashes of objects.
+    + quiet (boolean, optional) - Write just hashes of objects. Default: false.
 
 + Request Without Arguments
 
