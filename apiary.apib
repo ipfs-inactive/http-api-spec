@@ -7161,6 +7161,60 @@ Displays the links an IPFS or IPNS object(s) contains, with the following format
         }
         ```
 
+# Group mount
+
+Mount is currently unstable. This will be updated when it is accessible through the
+HTTP API.
+
+Mounts IPFS to the filesystem (read-only).
+
+Mount ipfs at a read-only mountpoint on the OS. The default, /ipfs and /ipns,
+are set in the configutation file, but can be overriden by the options.
+All ipfs objects will be accessible under this directory. Note that the
+root will not be listable, as it is virtual. Access known paths directly.
+
+## mount [GET /mount]
+
++ Request
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/mount
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/mount
+        ```
+
++ Response 500
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.2
+        Trailer: X-Stream-Error
+        Vary: Origin
+        Date: Mon, 27 Jun 2016 10:51:33 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (Error)
+        - Message
+        - Code: 0
+
+    + Body
+
+        ```
+        {
+          "Message": "unable to check fuse version.\n\nDear User,\n\nBefore mounting, we must check your version of OSXFUSE. We are protecting\nyou from a nasty kernel panic we found in OSXFUSE versions <2.7.2.[1]. To\nmake matters worse, it's harder than it should be to check whether you have\nthe right version installed...[2]. We've automated the process with the\nhelp of a little tool. We tried to install it, but something went wrong[3].\nPlease install it yourself by running:\n\n\tgo get github.com/jbenet/go-fuse-version/fuse-version\n\nYou can also stop ipfs from running these checks and use whatever OSXFUSE\nversion you have by running:\n\n\tipfs config DontCheckOSXFUSE true\n\n[1]: https://github.com/ipfs/go-ipfs/issues/177\n[2]: https://github.com/ipfs/go-ipfs/pull/533\n[3]: exit status 2\n# github.com/jbenet/go-fuse-version\n../../gocode/src/github.com/jbenet/go-fuse-version/version_darwin.go:6:11: fatal error: 'fuse/fuse.h' file not found\n #include <fuse/fuse.h>\n          ^\n1 error generated.\n\n",
+          "Code": 0
+        }
+        ```
+
 # Group name
 
 IPFS namespace (IPNS) tool.
