@@ -3282,9 +3282,10 @@ timeout. If the timeout is too small, some peers may not be reached.
 The default timeout is 20 seconds.
 
 + Parameters
-    + vis (enum[string], optional)
+    + vis (enum[string], optional) - Output format.
+        - Default: `text`
         + Members
-            - `plain text` - Easy to read. Default.
+            - `text` - Easy to read.
             - `d3` - JSON ready to be fed into d3view.
             - `dot` - Graphviz format.
 
@@ -6277,8 +6278,9 @@ Stores to disk the data contained an IPFS or IPNS object(s) at the given path.
     + archive (boolean, optional) - Output a TAR archive. Default: false.
     + compress (boolean, optional) - Compress the output with GZIP compression. Default: false.
     + compression-level (enum[number], optional) - The level of compression.
+        + Default: -1
         + Members
-            + Default: -1
+            + -1
             + 0
             + 1
             + 2
