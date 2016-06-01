@@ -1162,7 +1162,7 @@ Retrieve information on a raw ipfs block.
 # Group bootstrap
 Show or edit the list of bootstrap peers.
 
-Running `ipfs bootstrap` with no arguments will run `ipfs bootstrap list`.
+Requesting `ipfs/bootstrap` with no arguments will return  `ipfs/bootstrap/list`.
 
 **Security Warning**:
 
@@ -1227,7 +1227,7 @@ in the bootstrap list).
 
 + Parameters
     + arg (MultiAddr, required) - A peer to add to the bootstrap list.
-    + default (boolean, optional) - Add default bootstrap nodes.
+    + default (boolean, optional) - Add default bootstrap nodes. Default: false.
 
 + Request No Arguments
 
@@ -1491,7 +1491,7 @@ Outputs the list of peers that were removed.
 
 + Parameters
     + arg (MultiAddr, optional) - A peer to add to the bootstrap list
-    + all (boolean, optional) - Remove all bootstrap peers.
+    + all (boolean, optional) - Remove all bootstrap peers. Default: false.
 
 + Request Without Options
 
