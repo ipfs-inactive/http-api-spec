@@ -10332,11 +10332,22 @@ This command can't be called directly.
 ## bw [POST /stats/bw{&peer,proto,poll,interval}]
 Print ipfs bandwidth information.
 
+By default, overall bandwidth and all protocols are shown. To limit bandwidth to
+a particular peer, use the 'peer' parameter along with that peer's multihash id. To
+specify a specific protocol, use the 'proto' parameter. The 'peer' and 'proto'
+params cannot be specified simultaneously. The protocols that are queried using
+this method are outlined in the specification: https://github.com/ipfs/specs/blob/master/libp2p/7-properties.md#757-protocol-multicodecs
+
+Example protocol options:
+- /ipfs/id/1.0.0
+- /ipfs/bitswap
+- /ipfs/dht
+
 + Parameters
     + peer (string, optional) - Specify a peer to print bandwidth for.
     + proto (string, optional) - Specify a protocol to print bandwidth for.
     + poll (boolean, optional) - Print bandwidth at an interval. Default: false.
-    + interval (string, optional) - Time interval to wait between updating output, if `poll` is true.
+    + interval (time, optional) - Time interval to wait between updating output, if `poll` is true. Default: `1s`.
 
 + Request Without Arguments
 
