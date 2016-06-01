@@ -9782,6 +9782,8 @@ Lists links (references) from an object.
 
 + Parameters
     + arg (string, required) - Path to the object or objects to list refs from.
+    + format (string, optional) - Emit edges with given format. Available tokens: `<src>`, `<dst>`, `<linkname>`.
+        + Default: `<dst>`
     + edges (boolean, optional) - Emit edge format: `<from> -> <to>`. Alias: e.
     + unique (boolean, optional) - Omit duplicate refs from output. Alias: u.
     + recursive (boolean, optional) - Recursively list links of child nodes. Alias: r.
@@ -10017,6 +10019,47 @@ Lists links (references) from an object.
         }
         {
           "Ref": "QmT8onRUfPgvkoPMdMvCHPYxh98iKCfFkBYM1ufYpnkHJn",
+          "Err": ""
+        }
+        ```
+
+
++ Request With Argument And Recursive Option
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&format=<linkname>%20<dst>%20<src>"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/refs?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&format=<linkname>%20<dst>%20<src>"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.2
+        Trailer: X-Stream-Error
+        X-Chunked-Output: 1
+        Date: Wed, 01 Jun 2016 14:23:42 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Ref (string) - In this format, `<linkname> <dst> <src>`.
+        - Err (string)
+
+    + Body
+
+        ```
+        {
+          "Ref": "cat.jpg Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ",
           "Err": ""
         }
         ```
