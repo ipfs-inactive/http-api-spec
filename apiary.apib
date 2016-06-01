@@ -6,7 +6,7 @@ The API for interacting with IPFS nodes.
 
 The HTTP API is currently accepting all methods, so GET will work just as well as POST for any group. Because of this, the methods shown below are the specifications that should be adhered to, although any will work. For more, see this discussion: https://github.com/ipfs/go-ipfs/issues/2165.
 
-# Group add [POST /add{?arg}{&r,p,t,n,w,H,s}]
+# Group add [POST /add{?arg}{&r,p,t,n,w,H,s,pin}]
 Add a file or directory to IPFS.
 
 #### curl
@@ -15,13 +15,14 @@ Add a file or directory to IPFS.
 
 + Parameters
     + arg (string, required) - The path to a file to be added to IPFS.
+    + H (boolean, optional) - Hidden. Include files that are hidden. Default: false.
+    + n (boolean, optional) - Only-hash. Only chunk and hash - do not write to disk. Default: false.
+    + p (boolean, optional) - Progress. Stream progress data. Default: true.
+    + pin (boolean, optional) - Pin this object when adding. Default: true.
     + r (boolean, optional) - Recursive. Add directory paths recursively.
-    + p (boolean, optional) - Progress. Stream progress data.
-    + t (boolean, optional) - Trickle. Use trickle-dag format for dag generation.
-    + n (boolean, optional) - Only-hash. Only chunk and hash - do not write to disk.
-    + w (boolean, optional) - Wrap-with-directory. Wrap files with a directory object.
-    + H (boolean, optional) - Hidden. Include files that are hidden.
     + s (boolean, optional) - Chunker. Chunking algorithm to use.
+    + t (boolean, optional) - Trickle. Use trickle-dag format for dag generation. Default: false.
+    + w (boolean, optional) - Wrap-with-directory. Wrap files with a directory object. Default: false.
 
 + Request Single File (multipart/form-data; boundary=CUSTOM)
 
