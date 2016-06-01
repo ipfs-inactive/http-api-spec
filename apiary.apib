@@ -11424,19 +11424,22 @@ remove your filters from the IPFS config file.
         ```
         ```
 
-## peers [GET /swarm/filters/peers]
+## peers [GET /swarm/peers{?verbose}]
 List the set of peers the node is connected to.
+
++ Parameters
+    + verbose (boolean, optional) - Also display latency along with peer information in the following form: <peer address> <latency>. Alias: v. Default: false.
 
 + Request Without Arguments
 
     #### curl
 
-        curl -i "http://localhost:5001/api/v0/swarm/filters/peers"
+        curl -i "http://localhost:5001/api/v0/swarm/peers"
 
     + Body
 
         ```
-        curl -i "http://localhost:5001/api/v0/swarm/filters/peers"
+        curl -i "http://localhost:5001/api/v0/swarm/peers"
         ```
 
 + Response 200
@@ -11447,9 +11450,9 @@ List the set of peers the node is connected to.
         Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.1-dev
+        Server: go-ipfs/0.4.2
         Trailer: X-Stream-Error
-        Date: Tue, 19 Apr 2016 16:29:51 GMT
+        Date: Wed, 01 Jun 2016 14:47:02 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -11461,7 +11464,99 @@ List the set of peers the node is connected to.
 
         ```
         {
-          "Strings": null
+          "Strings": [
+            "/ip4/104.131.131.82/tcp/4001/ipfs/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ",
+            "/ip4/104.236.176.52/tcp/4001/ipfs/QmSoLnSGccFuZQJzRadHn95W2CrSFmZuTdDWP8HXaHca9z",
+            "/ip4/144.76.172.110/tcp/4001/ipfs/QmcqtYSXyK4LtFoTm43UYLDrPtodP7aVX2qDGjFuVLZuaW",
+            "/ip4/158.69.48.74/tcp/4001/ipfs/QmWYP5a1UDgFRJY1jXa9jMvnkLsZ45ivABq1nsYFfWqE7u",
+            "/ip4/178.62.158.247/tcp/14001/ipfs/QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd",
+            "/ip4/185.14.30.146/tcp/4001/ipfs/QmRmkky7qQBjCAU2gFUqfy3NXD7BPq8YVLPM7GHXBz7b5P",
+            "/ip4/192.241.197.120/tcp/4001/ipfs/QmSGYB8socm1hcrFg4gibMYWNcjTh37xRLRVtgoU9vmg3w",
+            "/ip4/193.219.36.233/tcp/4001/ipfs/QmVjEQAUXCEQMDmvgtsd5f2EsgTbg33Cpis5TDM3uVP9Vs",
+            "/ip4/37.187.116.23/tcp/4001/ipfs/QmbqE6UfCJaXST3i65zbr649s8cJCUoP9m3UFUrXcNgeDn",
+            "/ip4/45.55.151.20/tcp/4001/ipfs/QmdkJZUWnVkEc6yfptVu4LWY8nHkEnGwsxqQ233QSGj8UP",
+            "/ip4/46.101.230.105/tcp/4001/ipfs/QmNSkXT3CdFs4WpKDxPpkXyYSbBoJBGuAM4bE9jDAMDdKq",
+            "/ip4/5.9.59.34/tcp/4001/ipfs/QmRv1GNseNP1krEwHDjaQMeQVJy41879QcDwpJVhY8SWve",
+            "/ip4/52.34.140.240/tcp/4001/ipfs/QmbCs2voAqpHZSecVtqRnfkMu2QW8JoSGAqHoch6no1YYP",
+            "/ip4/52.36.247.108/tcp/4001/ipfs/QmPPd5xtYnJHYS8LxV6UNTGwLTvRhYR9VMDJrP8NscPQd8",
+            "/ip4/52.63.206.249/tcp/4001/ipfs/QmWBLbdfH2KvrjkSzAYknqM3bDnAEFLAqUGbKzFUUjkDAu",
+            "/ip4/65.19.134.244/udp/4001/utp/ipfs/Qmd8m2mmgdB9eRFyumGgj97FvPR3GJRPjSVKtiwcrdop4K",
+            "/ip4/82.221.106.113/tcp/4001/ipfs/QmdoxVqayD8z9aummFscKq56hX58VWD4axGYqF7uTdQ2h3",
+            "/ip4/86.120.53.110/tcp/24429/ipfs/QmNcYn35QuRXCUqWrjNXC6GdDa81xyp8FWJzqyum2D5jMp",
+            "/ip4/95.129.55.173/tcp/4001/ipfs/QmZ86ow1byeyhNRJEatWxGPJKcnQKG7s51MtbHdxxUddTH",
+            "/ip4/95.27.70.121/tcp/32513/ipfs/QmQs6Poz3c8h3PG3UujQi1z4zfDJY6pa3YonUvkE3RvgYu"
+          ]
+        }
+        ```
+
++ Request With Verbose
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/swarm/peers?verbose=true"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/swarm/peers?verbose=true"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.2
+        Trailer: X-Stream-Error
+        Date: Wed, 01 Jun 2016 14:49:22 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Strings (array, nullable)
+            - (string) - Multiaddr with latency information in time format.
+
+    + Body
+
+        ```
+        {
+          "Strings": [
+            "/ip4/104.131.131.82/tcp/4001/ipfs/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ 740.111388ms",
+            "/ip4/104.236.176.52/tcp/4001/ipfs/QmSoLnSGccFuZQJzRadHn95W2CrSFmZuTdDWP8HXaHca9z 376.679609ms",
+            "/ip4/144.76.172.110/tcp/4001/ipfs/QmcqtYSXyK4LtFoTm43UYLDrPtodP7aVX2qDGjFuVLZuaW 218.785157ms",
+            "/ip4/158.69.21.139/tcp/4001/ipfs/QmPz9uv4HUP1er5TGaaoc4NVCbN8VFMrf5gwvxfmtSAmGv 221.844286ms",
+            "/ip4/158.69.48.74/tcp/4001/ipfs/QmWYP5a1UDgFRJY1jXa9jMvnkLsZ45ivABq1nsYFfWqE7u 423.110302ms",
+            "/ip4/163.172.157.39/tcp/4001/ipfs/QmP9Pxn13GiAufcXfjGgXF4ktfD4Easj9j9RKfFEbqrKjz 59.928358ms",
+            "/ip4/172.245.99.11/tcp/34001/ipfs/QmTv99LaBwegvtRgUaUUy6JSzF6q8i2FCJdy7fJQxqAtU8 352.173945ms",
+            "/ip4/178.62.158.247/tcp/14001/ipfs/QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd 91.905421ms",
+            "/ip4/185.14.30.146/tcp/4001/ipfs/QmRmkky7qQBjCAU2gFUqfy3NXD7BPq8YVLPM7GHXBz7b5P 122.556197ms",
+            "/ip4/188.166.146.223/tcp/4001/ipfs/Qmbjn4xnJmpf3G3iQ9zJYEKKYxjB8diG3a2CT7FS1ZgtMx 88.385637ms",
+            "/ip4/192.241.197.120/tcp/4001/ipfs/QmSGYB8socm1hcrFg4gibMYWNcjTh37xRLRVtgoU9vmg3w 416.255574ms",
+            "/ip4/193.219.36.233/tcp/4001/ipfs/QmVjEQAUXCEQMDmvgtsd5f2EsgTbg33Cpis5TDM3uVP9Vs 296.449158ms",
+            "/ip4/213.138.110.195/tcp/4001/ipfs/QmairS6YvvdhVcPmWM6juu12A8UixjrknFVDKBn8tZ7R1Z 83.910351ms",
+            "/ip4/37.187.116.23/tcp/4001/ipfs/QmbqE6UfCJaXST3i65zbr649s8cJCUoP9m3UFUrXcNgeDn 133.655682ms",
+            "/ip4/45.55.151.20/tcp/4001/ipfs/QmdkJZUWnVkEc6yfptVu4LWY8nHkEnGwsxqQ233QSGj8UP 974.919025ms",
+            "/ip4/46.101.230.105/tcp/4001/ipfs/QmNSkXT3CdFs4WpKDxPpkXyYSbBoJBGuAM4bE9jDAMDdKq 182.658883ms",
+            "/ip4/5.9.59.34/tcp/4001/ipfs/QmRv1GNseNP1krEwHDjaQMeQVJy41879QcDwpJVhY8SWve 71.508445ms",
+            "/ip4/50.161.3.114/tcp/4001/ipfs/QmSsrEQN8mZeGFb5ZmjK5Ec2BCE7wLRmpzeLcnPUH3RLaL 203.250386ms",
+            "/ip4/52.34.140.240/tcp/4001/ipfs/QmbCs2voAqpHZSecVtqRnfkMu2QW8JoSGAqHoch6no1YYP 841.227969ms",
+            "/ip4/52.36.247.108/tcp/4001/ipfs/QmPPd5xtYnJHYS8LxV6UNTGwLTvRhYR9VMDJrP8NscPQd8 920.241856ms",
+            "/ip4/52.39.237.57/tcp/4001/ipfs/Qma1KPdFYfDKB7peA8v9KgiibweDY2tWwC9KPQ2uC86yjB 320.427224ms",
+            "/ip4/52.63.206.249/tcp/4001/ipfs/QmWBLbdfH2KvrjkSzAYknqM3bDnAEFLAqUGbKzFUUjkDAu 1.322415139s",
+            "/ip4/65.19.134.244/udp/4001/utp/ipfs/Qmd8m2mmgdB9eRFyumGgj97FvPR3GJRPjSVKtiwcrdop4K 363.342377ms",
+            "/ip4/65.34.170.14/tcp/4001/ipfs/QmdGXJE9U9wway6PoLZdzkZtkxwN7kvqgHa1SYps54U61a 312.207797ms",
+            "/ip4/71.204.170.241/tcp/4001/ipfs/QmbW7bf7DdF7MMsoFi1vwxtTgka2pmibME5xSzwgi4tzW2 360.15412ms",
+            "/ip4/81.241.186.204/tcp/60633/ipfs/QmNcsekuFFcQHYuuqE1d9uZgSfqLSa3WaxqMcbKkK4vyQD 76.519066ms",
+            "/ip4/82.221.106.113/tcp/4001/ipfs/QmdoxVqayD8z9aummFscKq56hX58VWD4axGYqF7uTdQ2h3 150.14925ms",
+            "/ip4/86.120.53.110/tcp/24429/ipfs/QmNcYn35QuRXCUqWrjNXC6GdDa81xyp8FWJzqyum2D5jMp 138.966261ms",
+            "/ip4/91.121.16.67/tcp/4001/ipfs/QmeWdgoZezpdHz1PX8Ly8AeDQahFkBNtHn6qKeNtWP1jB6 56.652597ms",
+            "/ip4/94.23.12.202/tcp/4001/ipfs/QmfKhDQk8PRS7NDFtjrvNvqbXdstEpPWMewnmw7hUwx6fD 46.961408ms",
+            "/ip4/95.129.55.173/tcp/4001/ipfs/QmZ86ow1byeyhNRJEatWxGPJKcnQKG7s51MtbHdxxUddTH 94.666187ms",
+            "/ip4/95.27.70.121/tcp/32513/ipfs/QmQs6Poz3c8h3PG3UujQi1z4zfDJY6pa3YonUvkE3RvgYu 395.265568ms"
+          ]
         }
         ```
 
