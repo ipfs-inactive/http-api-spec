@@ -9990,7 +9990,8 @@ Lists links (references) from an object.
     + Headers
 
         ```
-        Date: Tue, 19 Apr 2016 14:12:30 GMT
+        Vary: Origin
+        Date: Mon, 13 Jun 2016 10:56:22 GMT
         Content-Length: 32
         Content-Type: text/plain; charset=utf-8
         ```
@@ -10027,9 +10028,10 @@ Lists links (references) from an object.
         Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.1-dev
+        Server: go-ipfs/0.4.2
         Trailer: X-Stream-Error
-        Date: Tue, 19 Apr 2016 14:12:20 GMT
+        Vary: Origin
+        Date: Mon, 13 Jun 2016 10:56:45 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -10066,10 +10068,11 @@ Lists links (references) from an object.
         Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.1-dev
+        Server: go-ipfs/0.4.2
         Trailer: X-Stream-Error
+        Vary: Origin
         X-Chunked-Output: 1
-        Date: Tue, 19 Apr 2016 14:12:09 GMT
+        Date: Mon, 13 Jun 2016 10:57:06 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -10100,10 +10103,11 @@ Lists links (references) from an object.
         Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.1-dev
+        Server: go-ipfs/0.4.2
         Trailer: X-Stream-Error
+        Vary: Origin
         X-Chunked-Output: 1
-        Date: Tue, 19 Apr 2016 14:11:59 GMT
+        Date: Mon, 13 Jun 2016 10:57:18 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -10140,10 +10144,11 @@ Lists links (references) from an object.
         Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.1-dev
+        Server: go-ipfs/0.4.2
         Trailer: X-Stream-Error
+        Vary: Origin
         X-Chunked-Output: 1
-        Date: Tue, 19 Apr 2016 14:11:46 GMT
+        Date: Mon, 13 Jun 2016 10:57:34 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -10180,10 +10185,11 @@ Lists links (references) from an object.
         Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.1-dev
+        Server: go-ipfs/0.4.2
         Trailer: X-Stream-Error
+        Vary: Origin
         X-Chunked-Output: 1
-        Date: Tue, 19 Apr 2016 14:11:36 GMT
+        Date: Mon, 13 Jun 2016 10:57:53 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -10231,8 +10237,9 @@ Lists links (references) from an object.
         Content-Type: application/json
         Server: go-ipfs/0.4.2
         Trailer: X-Stream-Error
+        Vary: Origin
         X-Chunked-Output: 1
-        Date: Wed, 01 Jun 2016 14:23:42 GMT
+        Date: Mon, 13 Jun 2016 10:58:05 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -10269,28 +10276,38 @@ Displays the hashes of all local objects.
 
 + Response 200
 
+    The response has been truncated, to show only a sample of identically-formatted ndjson objects.
+
     + Headers
 
         ```
         Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
-        Content-Type: text/plain
-        Server: go-ipfs/0.4.1-dev
+        Content-Type: application/json
+        Server: go-ipfs/0.4.2
         Trailer: X-Stream-Error
-        X-Stream-Output: 1
-        Date: Tue, 19 Apr 2016 14:11:14 GMT
+        Vary: Origin
+        X-Chunked-Output: 1
+        Date: Mon, 13 Jun 2016 10:58:20 GMT
         Transfer-Encoding: chunked
         ```
 
-    + Attributes (string)
+    + Attributes (ndjson)
 
-        Newline delimited multihashes
+        - Ref (Multihash)
+        - Err (string)
 
     + Body
 
         ```
-        QmNLjhs2cWVGopVTE5KqCZBdX7TE6i9AU1y8pwytt7cyzC
-        QmNLwdgyRiTuMf9M3Fjtu2TpMjz2CgZS4YgeuqjLHv3rjq
+        {
+          "Ref": "QmNLxtKFa66yoRQHWa4FXkwCMqVpWGhg2XBXAfwKvSmJFp",
+          "Err": ""
+        }
+        {
+          "Ref": "QmNXFHU3KzhzXN9pZ5Bdghk3LYGj58Xzi7WvMVVoykdLxA",
+          "Err": ""
+        }
         ```
 
 # Group repo
