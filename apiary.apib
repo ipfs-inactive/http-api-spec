@@ -3467,46 +3467,30 @@ Print out information about your computer to aid in debugging.
         Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.0-dev
+        Server: go-ipfs/0.4.2
         Trailer: X-Stream-Error
-        Date: Fri, 18 Mar 2016 21:41:24 GMT
+        Vary: Origin
+        Date: Sun, 19 Jun 2016 14:24:40 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (object)
         - diskinfo (object)
-            - `free_space`: 6639185920 (number)
-            - `fstype`: hfs (string)
-            - `total_space`: 120101797888 (number)
-            - `used_space`: 113462611968 (number)
+            - free_space: 6639185920 (number)
+            - fstype: hfs (string)
+            - total_space: 120101797888 (number)
         - environment (object)
-            - GOPATH: `/Users/dignifiedquire/.go` (string)
+            - GOPATH: "/Users/dignifiedquire/.go" (string)
             - IPFS_PATH (string, nullable)
-        - `ipfs_git_sha` (string, nullable)
-        - `ipfs_version`: `0.3.9` (string)
+        - ipfs_commit: "a6fb581" (string, nullable)
+        - ipfs_version: "0.3.9" (string)
         - memory (object)
-            - swap (object)
-                - total: 3072000 (number)
-                - used: 1935000 (number)
-                - free: 1137000 (number)
-                - used_percent: 62.98828125 (number)
-                - sin: 0 (number)
-                - sout: 0 (number)
-            - virt (object)
-                - total: 4294967296 (number)
-                - available: 682414080 (number)
-                - used: 4277125120 (number)
-                - used_percent: 84.11130905151367 (number)
-                - free: 17842176 (number)
-                - active: 671182848 (number)
-                - inactive: 664559616 (number)
-                - buffers: 0 (number)
-                - cached: 664571904 (number)
-                - wired: 1469018112 (number)
-                - shared: 0 (number)
-            - net (object)
-            - `interface_addresses` (array)
+            - swap: 0 (number)
+            - virt: 0 (number)
+        - net (object)
+            - interface_addresses (array)
                 - "/ip6/::1" (MultiAddr)
+            - online (boolean)
         - runtime (object)
             - arch: amd64 (string)
             - compiler: gc (string)
@@ -3521,61 +3505,39 @@ Print out information about your computer to aid in debugging.
         ```
         {
           "diskinfo": {
-            "free_space": 10991816704,
-            "fstype": "hfs",
-            "total_space": 499071844352,
-            "used_space": 488080027648
+            "free_space": 22129876992,
+            "fstype": "17",
+            "total_space": 21867732992
           },
           "environment": {
-            "GOPATH": "/Users/richard/src/go",
+            "GOPATH": "/Users/richard/gocode",
             "IPFS_PATH": ""
           },
-          "ipfs_git_sha": "",
-          "ipfs_version": "0.4.0-dev",
+          "ipfs_commit": "a6fb581",
+          "ipfs_version": "0.4.2",
           "memory": {
-            "swap": {
-              "total": 1024000,
-              "used": 4500,
-              "free": 1019500,
-              "used_percent": 0.439453125,
-              "sin": 0,
-              "sout": 0
-            },
-            "virt": {
-              "total": 17179869184,
-              "available": 5769371648,
-              "used": 16170459136,
-              "used_percent": 66.41783714294434,
-              "free": 1009410048,
-              "active": 8633831424,
-              "inactive": 3408060416,
-              "buffers": 0,
-              "cached": 4759961600,
-              "wired": 2031640576,
-              "shared": 0
-            }
+            "swap": 0,
+            "virt": 0
           },
           "net": {
             "interface_addresses": [
               "/ip6/::1",
               "/ip4/127.0.0.1",
               "/ip6/fe80::1",
-              "/ip6/fe80::62f8:1dff:fed2:1970",
-              "/ip6/2601:184:4400:78fc:62f8:1dff:fed2:1970",
-              "/ip6/2601:184:4400:78fc:2120:5f12:5e93:6cf2",
-              "/ip4/10.0.0.42",
-              "/ip6/fe80::2cbf:91ff:fe23:aee6",
-              "/ip6/fe80::e587:3267:259f:fb4b"
-            ]
+              "/ip6/fe80::a6d1:8cff:fee0:7950",
+              "/ip4/192.168.10.234",
+              "/ip6/fe80::6c24:b1ff:fe6d:8ad2"
+            ],
+            "online": true
           },
           "runtime": {
             "arch": "amd64",
             "compiler": "gc",
             "gomaxprocs": 3,
-            "numcpu": 8,
-            "numgoroutines": 244,
+            "numcpu": 4,
+            "numgoroutines": 211,
             "os": "darwin",
-            "version": "go1.5.1"
+            "version": "go1.5.3"
           }
         }
         ```
