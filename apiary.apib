@@ -10448,6 +10448,47 @@ set of stored objects and print repo statistics.
         }
         ```
 
+## version [GET /repo/version]
+Show the repo version.
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/repo/version"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/repo/version"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.2
+        Trailer: X-Stream-Error
+        Vary: Origin
+        Date: Tue, 28 Jun 2016 11:13:47 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - Version: "3" (string)
+
+    + Body
+
+        ```
+        {
+          "Version": "3"
+        }
+        ```
+
 # Group resolve
 Resolve the value of names to IPFS.
 
