@@ -7023,13 +7023,14 @@ This is a utility command used to list the logging subsystems of a running daemo
 # Group ls
 List links from an object.
 
-## ls [GET /ls{?arg}]
+## ls [GET /ls{?arg}{&resolve-type}]
 Displays the links an IPFS or IPNS object(s) contains, with the following format:
 
       <link base58 hash> <link size in bytes> <link name>
 
 + Parameters
     + arg (string, required) - The path to the IPFS object or objects to list links from
+    + resolve-type (boolean, optional) - Resolve linked objects to find out their types. Default: true.
 
 + Request Without Arguments
 
@@ -7130,6 +7131,64 @@ Displays the links an IPFS or IPNS object(s) contains, with the following format
         Trailer: X-Stream-Error
         Vary: Origin
         Date: Wed, 29 Jun 2016 09:28:41 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        + `Objects` (array)
+            + (object)
+                - `Hash` (string)
+                + `Links` (array)
+                    + (object)
+                        - `Name` (string)
+                        - `Hash` (string)
+                        - `Size` (number)
+                        - `Type` (number)
+
+    + Body
+
+        ```
+        {
+          "Objects": [
+            {
+              "Hash": "QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ",
+              "Links": [
+                {
+                  "Name": "cat.jpg",
+                  "Hash": "Qmd286K6pohQcTKYqnS1YhWrCiS4gz7Xi34sdwMe9USZ7u",
+                  "Size": 443362,
+                  "Type": 2
+                }
+              ]
+            }
+          ]
+        }
+        ```
+
++ Request With Argument And Resolve Type
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/ls?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&resolve-type=false"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/ls?arg=QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ&resolve-type=false"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.2
+        Trailer: X-Stream-Error
+        Vary: Origin
+        Date: Fri, 01 Jul 2016 11:08:35 GMT
         Transfer-Encoding: chunked
         ```
 
