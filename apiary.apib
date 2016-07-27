@@ -10507,6 +10507,69 @@ set of stored objects and print repo statistics.
         }
         ```
 
+## verify [GET /repo/verify]
+Verify all blocks in repo are not corrupted.
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/repo/verify"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/repo/verify"
+        ```
+
++ Response 200
+
+    The response has been truncated.
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.3-dev
+        Trailer: X-Stream-Error
+        Vary: Origin
+        X-Chunked-Output: 1
+        Date: Wed, 27 Jul 2016 21:26:38 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (ndjson)
+        - Message: "" (string)
+        - Progress: 1 (number)
+
+    + Body
+
+        ```
+        {
+          "Message": "",
+          "Progress": 1
+        }
+        {
+          "Message": "",
+          "Progress": 2
+        }
+        ...
+        {
+          "Message": "",
+          "Progress": 143
+        }
+        {
+          "Message": "",
+          "Progress": 144
+        }
+        {
+          "Message": "verify complete, all blocks validated.",
+          "Progress": 0
+        }
+        ```
+
 ## version [GET /repo/version]
 Show the repo version.
 
