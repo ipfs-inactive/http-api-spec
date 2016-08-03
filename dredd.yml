@@ -1,0 +1,25 @@
+init: true
+dry-run: null
+hookfiles: null
+language: nodejs
+sandbox: false
+server: ipfs daemon
+server-wait: 10
+custom: {}
+names: false
+only: []
+reporter: apiary
+output: []
+header: []
+sorted: false
+user: null
+inline-errors: false
+details: false
+method: []
+color: true
+level: info
+timestamp: false
+silent: false
+path: []
+blueprint: apiary.apib
+endpoint: 'http://localhost:5001/api/v0'
