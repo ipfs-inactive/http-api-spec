@@ -445,9 +445,10 @@ Show some diagnostic information on the bitswap agent.
         Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.1
+        Server: go-ipfs/0.4.2
         Trailer: X-Stream-Error
-        Date: Thu, 28 Apr 2016 17:40:22 GMT
+        Vary: Origin
+        Date: Mon, 13 Jun 2016 11:06:46 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -10448,9 +10449,10 @@ set of stored objects and print repo statistics.
         Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.1-dev
+        Server: go-ipfs/0.4.2
         Trailer: X-Stream-Error
-        Date: Tue, 19 Apr 2016 15:38:07 GMT
+        Vary: Origin
+        Date: Mon, 13 Jun 2016 11:08:59 GMT
         Transfer-Encoding: chunked
         ```
 
@@ -10458,14 +10460,16 @@ set of stored objects and print repo statistics.
         - NumObjects (number) Number of objects in the local repo.
         - RepoPath (number) Size in bytes that the repo is currently taking.
         - RepoSize (string) The path to the repo being currently used.
+        - Version (string) The repo version.
 
     + Body
 
         ```
         {
-          "NumObjects": 167,
+          "NumObjects": 412,
+          "RepoSize": 68689750,
           "RepoPath": "/Users/richard/.ipfs",
-          "RepoSize": 22289161
+          "Version": "fs-repo@3"
         }
         ```
 
@@ -10702,6 +10706,64 @@ Query IPFS statistics.
 
 This command can't be called directly.
 
+## bitswap [GET /stats/bitswap]
+Show some diagnostic information on the bitswap agent.
+
+This command is identical to '/bitswap/stat'.
+
++ Request
+
+    #### curl
+
+        curl -i http://localhost:5001/api/v0/stats/bitswap
+
+    + Body
+
+        ```
+        curl -i http://localhost:5001/api/v0/stats/bitswap
+        ```
+
++ Response 200
+
+    + Attributes (object)
+        + ProvideBufLen: 0 (number)
+        + Wantlist (array, nullable)
+        + Peers (array)
+            - QmNjRVohhWBX31EoaAXkrj5mPF9vQNcTVvQgWHNwdxweCN (Multihash)
+        + BlocksReceived: 0 (number)
+        + DupBlksReceived: 0 (number)
+        + DupDataReceived: 0 (number)
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.2
+        Trailer: X-Stream-Error
+        Vary: Origin
+        Date: Mon, 13 Jun 2016 11:06:46 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Body
+
+        ```
+        {
+          "ProvideBufLen": 0,
+          "Wantlist": null,
+          "Peers": [
+            "QmSoLPppuBtQSGwKDZT2M73ULpjvfd3aZ6ha4oFGL1KrGM",
+            "QmSoLnSGccFuZQJzRadHn95W2CrSFmZuTdDWP8HXaHca9z",
+            "QmSoLueR4xBeUbY9WZ9xGUUxunbKWcrNFTDAadQJmocnWm"
+          ],
+          "BlocksReceived": 0,
+          "DupBlksReceived": 0,
+          "DupDataReceived": 0
+        }
+        ```
+
 ## bw [POST /stats/bw{&peer,proto,poll,interval}]
 Print ipfs bandwidth information.
 
@@ -10821,6 +10883,56 @@ Example protocol options:
           "TotalOut": 1450578,
           "RateIn": 550.0080313689939,
           "RateOut": 738.0719064674622
+        }
+        ```
+
+## repo [GET /stats/repo]
+Get stats for the currently used repo. This is a plumbing command that will scan the local
+set of stored objects and print repo statistics.
+
+This command is identical to '/repo/stat'.
+
++ Request
+
+    #### curl
+
+        curl -i "http://localhost:5001/api/v0/stats/repo"
+
+    + Body
+
+        ```
+        curl -i "http://localhost:5001/api/v0/stats/repo"
+        ```
+
++ Response 200
+
+    + Headers
+
+        ```
+        Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
+        Content-Type: application/json
+        Server: go-ipfs/0.4.2
+        Trailer: X-Stream-Error
+        Vary: Origin
+        Date: Mon, 13 Jun 2016 11:08:59 GMT
+        Transfer-Encoding: chunked
+        ```
+
+    + Attributes (object)
+        - NumObjects (number) Number of objects in the local repo.
+        - RepoPath (number) Size in bytes that the repo is currently taking.
+        - RepoSize (string) The path to the repo being currently used.
+        - Version (string) The repo version.
+
+    + Body
+
+        ```
+        {
+          "NumObjects": 412,
+          "RepoSize": 68689750,
+          "RepoPath": "/Users/richard/.ipfs",
+          "Version": "fs-repo@3"
         }
         ```
 
