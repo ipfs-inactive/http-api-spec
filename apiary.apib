@@ -12449,9 +12449,10 @@ Restart the IPFS Tour
 
 # Group version
 
-Show version details about the IPFS node.
+Shows ipfs version information.
 
 ## version [GET /version]
+
 Returns the current version of ipfs and exits.
 
 + Request
@@ -12474,26 +12475,30 @@ Returns the current version of ipfs and exits.
         Access-Control-Allow-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Access-Control-Expose-Headers: X-Stream-Output, X-Chunked-Output, X-Content-Length
         Content-Type: application/json
-        Server: go-ipfs/0.4.1
+        Server: go-ipfs/0.4.3-dev
         Trailer: X-Stream-Error
-        Date: Thu, 28 Apr 2016 17:33:41 GMT
+        Vary: Origin
+        Date: Thu, 01 Sep 2016 00:17:20 GMT
         Transfer-Encoding: chunked
         ```
 
     + Attributes (object)
-        - Version: "0.4.0-dev" (string)
-        - Commit: "b036b23a233a64faa6a456522b0f45763be70e64" (string)
+        - Commit: "d742fb1" (string)
+        - Golang: "go1.5.2" (string)
         - Repo:  "3" (string)
+        - System: "amd64/darwin" (string)
+        - Version: "0.4.3-dev" (string)
 
     + Body
 
         ```
         {
-          "Version": "0.4.0-dev",
-          "Commit": "",
-          "Repo": "3"
+          "Commit": "d742fb1",
+          "Golang": "go1.5.2",
+          "Repo": "4",
+          "System": "amd64/darwin",
+          "Version": "0.4.3-dev"
         }
-        ```
 
 # Data Structures
 
