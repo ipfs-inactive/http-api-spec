@@ -1,3 +1,12 @@
+# PSA - This specification is out of date, please use [API Docs](https://ipfs.io/docs/api/) for a up to date reference.
+
+We working towards generating Apiary compliant HTTP API documentation automatically and tests the different implementations to see if they are compliant. Until that happens, we have a docs generation tool that grabs the endpoints from go-ipfs and generates the documentation.
+
+The tool is [http-api-docs](https://github.com/ipfs/http-api-docs) and generated docs are stored in the [Website Repo](https://github.com/ipfs/website/blob/master/content/docs/api.md)
+
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+
 # Apiary IPFS HTTP API description
 
 [![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://ipn.io)
